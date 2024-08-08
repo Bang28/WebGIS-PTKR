@@ -69,6 +69,16 @@ def publish_date(sender, instance, created, **kwargs):
         instance.delete()
         print('There is problem during shp uploade: ', e)
 
+    # publish shp to the geoserver using gerserver-rest
+    try:
+        geo.create_featurestore(store_name=name, workspace='ptkr', db='ptkr', host='localhost', 
+                                pg_user='postgres', pg_password='12345678', schema='data', port=5433)
+        geo.publish_featurestore(workspace='ptkr', store_name=name, pg_table=name)
+        geo.create_outline_featurestyle('ptkr_shp', workspace='ptkr')
+        geo.publish_style(layer_name=name, style_name='ptkr_shp', workspace='ptkr')
+    except Exception as e:
+        print(e)
+
 @receiver(post_delete, sender=Shp)
 def delete_date(sender, instance, created, **kwargs):
     pass
