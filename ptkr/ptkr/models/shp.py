@@ -80,5 +80,11 @@ def publish_date(sender, instance, created, **kwargs):
         print(e)
 
 @receiver(post_delete, sender=Shp)
-def delete_date(sender, instance, created, **kwargs):
-    pass
+def delete_date(sender, instance, **kwargs):
+    try:
+        db.delete_table(instance.name, schema='data')
+    except Exception as e:
+        print(e)
+
+    geo.delete_layer(instance.name, 'ptkr')
+    geo.delete_featurestore(instance.name, 'ptkr')
