@@ -26,5 +26,5 @@ L.control.measure({
 
 // zoom to layer function
 $('.zoom-to-layer').click(function () {
-    map.setView([38.8610, 71.2761], 7)
+    map.setView([-7.050, 108.891], 10)
 });

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="map">  
+	<!-- map coordinate -->
+	<div class="leaflet-control map-coordinate">
+		<div class="coordinate"></div>
+	</div>
+
+	<!-- full browser -->
+	<div class="leaflet-control full-screen" onclick="fullScreenView()">
+		<svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
+		<path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707" />
+		</svg>
+	</div>
+
+	<!-- zoom to layer -->
+	<div class="leaflet-control zoom-to-layer">
+		<svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+		<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+		</svg>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var overLayMaps = {};
+	// render shp files
+	{% for s in shp %}
+		var {{s.name}} = L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+            layers: '{{s.name}}',
+			transparent: true,
+            format: 'image/png',
+        }).addTo(map)
+
+        overLayMaps['{{s.name}}'] = {{s.name}}
+	{% endfor %}
+	
+	L.control.layers(baseMaps, overLayMaps, {
+		collapse: false,
+		position: 'bottomleft', // default topright    
+	}).addTo(map);
+</script>
+{% endblock script %}

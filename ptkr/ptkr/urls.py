@@ -1,7 +1,11 @@
 from django.urls import path
-from .views import index
+from .views import beranda, satuLantai, duaLantai, tigaLantai, statistik
 
 app_name = 'ptkr'
 urlpatterns = [
-    path('', index, name='index')
+    path('beranda/', beranda, name='beranda'),
+    path('satu-lantai/', satuLantai, name='satu'),
+    path('dua-lantai/', duaLantai, name='dua'),
+    path('tiga-lantai/', tigaLantai, name='tiga'),
+    path('statistik/', statistik, name='statistik'),
 ]

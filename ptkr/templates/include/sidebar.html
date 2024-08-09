@@ -1,0 +1,76 @@
+{% load static %}
+
+<!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{% static './dist/img/PTKRLogo-1.png' %}" alt="PTKR Logo" class="brand-image img-circle elevation-3">
+      <span class="brand-text font-weight-light">PTKR</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+
+      <!-- SidebarSearch Form -->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="{% url "ptkr:beranda" %}" class="nav-link
+            {% if request.resolver_match.url_name == 'beranda' %} active {% endif %} ">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                Beranda
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url "ptkr:statistik" %}" class="nav-link
+            {% if request.resolver_match.url_name == 'statistik' %}active{% endif %}">
+              <i class="nav-icon fas fa-chart-bar"></i>
+              <p>
+                Statistik
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link 
+            {% if request.resolver_match.url_name == 'satu' %} active 
+            {% elif request.resolver_match.url_name == 'dua' %} active
+            {% elif request.resolver_match.url_name == 'tiga' %} active
+            {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Forms
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url "ptkr:satu" %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>1 Lantai</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url "ptkr:dua" %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>2 Lantai</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url "ptkr:tiga" %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>3 Lantai</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

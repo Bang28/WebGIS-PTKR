@@ -1,5 +1,5 @@
 // map class initialize
-var map = L.map('map').setView([38.8610, 71.2761], 7);
+var map = L.map('map').setView([-1.5387473, 118.4170327], 5);
 map.zoomControl.setPosition('topright'); //set position zoom control to topright "by default topleft"
 
 // adding osm layer
@@ -35,20 +35,10 @@ var taji = L.geoJSON(data, {
     }
 });
 taji.addTo(marker);
-marker.addTo(map); // default 
+// marker.addTo(map); // default 
 
 // leaflet layer control
 var baseMaps = {
     'OSM': osm,
     'Esri World Imagery': ewi
 }
-
-var overlayMaps = {
-    'GeoJSON Marker': marker, // default marker value when i uncomment marker in GeoJso load
-    'Single Marker': singleMarker
-}
-
-L.control.layers(baseMaps, overlayMaps, {
-    collapse: false,
-    position: 'topleft', // default topright    
-}).addTo(map);
