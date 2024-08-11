@@ -1,0 +1,78 @@
+{% extends "forms/forms-base.html" %}
+
+{% block form-title %}FORMULIR INPUT DATA BANGUNAN TIGA LANTAI{% endblock form-title %}
+
+{% block action %}{% endblock action %}
+
+{% block struktur %}
+<!--Plat Lantai-->
+<div class="col-md-6">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Struktur Plat Lantai</h3>
+        </div>
+        <div class="card-body">
+            <label class="fieldlabels" for="ket_plantai">Keterangan Plat Lantai: *</label> 
+            <input type="text" class="form-control-sm" id="ket_plantai" name="ket_plantai" placeholder="Keterangan Plat Lantai" required/> 
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="fieldlabels" for="j_plantai">Jumlah Plat Lantai: *</label> 
+                    <input type="number" min="0" max="20" class="form-control-sm" id="j_plantai" name="j_plantai" placeholder="Jumlah Plat Lantai" required/> 
+                    <label class="fieldlabels" for="plantai_tr">Plat Lantai Tidak Rusak: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_tr" name="plantai_tr" placeholder="Plat Lantai Tidak Rusak" required/> 
+                    <label class="fieldlabels" for="plantai_rsr">Plat Lantai Rusak Sangat Ringan: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_rsr" name="plantai_rsr" placeholder="Plat Lantai Rusak Sangat Ringan" required/> 
+                    <label class="fieldlabels" for="plantai_rr">Plat Lantai Rusak Ringan: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_rr" name="plantai_rr" placeholder="Plat Lantai Rusak Ringan" required/> 
+                </div>
+                <div class="col-md-6">
+                    <label class="fieldlabels" for="plantai_rs">Plat Lantai Rusak Sedang: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_rs" name="plantai_rs" placeholder="Plat Lantai Rusak Sedang" required/> 
+                    <label class="fieldlabels" for="plantai_rb">Plat Lantai Rusak Berat: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_rb" name="plantai_rb" placeholder="Plat Lantai Rusak Berat" required/> 
+                    <label class="fieldlabels" for="plantai_rsb">Plat Lantai Rusak Sangat Berat: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_rsb" name="plantai_rsb" placeholder="Plat Lantai Rusak Sangat Berat" required/> 
+                    <label class="fieldlabels" for="plantai_kts">Komponen Plat Lantai Tidak Sesuai: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="plantai_kts" name="plantai_kts" placeholder="Komponen Plat Lantai Tidak Sesuai" required/> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Plat Lantai-->
+<!--Tangga-->
+<div class="col-md-6">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Struktur Tangga</h3>
+        </div>
+        <div class="card-body">
+            <label class="fieldlabels" for="ket_tangga">Keterangan Tangga: *</label> 
+            <input type="text" class="form-control-sm" id="ket_tangga" name="ket_tangga" placeholder="Keterangan Tangga" required/> 
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="fieldlabels" for="j_tangga">Jumlah Tangga: *</label> 
+                    <input type="number" min="0" max="20" class="form-control-sm" id="j_tangga" name="j_tangga" placeholder="Jumlah Tangga" required/> 
+                    <label class="fieldlabels" for="tangga_tr">Tangga Tidak Rusak: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_tr" name="tangga_tr" placeholder="Tangga Tidak Rusak" required/> 
+                    <label class="fieldlabels" for="tangga_rsr">Tangga Rusak Sangat Ringan: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_rsr" name="tangga_rsr" placeholder="Tangga Rusak Sangat Ringan" required/> 
+                    <label class="fieldlabels" for="tangga_rr">Tangga Rusak Ringan: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_rr" name="tangga_rr" placeholder="Tangga Rusak Ringan" required/> 
+                </div>
+                <div class="col-md-6">
+                    <label class="fieldlabels" for="tangga_rs">Tangga Rusak Sedang: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_rs" name="tangga_rs" placeholder="Tangga Rusak Sedang" required/> 
+                    <label class="fieldlabels" for="tangga_rb">Tangga Rusak Berat: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_rb" name="tangga_rb" placeholder="Tangga Rusak Berat" required/> 
+                    <label class="fieldlabels" for="tangga_rsb">Tangga Rusak Sangat Berat: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_rsb" name="tangga_rsb" placeholder="Tangga Rusak Sangat Berat" required/> 
+                    <label class="fieldlabels" for="tangga_kts">Komponen Tangga Tidak Sesuai: *</label> 
+                    <input type="number" min="0" max="10" class="form-control-sm" id="tangga_kts" name="tangga_kts" placeholder="Komponen Tangga Tidak Sesuai" required/> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Plat Lantai-->
+{% endblock struktur %}

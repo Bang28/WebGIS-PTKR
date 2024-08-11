@@ -6,13 +6,13 @@ def statistik(request):
     return render(request, 'statistik.html')
 
 def tigaLantai(request):
-    return render(request, 'forms/tigaLantai.html')
+    return render(request, 'forms/tiga-lantai.html')
 
 def duaLantai(request):
-    return render(request, 'forms/duaLantai.html')
+    return render(request, 'forms/dua-lantai.html')
 
 def satuLantai(request):
-    return render(request, 'forms/satuLantai.html')
+    return render(request, 'forms/satu-lantai.html')
 
 def beranda(request):
     shp = Shp.objects.all()

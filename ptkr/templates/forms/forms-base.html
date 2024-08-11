@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- partial:index.partial.html -->
+<div class="container-fluid">
+    <div class="">
+        <div class="p-0 mt-3 mb-2">
+            <div class="card card-outline card-info px-4 pt-4 pb-0 mb-3">
+                <div>
+                    <div class="card-tools float-right">
+                        <button type="button" class="btn btn-tool" data-toggle="tooltip" data-placement="bottom" title="Bantuan">
+                            <i class="fas fa-question-circle fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <h2 id="heading" class="text-center">
+                    {% block form-title %}{% endblock form-title %}
+                </h2>
+                <p class="text-center">Masukan data sesuai hasil pengamatan</p>
+                <form id="msform" method="POST" {% block action %}{% endblock action %} enctype="multipart/form-data">
+                    <!-- progressbar -->
+                    <ul id="progressbar" class="text-center">
+                        <li class="active" id="personal"><strong>Personal</strong></li>
+                        <li id="struktur"><strong>Struktur</strong></li>
+                        <li id="arsitektur"><strong>Arsitektur</strong></li>
+                        <li id="utilitas"><strong>Utilitas</strong></li>
+                        <li id="lokasi"><strong>Lokasi</strong></li>
+                    </ul>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> <br> 
+                    <!-- fieldsets -->
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                {% include './partials/personal.html' %}
+                            </div>
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                {% include './partials/struktur.html' %}
+                                {% block struktur %}{% endblock struktur %}
+                            </div>
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next" /> 
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                {% include './partials/arsitektur.html' %} 
+                            </div>
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next" /> 
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                {% include './partials/utilitas.html' %}
+                            </div>
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next" /> 
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Koordinat Lokasi:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 5 - 5</h2>
+                                </div> <br>
+                                <div class="col-md-12">
+                                    <!--map-->
+                                    <div id="peta"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Submit" /> 
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- partial -->
+{% endblock content %}
+
+{% block script %}
+<!--Map-->
+<script>
+    var map = L.map('peta', {zoomControl: false}).setView([-1.5387473, 118.4170327], 5);
+
+    // Panggil invalidateSize() setelah peta siap
+    map.whenReady(function() {
+        setTimeout(function() { 
+            map.invalidateSize(); 
+        }, 300);
+    });
+
+    // Tambahkan lapisan peta
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    })
+
+    // Kontrol layer
+    var baseMaps = {
+        'OSM': osm,
+        'Esri World Imagery': ewi
+    };
+
+    // get locate
+    L.control.locate({
+        locateOptions: {
+            enableHighAccuracy: true
+            }
+    }).addTo(map);
+
+    L.control.layers(baseMaps, {}, {
+        collapse: false,
+        position: 'topright',
+    }).addTo(map);
+
+    // Event listener untuk tombol "Next" untuk menampilkan peta saat fieldset diubah
+    $(".next").click(function(){
+        var current_fs = $(this).parent();
+        var next_fs = $(this).parent().next();
+        
+        // Tampilkan fieldset berikutnya
+        next_fs.show(); 
+        
+        // Panggil invalidateSize() untuk memastikan peta dirender dengan benar
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 100);
+        
+        current_fs.hide();
+    });
+
+    $(".previous").click(function(){
+        var current_fs = $(this).parent();
+        var previous_fs = $(this).parent().prev();
+        
+        previous_fs.show();
+        current_fs.hide();
+    });
+</script>
+
+<!--API Wilayah Indonesia-->
+<script>
+    // provinsi
+    fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+        .then(response => response.json())
+        .then(provinces => {
+            var data = provinces;
+            var tampung = `<option>Pilih</option>`;
+            document.getElementById('kota').innerHTML = `<option>Pilih</option>`;
+            document.getElementById('kecamatan').innerHTML = `<option>Pilih</option>`;
+            document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+            data.forEach(element => {
+                tampung += `<option data-reg='${element.id}' value='${element.name}'>${element.name}</option>`;
+            });
+            document.getElementById('provinsi').innerHTML = tampung;
+        });
+
+    // kota
+    const selectProvinsi = document.getElementById('provinsi');
+    selectProvinsi.addEventListener('change', (e) => {
+        var provinsi = e.target.options[e.target.selectedIndex].dataset.reg;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi}.json`)
+            .then(response => response.json())
+            .then(regencies => {
+                var data = regencies;
+                var tampung = `<option>Pilih</option>`;
+                document.getElementById('kecamatan').innerHTML = `<option>Pilih</option>`;
+                document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option data-dist='${element.id}' value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kota').innerHTML = tampung;
+            });
+    });
+    
+    // kecamatan
+    const selectKota = document.getElementById('kota');
+    selectKota.addEventListener('change', (e) => {
+        var kota = e.target.options[e.target.selectedIndex].dataset.dist;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kota}.json`)
+            .then(response => response.json())
+            .then(districts => {
+                var data = districts;
+                var tampung = `<option>Pilih</option>`;
+                document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option data-vill='${element.id}' value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kecamatan').innerHTML = tampung;
+            });
+    });
+    
+    // kelurahan
+    const selectKecamatan = document.getElementById('kecamatan');
+    selectKecamatan.addEventListener('change', (e) => {
+        var kecamatan = e.target.options[e.target.selectedIndex].dataset.vill;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan}.json`)
+            .then(response => response.json())
+            .then(villages => {
+                var data = villages;
+                var tampung = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kelurahan').innerHTML = tampung;
+            });
+    });
+</script>
+
+<script>
+    // leaflet search 
+    L.Control.geocoder({
+        position: 'topleft'
+    }).addTo(map);
+</script>
+
+<script>
+    setTimeout(function () {
+        window.dispatchEvent(new Event('resize'));
+    }, 1000);
+</script>
+{% endblock script %}

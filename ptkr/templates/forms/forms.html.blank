@@ -1,0 +1,687 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="content">
+    <!-- partial:index.partial.html -->
+    <div class="container-fluid">
+        <div class="justify-content-center">
+            <div class="text-center p-0 mt-3 mb-2">
+                <div class="card card-outline card-info px-4 pt-4 pb-0 mb-3">
+                    <div>
+                        <div class="card-tools float-right">
+                            <button type="button" class="btn btn-tool" data-toggle="tooltip" data-placement="bottom" title="Bantuan">
+                                <i class="fas fa-question-circle fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h2 id="heading">FORMULIR INPUT DATA BANGUNAN SATU LANTAI</h2>
+                    <p>Masukan data sesuai hasil pengamatan</p>
+                    <form id="msform" method="POST" action="" enctype="multipart/form-data">
+                        <!-- progressbar -->
+                        <ul id="progressbar">
+                            <li class="active" id="personal"><strong>Personal</strong></li>
+                            <li id="struktur"><strong>Struktur</strong></li>
+                            <li id="arsitektur"><strong>Arsitektur</strong></li>
+                            <li id="utilitas"><strong>Utilitas</strong></li>
+                            <li id="lokasi"><strong>Lokasi</strong></li>
+                        </ul>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div> <br> 
+                        <!-- fieldsets -->
+                        <fieldset>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Informasi Dasar:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 1 - 5</h2>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fieldlabels" for="namapemilik">Nama Pemilik: *</label> 
+                                        <input type="text" class="form-control-sm" id="namapemilik" name="nama_pemilik" placeholder="Nama Pemilik" /> 
+                                        <label class="fieldlabels" for="tiperumah">Tipe Rumah: *</label> 
+                                        <input type="text" class="form-control-sm" id="tiperumah" name="tipe_rumah" placeholder="Tipe Rumah" /> 
+                                        <label class="fieldlabels" for="provinsi">Provinsi: *</label> 
+                                        <select name="provinsi" id="provinsi" class="form-control form-control-sm">
+                                            <option>Pilih</option>
+                                        </select>
+                                        <label class="fieldlabels" for="kota">Kota: *</label> 
+                                        <select name="kota" id="kota" class="form-control form-control-sm">
+                                            <option>Pilih</option>
+                                        </select>
+                                        <label class="fieldlabels" for="kecamatan">Kecamatan: *</label> 
+                                        <select name="kecamatan" id="kecamatan" class="form-control form-control-sm">
+                                            <option>Pilih</option>
+                                        </select>
+                                        <label class="fieldlabels" for="kelurahan">Desa: *</label> 
+                                        <select name="kelurahan" id="kelurahan" class="form-control form-control-sm">
+                                            <option>Pilih</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fieldlabels" for="Dusun">Dusun: *</label> 
+                                        <input type="text" class="form-control-sm" id="Dusun" name="dusun" placeholder="Dusun" /> 
+                                        <label class="fieldlabels" for="rw">RW: *</label> 
+                                        <input type="text" class="form-control-sm" id="rw" name="rw" placeholder="RW" /> 
+                                        <label class="fieldlabels" for="rt">RT: *</label> 
+                                        <input type="text" class="form-control-sm" id="rt" name="rt" placeholder="RT" /> 
+                                        <label class="fieldlabels" for="Bencana">Bencana: *</label> 
+                                        <input type="text" class="form-control-sm" id="Bencana" name="bencana" placeholder="Bencana" /> 
+                                        <label class="fieldlabels" for="Foto">Foto: *</label> 
+                                        <input type="file" class="form-control-file" id="Foto" name="foto"/>
+                                    </div>
+                                </div>
+                            </div> 
+                            <input type="button" name="next" class="next action-button" value="Next" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Informasi Struktur:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 2 - 5</h2>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="fieldlabels" for="ket_pondasi">Keterangan Pondasi: *</label> 
+                                        <input type="text" class="form-control-sm" id="ket_pondasi" name="ket_pondasi" placeholder="Keterangan Pondasi" required/> 
+                                        <label class="fieldlabels" for="tkpondasi">Tingkat Kerusakan Pondasi: *</label> 
+                                        <input type="text" class="form-control-sm" id="tkpondasi" name="tkpondasi" placeholder="Tingkat Kerusakan Pondasi" required/> 
+                                    </div>
+                                    <!--Kolom-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Kolom</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <label class="fieldlabels" for="ket_kolom">Keterangan Kolom: *</label> 
+                                                <input type="text" class="form-control-sm" id="ket_kolom" name="ket_kolom" placeholder="Keterangan Kolom" required/> 
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="j_kolom">Jumlah Kolom: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="j_kolom" name="j_kolom" placeholder="Jumlah Kolom" required/> 
+                                                        <label class="fieldlabels" for="kolom_tr">Kolom Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_tr" name="kolom_tr" placeholder="Kolom Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="kolom_rsr">Kolom Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_rsr" name="kolom_rsr" placeholder="Kolom Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="kolom_rr">Kolom Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_rr" name="kolom_rr" placeholder="Kolom Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="kolom_rs">Kolom Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_rs" name="kolom_rs" placeholder="Kolom Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="kolom_rb">Kolom Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_rb" name="kolom_rb" placeholder="Kolom Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="kolom_rsb">Kolom Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_rsb" name="kolom_rsb" placeholder="Kolom Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="kolom_kts">Komponen Kolom Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kolom_kts" name="kolom_kts" placeholder="Komponen Kolom Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Kolom-->
+                                    <!--Balok-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Balok</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <label class="fieldlabels" for="ket_balok">Keterangan Balok: *</label> 
+                                                <input type="text" class="form-control-sm" id="ket_balok" name="ket_balok" placeholder="Keterangan Balok" required/> 
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="j_balok">Jumlah Balok: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="j_balok" name="j_balok" placeholder="Jumlah Balok" required/> 
+                                                        <label class="fieldlabels" for="balok_tr">Balok Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_tr" name="balok_tr" placeholder="Balok Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="balok_rsr">Balok Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_rsr" name="balok_rsr" placeholder="Balok Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="balok_rr">Balok Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_rr" name="balok_rr" placeholder="Balok Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="balok_rs">Balok Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_rs" name="balok_rs" placeholder="Balok Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="balok_rb">Balok Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_rb" name="balok_rb" placeholder="Balok Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="balok_rsb">Balok Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_rsb" name="balok_rsb" placeholder="Balok Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="balok_kts">Komponen Balok Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="balok_kts" name="balok_kts" placeholder="Komponen Balok Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Balok-->
+                                    <!--Atap-->
+                                    <div class="col-md-12">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Atap</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <label class="fieldlabels" for="ket_atap">Keterangan Atap: *</label> 
+                                                <input type="text" class="form-control-sm" id="ket_atap" name="ket_atap" placeholder="Keterangan Atap" required/> 
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_atap">Volume Atap (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_atap" name="v_atap" placeholder="Volume Atap (%) 100" readonly/> 
+                                                        <label class="fieldlabels" for="atap_tr">Atap Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_tr" name="atap_tr" placeholder="Atap Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="atap_rsr">Atap Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_rsr" name="atap_rsr" placeholder="Atap Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="atap_rr">Atap Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_rr" name="atap_rr" placeholder="Atap Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="atap_rs">Atap Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_rs" name="atap_rs" placeholder="Atap Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="atap_rb">Atap Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_rb" name="atap_rb" placeholder="Atap Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="atap_rsb">Atap Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_rsb" name="atap_rsb" placeholder="Atap Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="atap_kts">Komponen Atap Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="atap_kts" name="atap_kts" placeholder="Komponen Atap Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Atap-->
+                                </div> 
+                            </div> 
+                            <input type="button" name="next" class="next action-button" value="Next" /> 
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Informasi Arsitektur:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 3 - 5</h2>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!--Dinding/Partisi-->
+                                        <label class="fieldlabels" for="ket_dinding">Keterangan Dinding/Partisi: *</label> 
+                                        <input type="text" class="form-control-sm" id="ket_dinding" name="ket_dinding" placeholder="Keterangan Dinding/Partisi" required/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="fieldlabels" for="v_dinding">Volume Dinding (%) 100: *</label> 
+                                                <input type="number" min="0" max="20" class="form-control-sm" id="v_dinding" name="v_dinding" placeholder="Volume Dinding (%) 100" readonly/> 
+                                                <label class="fieldlabels" for="dinding_tr">Dinding Tidak Rusak: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_tr" name="dinding_tr" placeholder="Dinding Tidak Rusak" required/> 
+                                                <label class="fieldlabels" for="dinding_rsr">Dinding Rusak Sangat Ringan: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_rsr" name="dinding_rsr" placeholder="Dinding Rusak Sangat Ringan" required/> 
+                                                <label class="fieldlabels" for="dinding_rr">Dinding Rusak Ringan: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_rr" name="dinding_rr" placeholder="Dinding Rusak Ringan" required/> 
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fieldlabels" for="dinding_rs">Dinding Rusak Sedang: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_rs" name="dinding_rs" placeholder="Dinding Rusak Sedang" required/> 
+                                                <label class="fieldlabels" for="dinding_rb">Dinding Rusak Berat: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_rb" name="dinding_rb" placeholder="Dinding Rusak Berat" required/> 
+                                                <label class="fieldlabels" for="dinding_rsb">Dinding Rusak Sangat Berat: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_rsb" name="dinding_rsb" placeholder="Dinding Rusak Sangat Berat" required/> 
+                                                <label class="fieldlabels" for="dinding_kts">Komponen Dinding Tidak Sesuai: *</label> 
+                                                <input type="number" min="0" max="10" class="form-control-sm" id="dinding_kts" name="dinding_kts" placeholder="Komponen Dinding Tidak Sesuai" required/> 
+                                            </div>
+                                        </div>
+                                        <!--End Dinding/Partisi-->
+                                    </div>
+                                    <!--Plafon-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Plafon</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_plafon">Volume Plafon (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_plafon" name="v_plafon" placeholder="Volume Plafon (%) 100" readonly/> 
+                                                        <label class="fieldlabels" for="plafon_tr">Plafon Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_tr" name="plafon_tr" placeholder="Plafon Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="plafon_rsr">Plafon Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_rsr" name="plafon_rsr" placeholder="Plafon Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="plafon_rr">Plafon Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_rr" name="plafon_rr" placeholder="Plafon Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="plafon_rs">Plafon Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_rs" name="plafon_rs" placeholder="Plafon Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="plafon_rb">Plafon Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_rb" name="plafon_rb" placeholder="Plafon Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="plafon_rsb">Plafon Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_rsb" name="plafon_rsb" placeholder="Plafon Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="plafon_kts">Komponen Plafon Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="plafon_kts" name="plafon_kts" placeholder="Komponen Plafon Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Plafon-->
+                                    <!--Lantai-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Lantai</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_lantai">Volume Lantai (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_lantai" name="v_lantai" placeholder="Volume Lantai (%) 100" readonly/> 
+                                                        <label class="fieldlabels" for="lantai_tr">Lantai Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_tr" name="lantai_tr" placeholder="Lantai Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="lantai_rsr">Lantai Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_rsr" name="lantai_rsr" placeholder="Lantai Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="lantai_rr">Lantai Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_rr" name="lantai_rr" placeholder="Lantai Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="lantai_rs">Lantai Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_rs" name="lantai_rs" placeholder="Lantai Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="lantai_rb">Lantai Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_rb" name="lantai_rb" placeholder="Lantai Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="lantai_rsb">Lantai Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_rsb" name="lantai_rsb" placeholder="Lantai Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="lantai_kts">Komponen Lantai Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="lantai_kts" name="lantai_kts" placeholder="Komponen Lantai Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Lantai-->
+                                    <!--Kusen-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Kusen</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="j_kusen">Jumlah Kusen: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="j_kusen" name="j_kusen" placeholder="Jumlah Kusen" required/> 
+                                                        <label class="fieldlabels" for="kusen_tr">Kusen Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_tr" name="kusen_tr" placeholder="Kusen Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="kusen_rsr">Kusen Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_rsr" name="kusen_rsr" placeholder="Kusen Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="kusen_rr">Kusen Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_rr" name="kusen_rr" placeholder="Kusen Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="kusen_rs">Kusen Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_rs" name="kusen_rs" placeholder="Kusen Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="kusen_rb">Kusen Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_rb" name="kusen_rb" placeholder="Kusen Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="kusen_rsb">Kusen Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_rsb" name="kusen_rsb" placeholder="Kusen Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="kusen_kts">Komponen Kusen Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="kusen_kts" name="kusen_kts" placeholder="Komponen Kusen Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Kusen-->
+                                    <!--Pintu-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Pintu</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="j_pintu">Jumlah Pintu: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="j_pintu" name="j_pintu" placeholder="Jumlah Pintu" required/> 
+                                                        <label class="fieldlabels" for="pintu_tr">Pintu Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_tr" name="pintu_tr" placeholder="Pintu Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="pintu_rsr">Pintu Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_rsr" name="pintu_rsr" placeholder="Pintu Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="pintu_rr">Pintu Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_rr" name="pintu_rr" placeholder="Pintu Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="pintu_rs">Pintu Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_rs" name="pintu_rs" placeholder="Pintu Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="pintu_rb">Pintu Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_rb" name="pintu_rb" placeholder="Pintu Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="pintu_rsb">Pintu Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_rsb" name="pintu_rsb" placeholder="Pintu Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="pintu_kts">Komponen Pintu Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="pintu_kts" name="pintu_kts" placeholder="Komponen Pintu Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Pintu-->
+                                    <!--Jendela-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Jendela</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="j_jendela">Jumlah Jendela: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="j_jendela" name="j_jendela" placeholder="Jumlah Jendela" required/> 
+                                                        <label class="fieldlabels" for="jendela_tr">Jendela Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_tr" name="jendela_tr" placeholder="Jendela Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="jendela_rsr">Jendela Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_rsr" name="jendela_rsr" placeholder="Jendela Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="jendela_rr">Jendela Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_rr" name="jendela_rr" placeholder="Jendela Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="jendela_rs">Jendela Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_rs" name="jendela_rs" placeholder="Jendela Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="jendela_rb">Jendela Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_rb" name="jendela_rb" placeholder="Jendela Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="jendela_rsb">Jendela Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_rsb" name="jendela_rsb" placeholder="Jendela Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="jendela_kts">Komponen Jendela Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="jendela_kts" name="jendela_kts" placeholder="Komponen Jendela Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Jendela-->
+                                    <!--Finishing Plafon-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Finishing Plafon</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_fplafon">Volume Plafon (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_fplafon" name="v_fplafon" placeholder="Volume Plafon (%) 100" readonly/> 
+                                                        <label class="fieldlabels" for="fplafon_tr">Plafon Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_tr" name="fplafon_tr" placeholder="Plafon Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="fplafon_rsr">Plafon Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_rsr" name="fplafon_rsr" placeholder="Plafon Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="fplafon_rr">Plafon Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_rr" name="fplafon_rr" placeholder="Plafon Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="fplafon_rs">Plafon Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_rs" name="fplafon_rs" placeholder="Plafon Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="fplafon_rb">Plafon Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_rb" name="fplafon_rb" placeholder="Plafon Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="fplafon_rsb">Plafon Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_rsb" name="fplafon_rsb" placeholder="Plafon Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="fplafon_kts">Komponen Plafon Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fplafon_kts" name="fplafon_kts" placeholder="Komponen Plafon Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Finishing Plafon-->
+                                    <!--Finishing Dinding/Partisi-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Finishing Dinding</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_fdinding">Volume Dinding (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_fdinding" name="v_fdinding" placeholder="Volume Dinding (%) 100" readonly/> 
+                                                        <label class="fieldlabels" for="fdinding_tr">Dinding Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_tr" name="fdinding_tr" placeholder="Dinding Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="fdinding_rsr">Dinding Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_rsr" name="fdinding_rsr" placeholder="Dinding Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="fdinding_rr">Dinding Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_rr" name="fdinding_rr" placeholder="Dinding Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="fdinding_rs">Dinding Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_rs" name="fdinding_rs" placeholder="Dinding Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="fdinding_rb">Dinding Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_rb" name="fdinding_rb" placeholder="Dinding Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="fdinding_rsb">Dinding Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_rsb" name="fdinding_rsb" placeholder="Dinding Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="fdinding_kts">Komponen Dinding Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fdinding_kts" name="fdinding_kts" placeholder="Komponen Dinding Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Dinding/Partisi-->
+                                    <!--Finishing Kusen & Pintu-->
+                                    <div class="col-md-6">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Struktur Finishing Kusen & Pintu</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_fkupin">Volume Kusen & Pintu (%) 100: *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_fkupin" name="v_fkupin" placeholder="Volume Kusen & Pintu (%) 100" required/> 
+                                                        <label class="fieldlabels" for="fkupin_tr">Kupin Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_tr" name="fkupin_tr" placeholder="Kupin Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="fkupin_rsr">Kupin Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_rsr" name="fkupin_rsr" placeholder="Kupin Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="fkupin_rr">Kupin Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_rr" name="fkupin_rr" placeholder="Kupin Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="fkupin_rs">Kupin Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_rs" name="fkupin_rs" placeholder="Kupin Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="fkupin_rb">Kupin Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_rb" name="fkupin_rb" placeholder="Kupin Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="fkupin_rsb">Kupin Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_rsb" name="fkupin_rsb" placeholder="Kupin Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="fkupin_kts">Komponen Kupin Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="fkupin_kts" name="fkupin_kts" placeholder="Komponen Kupin Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Pintu-->
+                                </div> 
+                            </div> 
+                            <input type="button" name="next" class="next action-button" value="Next" /> 
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Informasi Utilitas:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 4 - 5</h2>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="fieldlabels" for="ket_listrik">Instalasi Listrik (Estimasi): *</label> 
+                                        <input type="text" class="form-control-sm" id="ket_listrik" name="ket_listrik" placeholder="Instalasi Listrik (Estimasi)" required/> 
+                                        <label class="fieldlabels" for="ket_air">Instalasi Air Bersih (Estimasi): *</label> 
+                                        <input type="text" class="form-control-sm" id="ket_air" name="ket_air" placeholder="Instalasi Air Bersih (Estimasi)" required/> 
+                                    </div>
+                                    <!--Drainase Limbah-->
+                                    <div class="col-md-12">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Drainase Limbah</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="v_drainase">Volume Komponen M1(Meter Lari): *</label> 
+                                                        <input type="number" min="0" max="20" class="form-control-sm" id="v_drainase" name="v_drainase" placeholder="Volume Drainase" required/> 
+                                                        <label class="fieldlabels" for="drainase_tr">Drainase Tidak Rusak: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_tr" name="drainase_tr" placeholder="Drainase Tidak Rusak" required/> 
+                                                        <label class="fieldlabels" for="drainase_rsr">Drainase Rusak Sangat Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_rsr" name="drainase_rsr" placeholder="Drainase Rusak Sangat Ringan" required/> 
+                                                        <label class="fieldlabels" for="drainase_rr">Drainase Rusak Ringan: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_rr" name="drainase_rr" placeholder="Drainase Rusak Ringan" required/> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="fieldlabels" for="drainase_rs">Drainase Rusak Sedang: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_rs" name="drainase_rs" placeholder="Drainase Rusak Sedang" required/> 
+                                                        <label class="fieldlabels" for="drainase_rb">Drainase Rusak Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_rb" name="drainase_rb" placeholder="Drainase Rusak Berat" required/> 
+                                                        <label class="fieldlabels" for="drainase_rsb">Drainase Rusak Sangat Berat: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_rsb" name="drainase_rsb" placeholder="Drainase Rusak Sangat Berat" required/> 
+                                                        <label class="fieldlabels" for="drainase_kts">Komponen Drainase Tidak Sesuai: *</label> 
+                                                        <input type="number" min="0" max="10" class="form-control-sm" id="drainase_kts" name="drainase_kts" placeholder="Komponen Drainase Tidak Sesuai" required/> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Drainase Limbah-->
+                                </div> 
+                            </div> 
+                            <input type="button" name="next" class="next action-button" value="Next" /> 
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Koordinat Lokasi:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 5 - 5</h2>
+                                    </div> <br>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!--map-->
+                                        <div id="peta" style="width: 100%; height: 100vh;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next action-button" value="Submit" /> 
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<!--Map-->
+<script>
+    var map = L.map('peta').setView([-1.5387473, 118.4170327], 5);
+    map.zoomControl.setPosition('topright'); //set position zoom control to topright "by default topleft"
+
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+    var baseMaps = {
+        'OSM': osm,
+        'Esri World Imagery': ewi
+    }
+
+    L.control.layers(baseMaps, {}, {
+		collapse: true,
+		position: 'topright', // default topright    
+	}).addTo(map);
+</script>
+
+<!--API Wilayah Indonesia-->
+<script>
+    // provinsi
+    fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+        .then(response => response.json())
+        .then(provinces => {
+            var data = provinces;
+            var tampung = `<option>Pilih</option>`;
+            document.getElementById('kota').innerHTML = `<option>Pilih</option>`;
+            document.getElementById('kecamatan').innerHTML = `<option>Pilih</option>`;
+            document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+            data.forEach(element => {
+                tampung += `<option data-reg='${element.id}' value='${element.name}'>${element.name}</option>`;
+            });
+            document.getElementById('provinsi').innerHTML = tampung;
+        });
+
+    // kota
+    const selectProvinsi = document.getElementById('provinsi');
+    selectProvinsi.addEventListener('change', (e) => {
+        var provinsi = e.target.options[e.target.selectedIndex].dataset.reg;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi}.json`)
+            .then(response => response.json())
+            .then(regencies => {
+                var data = regencies;
+                var tampung = `<option>Pilih</option>`;
+                document.getElementById('kecamatan').innerHTML = `<option>Pilih</option>`;
+                document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option data-dist='${element.id}' value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kota').innerHTML = tampung;
+            });
+    });
+    
+    // kecamatan
+    const selectKota = document.getElementById('kota');
+    selectKota.addEventListener('change', (e) => {
+        var kota = e.target.options[e.target.selectedIndex].dataset.dist;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kota}.json`)
+            .then(response => response.json())
+            .then(districts => {
+                var data = districts;
+                var tampung = `<option>Pilih</option>`;
+                document.getElementById('kelurahan').innerHTML = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option data-vill='${element.id}' value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kecamatan').innerHTML = tampung;
+            });
+    });
+    
+    // kelurahan
+    const selectKecamatan = document.getElementById('kecamatan');
+    selectKecamatan.addEventListener('change', (e) => {
+        var kecamatan = e.target.options[e.target.selectedIndex].dataset.vill;
+        fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan}.json`)
+            .then(response => response.json())
+            .then(villages => {
+                var data = villages;
+                var tampung = `<option>Pilih</option>`;
+                data.forEach(element => {
+                    tampung += `<option value='${element.name}'>${element.name}</option>`;
+                });
+                document.getElementById('kelurahan').innerHTML = tampung;
+            });
+    });
+</script>
+{% endblock script %}
