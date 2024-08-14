@@ -18,6 +18,7 @@
                 </h2>
                 <p class="text-center">Masukan data sesuai hasil pengamatan</p>
                 <form id="msform" method="POST" {% block action %}{% endblock action %} enctype="multipart/form-data">
+                    {% csrf_token %}
                     <!-- progressbar -->
                     <ul id="progressbar" class="text-center">
                         <li class="active" id="personal"><strong>Personal</strong></li>
@@ -75,13 +76,36 @@
                                 <div class="col-5">
                                     <h2 class="steps">Step 5 - 5</h2>
                                 </div> <br>
-                                <div class="col-md-12">
+                                <div class="col-md-12 mb-3">
                                     <!--map-->
-                                    <div id="peta"></div>
+                                    <div id="peta">
+                                        <!--add mark-->
+                                        <div id="addmark" class="leaflet-control addmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="latitude">Latitude</span>
+                                        </div>
+                                        <input type="text" name="lat" class="form-control lat" aria-label="Latitude" aria-describedby="latitude">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="longitude">Longitude</span>
+                                        </div>
+                                        <input type="text" name="long" class="form-control long" aria-label="Longitude" aria-describedby="longitude">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Submit" /> 
+                        <input type="submit" name="next" class="next action-button" value="Submit" /> 
                         <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                     </fieldset>
                 </form>
@@ -119,13 +143,6 @@
         'Esri World Imagery': ewi
     };
 
-    // get locate
-    L.control.locate({
-        locateOptions: {
-            enableHighAccuracy: true
-            }
-    }).addTo(map);
-
     L.control.layers(baseMaps, {}, {
         collapse: false,
         position: 'topright',
@@ -154,6 +171,86 @@
         previous_fs.show();
         current_fs.hide();
     });
+</script>
+
+<script>
+    // Add mark to map
+    var marker = null; // Variabel untuk menyimpan marker yang dibuat
+    // Fungsi untuk menghapus marker jika ada
+    function removeMarker() {
+        if (marker) {
+            map.removeLayer(marker);
+            marker = null;
+            document.querySelector('.lat').value = '';
+            document.querySelector('.long').value = '';
+            console.log('Marker removed.');
+        }
+    }
+
+    // Event listener untuk ikon tambah marker
+    document.getElementById('addmark').addEventListener('click', function() {
+        var addmarkDiv = this;
+
+        if (!addmarkDiv.classList.contains('active')) {
+            // Aktifkan mode tambah marker
+            addmarkDiv.classList.add('active');
+
+            // Tambahkan marker pada klik peta
+            map.on('click', function(e) {
+                if (addmarkDiv.classList.contains('active')) {
+                    removeMarker(); // Hapus marker yang ada (jika ada)
+                    marker = L.marker(e.latlng).addTo(map);
+                    document.querySelector('.lat').value = e.latlng.lat;
+                    document.querySelector('.long').value = e.latlng.lng;
+                }
+            });
+
+        } else {
+            // Nonaktifkan mode tambah marker
+            addmarkDiv.classList.remove('active');
+            removeMarker(); // Hapus marker ketika mode nonaktif
+        }
+    });
+</script>
+
+<script>
+    // leaflet locate control
+    var lc = L.control.locate().addTo(map);
+
+    // Event listener untuk memasukan nilai ketika locate control diaktifkan
+    map.on('locationfound', function(e) {
+        var latlng = e.latlng;
+        document.querySelector('.lat').value = latlng.lat;
+        document.querySelector('.long').value = latlng.lng;
+    });
+
+    // kosongkan input ketika locate control deactivated
+    $(document).ready(function() {
+    var targetNode = document.querySelector('div.leaflet-control-locate');
+
+        // Inisialisasi observer
+        var observer = new MutationObserver(function(mutationsList) {
+            mutationsList.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    if (!targetNode.classList.contains('active')) {
+                        // Kosongkan input jika kelas 'active' tidak ada
+                        document.querySelector('.lat').value = '';
+                        document.querySelector('.long').value = '';
+                    }
+                }
+            });
+        });
+
+        // Konfigurasi observer
+        observer.observe(targetNode, { attributes: true });
+    });
+</script>
+
+<script>
+    // leaflet search 
+    L.Control.geocoder({
+        position: 'topleft'
+    }).addTo(map);
 </script>
 
 <!--API Wilayah Indonesia-->
@@ -226,13 +323,7 @@
 </script>
 
 <script>
-    // leaflet search 
-    L.Control.geocoder({
-        position: 'topleft'
-    }).addTo(map);
-</script>
-
-<script>
+    // load full map
     setTimeout(function () {
         window.dispatchEvent(new Event('resize'));
     }, 1000);

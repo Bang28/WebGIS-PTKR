@@ -34,6 +34,6 @@ class AdminRumah(CustomGeoAdmin):
     list_display = [
         'pemilik_rumah',
         'kelurahan',
-        'koordinat',
+        'tipe_bangunan',
         'tingkat_kerusakan'
     ]

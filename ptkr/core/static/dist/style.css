@@ -16,6 +16,14 @@
     border-radius: 2%;
 }
 
+.leaflet-control-layers {
+    cursor: pointer;
+}
+
+.leaflet-control.zoom-to-layer {
+    cursor: pointer;
+}
+
 .zoom-to-layer {
     padding: 5px;
     background-color: #fff;

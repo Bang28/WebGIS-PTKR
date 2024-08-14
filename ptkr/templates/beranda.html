@@ -25,6 +25,17 @@
 
 
 <script>
+	var pointGroup = L.featureGroup()
+	
+	// render point
+	{% for p in point %}
+		var lat = {{p.lat}}
+        var lng = {{p.long}}
+        var point = L.marker([lat, lng]).bindPopup(`<h3>{{p.pemilik_rumah}}</h3><p>{{p.tingkat_kerusakan}}</p>`)
+		point.addTo(map)
+	{% endfor %}
+
+	// map layers
 	var overLayMaps = {};
 	// render shp files
 	{% for s in shp %}
@@ -38,7 +49,7 @@
 	{% endfor %}
 	
 	L.control.layers(baseMaps, overLayMaps, {
-		collapse: false,
+		collapsed: true,
 		position: 'bottomleft', // default topright    
 	}).addTo(map);
 </script>

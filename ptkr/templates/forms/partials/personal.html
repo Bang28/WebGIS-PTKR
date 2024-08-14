@@ -5,10 +5,8 @@
     <h2 class="steps">Step 1 - 5</h2>
 </div>
 <div class="col-md-6">
-    <label class="fieldlabels" for="namapemilik">Nama Pemilik: *</label> 
-    <input type="text" class="form-control-sm" id="namapemilik" name="nama_pemilik" placeholder="Nama Pemilik" /> 
-    <label class="fieldlabels" for="tiperumah">Tipe Rumah: *</label> 
-    <input type="text" class="form-control-sm" id="tiperumah" name="tipe_rumah" placeholder="Tipe Rumah" /> 
+    <label class="fieldlabels" for="penilik_rumah">Pemilik Rumah: *</label> 
+    <input type="text" class="form-control form-control-sm" id="penilik_rumah" name="pemilik_rumah" placeholder="Pemilik Rumah" /> 
     <label class="fieldlabels" for="provinsi">Provinsi: *</label> 
     <select name="provinsi" id="provinsi" class="form-control form-control-sm">
         <option>Pilih</option>
@@ -28,13 +26,18 @@
 </div>
 <div class="col-md-6">
     <label class="fieldlabels" for="Dusun">Dusun: *</label> 
-    <input type="text" class="form-control-sm" id="Dusun" name="dusun" placeholder="Dusun" /> 
+    <input type="text" class="form-control form-control-sm" id="Dusun" name="dusun" placeholder="Dusun" /> 
     <label class="fieldlabels" for="rw">RW: *</label> 
-    <input type="text" class="form-control-sm" id="rw" name="rw" placeholder="RW" /> 
+    <input type="number" class="form-control form-control-sm" id="rw" name="rw" placeholder="RW" /> 
     <label class="fieldlabels" for="rt">RT: *</label> 
-    <input type="text" class="form-control-sm" id="rt" name="rt" placeholder="RT" /> 
-    <label class="fieldlabels" for="Bencana">Bencana: *</label> 
-    <input type="text" class="form-control-sm" id="Bencana" name="bencana" placeholder="Bencana" /> 
+    <input type="number" class="form-control form-control-sm" id="rt" name="rt" placeholder="RT" /> 
+    <label class="fieldlabels" for="bencana">Bencana: *</label> 
+    <select name="bencana" id="bencana" class="form-control form-control-sm">
+        <option value="">Pilih</option>
+        {% for b in bencana %}
+            <option value="{{b.id}}">{{b.jenis_bencana}}</option>
+        {% endfor %}
+    </select>
     <label class="fieldlabels" for="Foto">Foto: *</label> 
     <input type="file" class="form-control-file" id="Foto" name="foto"/>
 </div>
