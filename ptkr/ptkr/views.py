@@ -3,8 +3,21 @@ from .models.shp import Shp
 from .models.ptkr import Bencana, RumahTerdampak
 
 # Create your views here.
+def detail(request, id):
+    """fungsi menampilkan detail rumah terdampak"""
+    detail = RumahTerdampak.objects.get(id=id)
+    context = {
+        'detail': detail
+    }
+    return render(request, 'detail.html', context)
+
 def statistik(request):
-    return render(request, 'statistik.html')
+    """fungsi menampilkan statistik bencana dan rumah terdampak"""
+    list_rumah = RumahTerdampak.objects.all()
+    context = {
+        'list_rumah': list_rumah
+    }
+    return render(request, 'statistik.html', context)
 
 def tigaLantai(request):
     """fungsi kalkulasi kerusakan bangunan tipe satu lantau"""

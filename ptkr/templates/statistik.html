@@ -16,7 +16,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header border-0">
                         <div class="d-flex justify-content-between">
@@ -58,9 +58,9 @@
                 </div>
                 <!-- /.card -->
             </div>
-
             <!-- /.col-md-6 -->
-            <div class="col-lg-6">
+
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header border-0">
                         <div class="d-flex justify-content-between">
@@ -101,6 +101,48 @@
                 <!-- /.card -->
             </div>
             <!-- /.col-md-6 -->
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Rumah Terdampak Bencana</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="mytable" class="table table-sm table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Pemilik Rumah</th>
+                                <th>Tipe Bangunan Rumah</th>
+                                <th>Alamat</th>
+                                <th>Bencana</th>
+                                <th>Tingkat Kerusakan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lr in list_rumah %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{lr.pemilik_rumah}}</td>
+                                <td>{{lr.tipe_bangunan}}</td>
+                                <td>{{lr.kota}} Kecamatan {{lr.kecamatan}} kelurahan {{lr.kelurahan}}</td>
+                                <td>{{lr.bencana}}</td>
+                                <td>{{lr.tingkat_kerusakan}}</td>
+                                <td>
+                                    <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-md-6 -->
         </div>
         <!-- /.row -->
     </div>
@@ -108,3 +150,17 @@
 </div>
 <!-- /.content -->
 {% endblock content %}
+
+{% block script %}
+<script>
+    $('#mytable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+    })
+</script>
+{% endblock script %}
