@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.gis import admin
+from import_export.admin import ImportExportModelAdmin
 from .models.shp import Shp
 from .models.ptkr import Bencana, RumahTerdampak
 
@@ -30,7 +31,7 @@ class AdminBencana(admin.ModelAdmin):
     ]
 
 @admin.register(RumahTerdampak)
-class AdminRumah(CustomGeoAdmin):
+class AdminRumah(ImportExportModelAdmin):
     list_display = [
         'pemilik_rumah',
         'kelurahan',

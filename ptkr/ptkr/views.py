@@ -1,21 +1,108 @@
 from django.shortcuts import render, redirect
 from .models.shp import Shp
 from .models.ptkr import Bencana, RumahTerdampak
+import plotly.express as px
+from django.db.models import Count
+from plotly.offline import plot
+import plotly.graph_objs as go
+import json
 
 # Create your views here.
 def detail(request, id):
-    """fungsi menampilkan detail rumah terdampak"""
+    """fungsi menampilkan detail rumah terdampak bencana"""
     detail = RumahTerdampak.objects.get(id=id)
     context = {
-        'detail': detail
+        'detail': detail,
     }
     return render(request, 'detail.html', context)
 
 def statistik(request):
     """fungsi menampilkan statistik bencana dan rumah terdampak"""
-    list_rumah = RumahTerdampak.objects.all()
+    list_rumah = RumahTerdampak.objects.all().order_by('-publish')
+    # Query untuk statistik rumah terdampak berdasarkan bencana yang terjadi, termasuk tingkat kerusakan dan tanggal kejadian
+    rumah_terdampak_bencana = RumahTerdampak.objects.values(
+        'bencana__jenis_bencana', 'bencana__tanggal_terjadi', 'tingkat_kerusakan'
+    ).annotate(jumlah=Count('id')).order_by('bencana__jenis_bencana', 'tingkat_kerusakan')
+
+    # Statistik kejadian bencana berdasarkan tanggal kejadian
+    kejadian_bencana = Bencana.objects.values('tanggal_terjadi', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('tanggal_terjadi')
+
+    # Menyiapkan list unik dari 'jenis_bencana' + 'tanggal_terjadi'
+    kerusakan_rumah_labels = sorted(
+        set(f"{entry['bencana__jenis_bencana']} ({entry['bencana__tanggal_terjadi'].strftime('%Y-%m-%d')})" 
+            for entry in rumah_terdampak_bencana)
+    )
+
+    # Memisahkan data berdasarkan tingkat kerusakan
+    data_ringan = [0] * len(kerusakan_rumah_labels)
+    data_sedang = [0] * len(kerusakan_rumah_labels)
+    data_berat = [0] * len(kerusakan_rumah_labels)
+    
+    for entry in rumah_terdampak_bencana:
+        label = f"{entry['bencana__jenis_bencana']} ({entry['bencana__tanggal_terjadi'].strftime('%Y-%m-%d')})"
+        index = kerusakan_rumah_labels.index(label)
+        if entry['tingkat_kerusakan'] == 'Rusak Ringan':
+            data_ringan[index] = entry['jumlah']
+        elif entry['tingkat_kerusakan'] == 'Rusak Sedang':
+            data_sedang[index] = entry['jumlah']
+        elif entry['tingkat_kerusakan'] == 'Rusak Berat':
+            data_berat[index] = entry['jumlah']
+
+    # Menyiapkan data untuk statistik kejadian bencana
+    tanggal_labels = [entry['tanggal_terjadi'].strftime('%Y-%m-%d') for entry in kejadian_bencana]
+    jenis_bencana_data = [entry['jumlah'] for entry in kejadian_bencana]
+
+    # Warna-warna unik untuk setiap jenis bencana
+    bencana_colors = {
+        'Gempa Bumi': 'rgba(54, 162, 235, 0.6)',
+        'Banjir': 'rgba(75, 192, 192, 0.6)',
+        'Topan': 'rgba(255, 159, 64, 0.6)',
+        'Kebakaran': 'rgba(255, 99, 132, 0.6)',
+        'Tanah Bergerak': 'rgba(153, 102, 255, 0.6)',
+        'Tanah Longsor': 'rgba(255, 206, 86, 0.6)',
+    }
+
+    # Menghitung data untuk setiap jenis bencana
+    datasets_bencana = []
+    for jenis_bencana, color in bencana_colors.items():
+        data_bencana = [entry['jumlah'] if entry['jenis_bencana'] == jenis_bencana else 0 for entry in kejadian_bencana]
+        datasets_bencana.append({
+            'label': jenis_bencana,
+            'data': data_bencana,
+            'backgroundColor': color,
+        })
+
+    # Siapkan data untuk Chart.js
+    chart_data_kerusakan_rumah = {
+        'labels': kerusakan_rumah_labels,
+        'datasets': [
+            {
+                'label': 'Ringan',
+                'data': data_ringan,
+                'backgroundColor': 'gray',
+            },
+            {
+                'label': 'Sedang',
+                'data': data_sedang,
+                'backgroundColor': 'yellow',
+            },
+            {
+                'label': 'Berat',
+                'data': data_berat,
+                'backgroundColor': 'red',
+            },
+        ]
+    }
+
+    chart_data_kejadian_bencana = {
+        'labels': tanggal_labels,
+        'datasets': datasets_bencana
+    }
+    
     context = {
-        'list_rumah': list_rumah
+        'list_rumah': list_rumah,
+        'chart_data_kerusakan_rumah': json.dumps(chart_data_kerusakan_rumah),
+        'chart_data_kejadian_bencana': json.dumps(chart_data_kejadian_bencana),
     }
     return render(request, 'statistik.html', context)
 
@@ -227,11 +314,11 @@ def tigaLantai(request):
         print(tk_bangunan)
         # kondisi untuk klasifikasi kerusakan berdasarkan total nilai kerusakan bangunan
         if tk_bangunan <= 0.3: #jika nilai tk_bangunan kurang dari atau sama dengan 30% = bangunan rusak ringan
-            tk_bangunan = 'rusak ringan'
+            tk_bangunan = 'Rusak Ringan'
         elif tk_bangunan > 0.3 and tk_bangunan <= 0.45: #jika nilai tk_bangunan lebih besar dari 30% dan kurang dari atau sama dengan 40% = bangunan rusak sedang
-            tk_bangunan = 'rusak sedang'
+            tk_bangunan = 'Rusak Dedang'
         else:
-            tk_bangunan = 'rusak berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
+            tk_bangunan = 'Rusak Berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
         
         # simpan data kedalam model rumah terdampak 
         RumahTerdampak.objects.create(pemilik_rumah=pemilik_rumah, tipe_bangunan=tipe_bangunan, provinsi=provinsi, kota=kota, kecamatan=kecamatan,
@@ -462,11 +549,11 @@ def duaLantai(request):
         print(tk_bangunan)
         # kondisi untuk klasifikasi kerusakan berdasarkan total nilai kerusakan bangunan
         if tk_bangunan <= 0.3: #jika nilai tk_bangunan kurang dari atau sama dengan 30% = bangunan rusak ringan
-            tk_bangunan = 'rusak ringan'
+            tk_bangunan = 'Rusak Ringan'
         elif tk_bangunan > 0.3 and tk_bangunan <= 0.45: #jika nilai tk_bangunan lebih besar dari 30% dan kurang dari atau sama dengan 40% = bangunan rusak sedang
-            tk_bangunan = 'rusak sedang'
+            tk_bangunan = 'Rusak Sedang'
         else:
-            tk_bangunan = 'rusak berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
+            tk_bangunan = 'Rusak Berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
         
         # simpan data kedalam model rumah terdampak 
         RumahTerdampak.objects.create(pemilik_rumah=pemilik_rumah, tipe_bangunan=tipe_bangunan, provinsi=provinsi, kota=kota, kecamatan=kecamatan,
@@ -674,11 +761,11 @@ def satuLantai(request):
         print(tk_bangunan)
         # kondisi untuk klasifikasi kerusakan berdasarkan total nilai kerusakan bangunan
         if tk_bangunan <= 0.3: #jika nilai tk_bangunan kurang dari atau sama dengan 30% = bangunan rusak ringan
-            tk_bangunan = 'rusak ringan'
+            tk_bangunan = 'Rusak Ringan'
         elif tk_bangunan > 0.3 and tk_bangunan <= 0.45: #jika nilai tk_bangunan lebih besar dari 30% dan kurang dari atau sama dengan 40% = bangunan rusak sedang
-            tk_bangunan = 'rusak sedang'
+            tk_bangunan = 'Rusak Sedang'
         else:
-            tk_bangunan = 'rusak berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
+            tk_bangunan = 'Rusak Berat' #jika nilai tk_bangunan diatas 40% = bangunan rusak berat
         
         # simpan data kedalam model rumah terdampak 
         RumahTerdampak.objects.create(pemilik_rumah=pemilik_rumah, tipe_bangunan=tipe_bangunan, provinsi=provinsi, kota=kota, kecamatan=kecamatan,

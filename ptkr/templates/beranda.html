@@ -53,4 +53,12 @@
 		position: 'bottomleft', // default topright    
 	}).addTo(map);
 </script>
+
+<script>
+	map.on('click', function(e){
+		console.log("Latitude: " + e.latlng.lat)
+		console.log("Longitude: " + e.latlng.lng)
+	})
+</script>
+
 {% endblock script %}

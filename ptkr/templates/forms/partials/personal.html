@@ -35,7 +35,7 @@
     <select name="bencana" id="bencana" class="form-control form-control-sm">
         <option value="">Pilih</option>
         {% for b in bencana %}
-            <option value="{{b.id}}">{{b.jenis_bencana}}</option>
+            <option value="{{b.id}}">{{b.jenis_bencana}} pada {{b.tanggal_terjadi|date:'d M Y'}}</option>
         {% endfor %}
     </select>
     <label class="fieldlabels" for="Foto">Foto: *</label> 

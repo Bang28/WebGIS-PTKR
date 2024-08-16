@@ -42,6 +42,8 @@ class RumahTerdampak(models.Model):
     foto = models.ImageField(_("Foto sample"), upload_to=file_upload, height_field=None, width_field=None, max_length=None)
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))
+    publish = models.DateField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
+    
 
     # fields info kerusakan komponen bangunan
     ket_pondasi = models.CharField(_("Indikasi kerusakan pondasi"), max_length=255)
