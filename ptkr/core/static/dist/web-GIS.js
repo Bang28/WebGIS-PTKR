@@ -5,7 +5,7 @@ L.Control.geocoder({
 
 // zoom to layer function
 $('.zoom-to-layer').click(function () {
-    map.setView([-7.050, 108.891], 10)
+    map.setView([-7.204620857883746, 109.0623553088576], 14)
 });
 
 // get locate

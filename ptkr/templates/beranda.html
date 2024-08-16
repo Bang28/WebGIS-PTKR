@@ -25,14 +25,58 @@
 
 
 <script>
-	var pointGroup = L.featureGroup()
+	// grouping point/marker
+	var pointGroup = L.markerClusterGroup()
+	pointGroup.addTo(map)
 	
 	// render point
 	{% for p in point %}
 		var lat = {{p.lat}}
         var lng = {{p.long}}
-        var point = L.marker([lat, lng]).bindPopup(`<h3>{{p.pemilik_rumah}}</h3><p>{{p.tingkat_kerusakan}}</p>`)
-		point.addTo(map)
+        var point = L.marker([lat, lng])
+			.bindPopup(`
+			<div class="card" style="width: 20rem">
+				<img src="{{p.foto.url}}" class="card-img-top" style="height:9rem" alt="p.tingkat_kerusakan">
+				<div class="card-body">
+					<h5 class="card-title font-weight-bold"><i class="fas fa-user"></i>&nbsp{{p.pemilik_rumah}}</h5>
+					{% comment %} <p class="card-text">Bencana: <br> {{p.bencana}} <br> Tingkat Kerusakan: <br> {{p.tingkat_kerusakan}} </p> {% endcomment %}
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+							<h6 class="description-header">Bencana</h6>
+							<span class="description-text">{{p.bencana}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+							<h6 class="description-header">Koordinat</h6>
+							<span class="description-text">{{p.lat}}</span>
+							<span class="description-text">{{p.long}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4">
+							<div class="description-block">
+							<h6 class="description-header">Kerusakan</h6>
+							<span class="description-text">{{p.tingkat_kerusakan}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<a href="{% url 'ptkr:detail' p.id %}" class="btn btn-sm btn-outline-info float-right">Detail</a>
+				</div>
+			</div>
+			`, {
+				maxWidth: 480
+			})
+		point.addTo(pointGroup)
 	{% endfor %}
 
 	// map layers
@@ -56,6 +100,7 @@
 
 <script>
 	map.on('click', function(e){
+		console.log(e)
 		console.log("Latitude: " + e.latlng.lat)
 		console.log("Longitude: " + e.latlng.lng)
 	})

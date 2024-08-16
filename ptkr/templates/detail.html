@@ -84,7 +84,7 @@
             </div>
             <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                 <h3 class="text-primary"><i class="fas fa-user"></i> {{detail.pemilik_rumah}}</h3>
-                <p class="text-muted">Alamat: Provinsi {{detail.provinsi}} Kota {{detail.kota}} Kecamatan {{detail.kecamatan}} Kelurahan {{detail.kelurahan}} </p>
+                <p class="text-muted"><i class="fas fa-map-pin"></i>&nbsp; Provinsi {{detail.provinsi|lower|capfirst }} Kota {{detail.kota|lower|capfirst }} Kecamatan {{detail.kecamatan|lower|capfirst }} Kelurahan {{detail.kelurahan|lower|capfirst }} </p>
                 <div>
                     <img class="img-fluid img-bordered-sm" src="{{detail.foto.url}}" alt="{{detail.pemilik_rumah}}">
                 </div>
@@ -111,7 +111,7 @@
     // render koordinat lokasi
     var lat = {{detail.lat}}
     var long = {{detail.long}}
-    var point = L.marker([lat, long]).bindPopup(`<h3>{{detail.pemilik_rumah}}</h3><p>{{detail.tingkat_kerusakan}}</p>`)
+    var point = L.marker([lat, long]).bindPopup(`<h3>{{detail.pemilik_rumah}}</h3>`)
 		point.addTo(map)
 
     // lapisan peta

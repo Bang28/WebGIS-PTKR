@@ -40,5 +40,5 @@ taji.addTo(marker);
 // leaflet layer control
 var baseMaps = {
     'OSM': osm,
-    'Esri World Imagery': ewi
+    'Esri World Imagery': ewi,
 }
