@@ -45,38 +45,81 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Rumah Terdampak Bencana</h3>
+                        <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-content-above-all-data-tab" data-toggle="pill" href="#custom-content-above-all-data" role="tab" aria-controls="custom-content-above-all-data" aria-selected="true">Tampilkan Semua Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-content-above-disaster-tab" data-toggle="pill" href="#custom-content-above-disaster" role="tab" aria-controls="custom-content-above-disaster" aria-selected="false">Tampilkan Data Berdasarkan Bencana</a>
+                        </li>
+                        </ul>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="mytable" class="table table-sm table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Pemilik Rumah</th>
-                                <th>Tipe Bangunan Rumah</th>
-                                <th>Alamat</th>
-                                <th>Bencana</th>
-                                <th>Tingkat Kerusakan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for lr in list_rumah %}
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>{{lr.pemilik_rumah}}</td>
-                                <td>{{lr.tipe_bangunan}}</td>
-                                <td>{{lr.kota}} Kecamatan {{lr.kecamatan}} kelurahan {{lr.kelurahan}}</td>
-                                <td>{{lr.bencana}}</td>
-                                <td>{{lr.tingkat_kerusakan}}</td>
-                                <td>
-                                    <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        </table>
+                        <div class="tab-content" id="custom-content-above-tabContent">
+                            <!--Semua data-->
+                            <div class="tab-pane fade show active" id="custom-content-above-all-data" role="tabpanel" aria-labelledby="custom-content-above-all-data-tab">
+                                <table id="mytable1" class="table table-sm table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Pemilik Rumah</th>
+                                            <th>Tipe Bangunan Rumah</th>
+                                            <th>Alamat</th>
+                                            <th>Bencana</th>
+                                            <th>Tingkat Kerusakan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for lr in list_rumah %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{lr.pemilik_rumah}}</td>
+                                            <td>{{lr.tipe_bangunan}}</td>
+                                            <td>Kelurahan {{lr.kelurahan|lower|capfirst}} Kecamatan {{lr.kecamatan|lower|capfirst}} {{lr.kota|lower|capfirst}}</td>
+                                            <td>{{lr.bencana}}</td>
+                                            <td>{{lr.tingkat_kerusakan}}</td>
+                                            <td>
+                                                <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Data Berdasarkan Bencana-->
+                            <div class="tab-pane fade" id="custom-content-above-disaster" role="tabpanel" aria-labelledby="custom-content-above-disaster-tab">
+                                <table id="mytable2" class="table table-sm table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Pemilik Rumah</th>
+                                            <th>Tipe Bangunan Rumah</th>
+                                            <th>Alamat</th>
+                                            <th>Bencana</th>
+                                            <th>Tingkat Kerusakan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for lr in list_rumah %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{lr.pemilik_rumah}}</td>
+                                            <td>{{lr.tipe_bangunan}}</td>
+                                            <td>Kelurahan {{lr.kelurahan|lower|capfirst}} Kecamatan {{lr.kecamatan|lower|capfirst}} {{lr.kota|lower|capfirst}}</td>
+                                            <td>{{lr.bencana}}</td>
+                                            <td>{{lr.tingkat_kerusakan}}</td>
+                                            <td>
+                                                <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -169,7 +212,7 @@
 
 <script>
     // datatables
-    $('#mytable').DataTable({
+    {% comment %} $('#mytable').DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": true,
@@ -177,6 +220,37 @@
         "info": true,
         "autoWidth": true,
         "responsive": true,
-    })
+    }) {% endcomment %}
+
+    // Inisialisasi DataTables untuk tabel pertama saat halaman dimuat
+    $(document).ready(function() {
+        $('#mytable1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true,
+        });
+
+        // Inisialisasi DataTables untuk tabel kedua hanya saat tab kedua diaktifkan
+        $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href"); // Mendapatkan ID dari tab yang aktif
+            if(target === '#custom-content-above-disaster') {
+                if (!$.fn.DataTable.isDataTable('#mytable2')) {
+                    $('#mytable2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": true,
+                        "responsive": true,
+                    });
+                }
+            }
+        });
+    });
 </script>
 {% endblock script %}

@@ -89,16 +89,12 @@
                 <p class="text-muted"><i class="fas fa-map-pin"></i>&nbsp; Provinsi {{detail.provinsi|lower|capfirst }} Kota {{detail.kota|lower|capfirst }} Kecamatan {{detail.kecamatan|lower|capfirst }} Kelurahan {{detail.kelurahan|lower|capfirst }} </p>
                 <div>
                     <img class="img-fluid img-bordered-sm" src="{{detail.foto.url}}" alt="{{detail.pemilik_rumah}}">
-                </div>
-                <div class="text-center mt-3 mb-3">
-                <a href="{% url 'ptkr:statistik' %}" class="btn btn-sm btn-outline-secondary">Kembali</a>
-                </div>
-                
+                </div>                
             </div>
             <div id="map" class="col-12 col-md-12 order-3" style="width: 100%; height: 400px;">
                 <!--Direction-->
                 <div id="direct" class="leaflet-control direction">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" title="Dapatkan rute" fill="currentColor" class="bi bi-arrow-up-right-circle-fill" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" data-toggle="tooltip" data-placement="right" title="Dapatkan rute" fill="currentColor" class="bi bi-arrow-up-right-circle-fill" viewBox="0 0 16 16">
                     <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"/>
                     </svg>
                 </div>
@@ -166,17 +162,6 @@
 
 <script>
     var directButton = document.getElementById('direct');
-
-    // Menambahkan event listener untuk mouseover
-    directButton.addEventListener('mouseover', function() {
-        // Menampilkan tooltip atau teks kustom
-        directButton.setAttribute('title', 'Dapatkan rute');
-    });
-
-    // Menghapus teks ketika mouse tidak lagi diarahkan ke tombol (opsional)
-    directButton.addEventListener('mouseout', function() {
-        directButton.removeAttribute('title');
-    });
 
     // Mendapatkan rute menggunakan leaflet routing machine (basic)
     {% comment %} var latTarget = {{detail.lat}}

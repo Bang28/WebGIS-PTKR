@@ -9,13 +9,13 @@
     <link rel="shortcut icon" href="{% static './dist/img/favicon.ico' %}" type="image/x-icon">
     {% include "./include/styles.html" %}
 </head>
-<body class="hold-transition layout-fixed layout-navbar-fixed layout-top-nav">
+<body class="layout-fixed sidebar-mini sidebar-collapse" style="height: auto;">
     <div class="wrapper">
         <!--navbar-->
         {% include "./include/navbar.html" %}
 
         <!--main sidebar-->
-        {% comment %} {% include "./include/sidebar.html" %} {% endcomment %}
+        {% include "./include/sidebar.html" %}
         
         <!--main content-->
         <div class="content-wrapper">
@@ -27,10 +27,6 @@
     </div>
     <!--file js-->
     {% include "./include/scripts.html" %}
-
-    <!--Modals & Alerts-->
-    {% include "modals&alerts/sign-in.html" %}
-    {% include "modals&alerts/alerts.html" %}
 
 </body>
 </html>

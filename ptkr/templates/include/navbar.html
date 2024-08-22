@@ -1,19 +1,78 @@
+{% load static %}
+
 <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a href="{% url 'ptkr:beranda' %}" class="nav-link" role="button">
+          <img src="{% static './dist/img/PTKRLogo-1.png' %}" alt="PTKR Logo" class="brand-image img-circle elevation-3">
+          <span class="brand-text font-weight-dark font-weight-bold">WEBGIS-PTKR</span>
+        </a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'ptkr:beranda' %}" class="nav-link 
+        {% if request.resolver_match.url_name == 'beranda' %}active{% endif %} ">Beranda</a>
       </li>
     </ul>
 
-    {% comment %} <!-- Right navbar links -->
+    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated %}
+      <!-- Form Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link 
+        {% if request.resolver_match.url_name == 'satu' %} active
+        {% elif request.resolver_match.url_name == 'dua' %} active
+        {% elif request.resolver_match.url_name == 'tiga' %} active
+        {% endif %} " data-toggle="dropdown" href="#" title="Formulir Input Data">
+          <i class="fab fa-wpforms" data-toggle="tooltip" data-placement="left" title="Formulir Input Data"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">Formulir Input Data</span>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'ptkr:satu' %}" class="dropdown-item">
+            <i class="fas fa-house-damage mr-2"></i> Satu Lantai
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'ptkr:dua' %}" class="dropdown-item">
+            <i class="fas fa-house-damage mr-2"></i> Dua Lantai
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'ptkr:tiga' %}" class="dropdown-item">
+            <i class="fas fa-house-damage mr-2"></i> Tiga Lantai
+          </a>
+        </div>
+      </li>
+      <!-- Statistik Menu -->
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+        <a class="nav-link 
+        {% if request.resolver_match.url_name == 'statistik' %}active{% endif %} " href="{% url "ptkr:statistik" %}">
+          <i class="far fa-chart-bar" data-toggle="tooltip" data-placement="left" title="Statistik Data"></i>
         </a>
       </li>
-    </ul> {% endcomment %}
+      <!--Sign Out Menu-->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ptkr:sign-out' %}">
+          <i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="left" title="Sign Out"></i>
+        </a>
+      </li>
+      {% else %}
+      <!-- Statistik Menu -->
+      <li class="nav-item">
+        <a class="nav-link 
+        {% if request.resolver_match.url_name == 'statistik' %}active{% endif %} " href="{% url "ptkr:statistik" %}">
+          <i class="far fa-chart-bar" data-toggle="tooltip" data-placement="left" title="Statistik Data"></i>
+        </a>
+      </li>
+      <!--Sign In Menu-->
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sm">
+          <i class="fas fa-sign-in-alt" data-toggle="tooltip" data-placement="left" title="Sign In"></i>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
   </nav>
-  <!-- /.navbar -->
+<!-- /.navbar -->

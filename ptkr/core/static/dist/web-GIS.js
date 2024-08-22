@@ -1,6 +1,8 @@
 // leaflet search 
 L.Control.geocoder({
-    position: 'topleft'
+    position: 'topleft',
+    collapsed: false,
+    placeholder: 'Cari Lokasi...',
 }).addTo(map);
 
 // zoom to layer function
