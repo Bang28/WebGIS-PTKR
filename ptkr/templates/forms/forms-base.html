@@ -200,8 +200,8 @@
                 if (addmarkDiv.classList.contains('active')) {
                     removeMarker(); // Hapus marker yang ada (jika ada)
                     marker = L.marker(e.latlng).addTo(map);
-                    document.querySelector('.lat').value = e.latlng.lat;
-                    document.querySelector('.long').value = e.latlng.lng;
+                    document.querySelector('.lat').value = e.latlng.lat.toFixed(7);
+                    document.querySelector('.long').value = e.latlng.lng.toFixed(7);
                 }
             });
 

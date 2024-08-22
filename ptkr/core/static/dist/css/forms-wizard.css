@@ -204,16 +204,6 @@
     border-radius: 3px;
 }
 
-.removemark {
-    padding: 5px;
-    background-color: #fff;
-    position: absolute;
-    right: 11px;
-    top: 110px;
-    border: 1px solid gray;
-    border-radius: 3px;
-}
-
 .leaflet-control.addmark {
     cursor: pointer;
 }

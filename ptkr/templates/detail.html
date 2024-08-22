@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}PTKR | Detail Rumah Terdampak{% endblock title %}
 
 {% block content %}
@@ -93,7 +95,14 @@
                 </div>
                 
             </div>
-            <div id="map" class="col-12 col-md-12 order-3" style="width: 100%; height: 400px;"></div>
+            <div id="map" class="col-12 col-md-12 order-3" style="width: 100%; height: 400px;">
+                <!--Direction-->
+                <div id="direct" class="leaflet-control direction">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" title="Dapatkan rute" fill="currentColor" class="bi bi-arrow-up-right-circle-fill" viewBox="0 0 16 16">
+                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"/>
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.card-body -->
@@ -108,16 +117,170 @@
 <script>
     var map = L.map('map', {zoomControl: false}).setView([{{detail.lat}}, {{detail.long}}], 14);
 
+    // custom gaya marker
+	var iconRingan = L.icon({
+		iconUrl: '{% static './dist/img/ringan.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+	var iconSedang = L.icon({
+		iconUrl: '{% static './dist/img/sedang.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+	var iconBerat = L.icon({
+		iconUrl: '{% static './dist/img/berat.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+
+    // Pilih gaya marker berdasarkan tingkat kerusakan
+    var markerStyle;
+		if ("{{ detail.tingkat_kerusakan }}" === "Rusak Ringan") {
+			markerStyle = iconRingan;
+		} else if ("{{ detail.tingkat_kerusakan }}" === "Rusak Sedang") {
+			markerStyle = iconSedang;
+		} else {
+			markerStyle = iconBerat;
+		}
+    
     // render koordinat lokasi
     var lat = {{detail.lat}}
     var long = {{detail.long}}
-    var point = L.marker([lat, long]).bindPopup(`<h3>{{detail.pemilik_rumah}}</h3>`)
+    var point = L.marker([lat, long], {icon: markerStyle})
+        .bindPopup(`<h3>{{detail.pemilik_rumah}}</h3>`)
+        .bindTooltip('{{detail.tingkat_kerusakan}}')
 		point.addTo(map)
 
     // lapisan peta
     var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+</script>
 
+<script>
+    var directButton = document.getElementById('direct');
+
+    // Menambahkan event listener untuk mouseover
+    directButton.addEventListener('mouseover', function() {
+        // Menampilkan tooltip atau teks kustom
+        directButton.setAttribute('title', 'Dapatkan rute');
+    });
+
+    // Menghapus teks ketika mouse tidak lagi diarahkan ke tombol (opsional)
+    directButton.addEventListener('mouseout', function() {
+        directButton.removeAttribute('title');
+    });
+
+    // Mendapatkan rute menggunakan leaflet routing machine (basic)
+    {% comment %} var latTarget = {{detail.lat}}
+    var longTarget = {{detail.long}}
+    // Mendapatkan rute ke koordinat lokasi
+    document.getElementById('direct').addEventListener('click', function() {
+        // Menentukan koordinat awal (misalnya posisi pengguna saat ini)
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latLngStart = L.latLng(position.coords.latitude, position.coords.longitude);
+
+            // Menentukan koordinat tujuan
+            var latLngEnd = L.latLng(latTarget, longTarget);
+
+            // Menambahkan routing
+            L.Routing.control({
+                waypoints: [
+                    latLngStart,  // Koordinat awal
+                    latLngEnd     // Koordinat tujuan
+                ],
+                routeWhileDragging: true
+            }).addTo(map);
+        });
+    }) {% endcomment %}
+
+    // Mendapatkan rute menggunakan leaflet routing machine
+    var latTarget = {{detail.lat}};
+    var longTarget = {{detail.long}};
+    var routingControl = null;  // Variabel untuk menyimpan rute
+    var isRoutingActive = false;  // Menyimpan status rute aktif atau tidak
+    var watchID = null;  // ID untuk melacak posisi secara real-time
+
+    document.getElementById('direct').addEventListener('click', function() {
+        // Jika rute sedang aktif, hapus rute dan hentikan pelacakan posisi
+        if (isRoutingActive) {
+            if (routingControl) {
+                map.removeControl(routingControl);  // Menghapus rute dari peta
+                routingControl = null;
+            }
+            if (watchID) {
+                navigator.geolocation.clearWatch(watchID);  // Menghentikan pelacakan posisi
+                watchID = null;
+            }
+            isRoutingActive = false;
+            return;
+        }
+
+        // Menentukan koordinat awal (misalnya posisi pengguna saat ini)
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latLngStart = L.latLng(position.coords.latitude, position.coords.longitude);
+            var latLngEnd = L.latLng(latTarget, longTarget);
+
+            // Menggunakan reverse geocoding untuk mendapatkan alamat awal dan tujuan
+            var geocoder = L.Control.Geocoder.nominatim();  // Menggunakan Nominatim sebagai geocoder
+
+            geocoder.reverse(latLngStart, map.options.crs.scale(map.getZoom()), function(results) {
+                var startAddress = results[0].name;  // Alamat awal
+                geocoder.reverse(latLngEnd, map.options.crs.scale(map.getZoom()), function(results) {
+                    var endAddress = results[0].name;  // Alamat tujuan
+
+                    // Menampilkan alamat awal dan tujuan
+                    // alert("Start: " + startAddress + "\nEnd: " + endAddress);
+                    Swal.fire({
+                        title: 'Rute Didapatkan!',
+                        html: '<b>Start:</b> ' + startAddress + '<br><b>End:</b> ' + endAddress,
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Menambahkan routing ke peta
+                    routingControl = L.Routing.control({
+                        waypoints: [
+                            latLngStart,  // Koordinat awal
+                            latLngEnd     // Koordinat tujuan
+                        ],
+                        routeWhileDragging: true
+                    }).addTo(map);
+
+                    // Menyimpan status rute sebagai aktif
+                    isRoutingActive = true;
+
+                    // Melacak posisi pengguna secara real-time
+                    watchID = navigator.geolocation.watchPosition(function(position) {
+                        var newLatLngStart = L.latLng(position.coords.latitude, position.coords.longitude);
+                        routingControl.setWaypoints([newLatLngStart, latLngEnd]);
+                    }, function(error) {
+                        console.error('Error getting location: ', error);
+                    }, {
+                        enableHighAccuracy: true,
+                        maximumAge: 10000,
+                        timeout: 10000
+                    });
+                });
+            });
+        });
+    });
+
+</script>
+
+<script>
+    // leaflet locate control
+    var lc = L.control.locate({
+        locateOptions: {
+            enableHighAccuracy: true
+        }
+    }).addTo(map);
 </script>
 {% endblock script %}

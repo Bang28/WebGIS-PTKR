@@ -50,7 +50,7 @@ def statistik(request):
 
     # Menyiapkan data untuk statistik kejadian bencana
     tanggal_labels = [entry['tanggal_terjadi'].strftime('%Y-%m-%d') for entry in kejadian_bencana]
-    jenis_bencana_data = [entry['jumlah'] for entry in kejadian_bencana]
+    # jenis_bencana_data = [entry['jumlah'] for entry in kejadian_bencana]
 
     # Warna-warna unik untuk setiap jenis bencana
     bencana_colors = {
@@ -98,6 +98,17 @@ def statistik(request):
         'labels': tanggal_labels,
         'datasets': datasets_bencana
     }
+
+    # chart_data_kejadian_bencana = {
+    #     'labels': tanggal_labels,
+    #     'datasets': [
+    #         {
+    #             'label': 'Jumlah Kejadian',
+    #             'data': jenis_bencana_data,
+    #             'backgroundColor': 'green',
+    #         }
+    #     ]
+    # }
     
     context = {
         'list_rumah': list_rumah,
