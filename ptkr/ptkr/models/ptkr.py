@@ -38,7 +38,7 @@ class RumahTerdampak(models.Model):
     dusun = models.CharField(_("Dusun"), max_length=150)
     rw = models.CharField(_("RW"), max_length=3)
     rt = models.CharField(_("RT"), max_length=3)
-    bencana = models.ForeignKey(Bencana, verbose_name=_("Bencana"), on_delete=models.CASCADE, related_name='bencana')
+    bencana = models.ForeignKey(Bencana, verbose_name=_("Bencana"), on_delete=models.CASCADE, related_name='rumah_terdampak')
     foto = models.ImageField(_("Foto sample"), upload_to=file_upload, height_field=None, width_field=None, max_length=None)
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))

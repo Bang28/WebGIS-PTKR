@@ -21,7 +21,7 @@
                     <div class="card-header border-0">
                         <h3 class="card-title">Statistik Kerusakan Rumah</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="position: relative; height: 50vh;">
                         <canvas id="rumahTerdampakChart"></canvas>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="card-header border-0">
                         <h3 class="card-title">Statistik Kejadian Bencana</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="position: relative; height: 50vh;">
                         <canvas id="bencanaChart"></canvas>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for lr in list_rumah %}
+                                        {% for lr in list_semua_data %}
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td>{{lr.pemilik_rumah}}</td>
@@ -81,7 +81,7 @@
                                             <td>{{lr.bencana}}</td>
                                             <td>{{lr.tingkat_kerusakan}}</td>
                                             <td>
-                                                <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                                <a href="{% url 'ptkr:detail-rumah' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -94,25 +94,21 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Pemilik Rumah</th>
-                                            <th>Tipe Bangunan Rumah</th>
-                                            <th>Alamat</th>
-                                            <th>Bencana</th>
-                                            <th>Tingkat Kerusakan</th>
+                                            <th>Bencana & Tanggal Kejadian</th>
+                                            <th>Daerah Terdampak</th>
+                                            <th>Jumlah Rumah Terdampak</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for lr in list_rumah %}
+                                        {% for lpb in list_per_bencana %}
                                         <tr>
                                             <td>{{forloop.counter}}</td>
-                                            <td>{{lr.pemilik_rumah}}</td>
-                                            <td>{{lr.tipe_bangunan}}</td>
-                                            <td>Kelurahan {{lr.kelurahan|lower|capfirst}} Kecamatan {{lr.kecamatan|lower|capfirst}} {{lr.kota|lower|capfirst}}</td>
-                                            <td>{{lr.bencana}}</td>
-                                            <td>{{lr.tingkat_kerusakan}}</td>
+                                            <td>{{lpb.bencana.jenis_bencana}} pada {{lpb.tanggal_terjadi|date:'d F Y'}} </td>
+                                            <td>{{lpb.daerah|title}}</td>
+                                            <td>Ringan: {{lpb.ringan}}, Sedang: {{lpb.sedang}}, Berat: {{lpb.berat}}</td>
                                             <td>
-                                                <a href="{% url 'ptkr:detail' lr.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                                <a href="{% url 'ptkr:detail-bencana' lpb.id %}" class="btn btn-sm btn-outline-primary btn-sm">Detail</a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -145,6 +141,7 @@
         data: chartData,
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     beginAtZero: true,
@@ -181,6 +178,7 @@
         data: chartDataKejadianBencana,
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     beginAtZero: true,

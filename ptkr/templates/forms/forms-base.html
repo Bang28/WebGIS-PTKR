@@ -220,8 +220,8 @@
     // Event listener untuk memasukan nilai ketika locate control diaktifkan
     map.on('locationfound', function(e) {
         var latlng = e.latlng;
-        document.querySelector('.lat').value = latlng.lat;
-        document.querySelector('.long').value = latlng.lng;
+        document.querySelector('.lat').value = latlng.lat.toFixed(7);
+        document.querySelector('.long').value = latlng.lng.toFixed(7);
     });
 
     // kosongkan input ketika locate control deactivated

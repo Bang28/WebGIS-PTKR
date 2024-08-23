@@ -26,7 +26,9 @@
 
 <script>
 	// grouping point/marker
-	var pointGroup = L.markerClusterGroup()
+	var pointGroup = L.markerClusterGroup({
+		zoomToBoundsOnClick: false,
+	})
 	pointGroup.addTo(map)
 
 	// custom gaya marker
@@ -55,7 +57,7 @@
 	// render point
 	{% for p in point %}
 		var lat = {{p.lat}}
-        var lng = {{p.long}}
+		var lng = {{p.long}}
 
 		// Pilih gaya marker berdasarkan tingkat kerusakan
 		var markerStyle;
@@ -104,7 +106,7 @@
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
-					<a href="{% url 'ptkr:detail' p.id %}" class="btn btn-sm btn-outline-info float-right">Detail</a>
+					<a href="{% url 'ptkr:detail-rumah' p.id %}" class="btn btn-sm btn-outline-info float-right">Detail</a>
 				</div>
 			</div>
 			`, {
@@ -114,6 +116,19 @@
 		point.addTo(pointGroup)
 	{% endfor %}
 
+	// Tambahkan event listener untuk clusterclick
+	pointGroup.on('clusterclick', function (a) {
+		// Zoom ke batas cluster
+		a.layer.zoomToBounds();
+
+		// Jika Anda ingin zoom lebih dekat ke titik tertentu dalam cluster, gunakan berikut ini:
+		var markers = a.layer.getAllChildMarkers();
+		if (markers.length > 0) {
+			// Zoom ke marker pertama dalam cluster
+			map.setView(markers[0].getLatLng(), map.getZoom() + 2);  // Anda bisa mengubah zoom level sesuai kebutuhan
+		}
+	});
+	
 	// map layers
 	var overLayMaps = {};
 	// render shp files

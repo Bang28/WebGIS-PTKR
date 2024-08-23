@@ -38,3 +38,11 @@ class AdminRumah(ImportExportModelAdmin):
         'tipe_bangunan',
         'tingkat_kerusakan'
     ]
+
+    search_fields = [
+        'pemilik_rumah',
+        'lat',
+        'long',
+    ]
+
+    list_per_page = 10
