@@ -11,11 +11,6 @@ var ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Worl
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
-// adding marker in the center of map
-var singleMarker = L.marker([38.8610, 71.2761])
-    .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-    .openPopup();
-
 // add scale
 L.control.scale({
     position: 'bottomright' //set position scale to bottom right "by default bottom left"
@@ -25,17 +20,6 @@ L.control.scale({
 map.on('mousemove', function (e) {
     $('.coordinate').html('Lat: ' + e.latlng.lat + ' Long: ' + e.latlng.lng)
 });
-
-// geoJson load
-// L.geoJSON(data).addTo(map);
-var marker = L.markerClusterGroup();
-var taji = L.geoJSON(data, {
-    onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.name)
-    }
-});
-taji.addTo(marker);
-// marker.addTo(map); // default 
 
 // leaflet layer control
 var baseMaps = {

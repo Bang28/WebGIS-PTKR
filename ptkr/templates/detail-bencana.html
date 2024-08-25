@@ -24,32 +24,30 @@
             <div class="col-md-12">
                 <div class="card card-outline card-info">
                     <div class="card-body">
-                        <div class="mb-3">
-                            <table id="tbBencana" class="table table-responsive table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pemilik</th>
-                                        <th>Alamat</th>
-                                        <th>Tingkat Kerusakan</th>
-                                        <th>Foto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for r in rumah_terdampak %}
-                                    <tr>
-                                        <td>{{forloop.counter}}</td>
-                                        <td>{{r.pemilik_rumah}}</td>
-                                        <td>Kel. {{r.kelurahan|title}}, Dk. {{r.dusun}}, RW {{r.rw}} RT {{r.rt}} </td>
-                                        <td>{{r.tingkat_kerusakan}}</td>
-                                        <td>
-                                            <img class="img-fluid" style="width: 50px;" src="{{r.foto.url}}" alt="{{r.pemilik_rumah}}">
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        <table id="tbBencana" class="table table-striped mb-3">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Pemilik</th>
+                                    <th>Alamat</th>
+                                    <th>Tingkat Kerusakan</th>
+                                    <th>Foto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in rumah_terdampak %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{r.pemilik_rumah}}</td>
+                                    <td>Kel. {{r.kelurahan|title}}, Dk. {{r.dusun}}, RW {{r.rw}} RT {{r.rt}} </td>
+                                    <td>{{r.tingkat_kerusakan}}</td>
+                                    <td>
+                                        <img class="img-fluid" style="width: 50px;" src="{{r.foto.url}}" alt="{{r.pemilik_rumah}}">
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         <div id="map" style="width: 100%; height: 400px;">
 
                         </div>
@@ -116,6 +114,14 @@
 </script>
 
 <script>
-    $('#tbBencana').DataTable()
+    $('#tbBencana').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+    });
 </script>
 {% endblock script %}
