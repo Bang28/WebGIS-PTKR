@@ -121,17 +121,6 @@ def statistik(request):
                 'berat': berat,
                 'id': bencana.id
             })
-        else:
-            per_bencana.append({
-                'bencana': bencana,
-                'tanggal_terjadi': bencana.tanggal_terjadi,
-                'daerah': 'N/A',
-                'ringan': 0,
-                'sedang': 0,
-                'berat': 0,
-                'id': bencana.id
-            })
-
     
     context = {
         'list_semua_data': all_data,

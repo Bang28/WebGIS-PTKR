@@ -1,0 +1,48 @@
+{% load static %}
+
+<!-- Canvas yang akan muncul dari bawah -->
+<div class="offcanvas" id="offCanvas">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Artikel Berita</h5>
+        <a href="#" class="close" id="closeCanvas" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body">
+        <!-- Konten dari off-canvas -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                {% for a in artikel %}
+                <div class="col-lg-3">
+                    <div class="card collapsed-card">
+                        <div class="card-header p-1">
+                            <h6 class="text-center font-weight-bold">{{ a.bencana.jenis_bencana }}</h6>
+                            <div class="text-center">
+                            <img class="img-fluid" src="{% static './dist/img/disaster.png' %}" alt="Photo" style="height: 150px;">
+                            </div>
+                            <div class="card-tools pr-2">
+                            <button type="button" class="btn btn-tool toggle-card" data-card-widget="collapse" title="Collapse">
+                                <i class="right fas fa-angle-left"></i>
+                            </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-1">
+                            <i class="fas fa-map-marker-alt mr-1"></i>&nbsp;{{ a.daerah|title }} <br>
+                            <i class="fas fa-calendar-alt"></i>&nbsp;{{ a.tanggal_terjadi|date:'d F Y' }} <br>
+                            <span class="badge badge-pill badge-secondary">Ringan: {{ a.ringan }}</span>
+                            <span class="badge badge-pill badge-warning">Sedang: {{ a.sedang }}</span>
+                            <span class="badge badge-pill badge-danger">Berat: {{ a.berat }}</span> <br>
+                            <a href="{% url "ptkr:detail-bencana" a.id %}" class="btn btn-sm btn-outline-info btn-block">Detail</a>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

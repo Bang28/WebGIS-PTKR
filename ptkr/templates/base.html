@@ -32,6 +32,46 @@
     {% include "modals&alerts/sign-in.html" %}
     {% include "modals&alerts/alerts.html" %}
 
+    <!--canvas-->
+    {% include "canvas/canvas.html" %}
+
 </body>
 </html>
+
+<!--OffCanvas Event-->
+<script>
+    $(document).ready(function () {
+        $('#toggleCanvas').on('click', function () {
+        $('#offCanvas').toggleClass('show');
+        });
+
+        $('#closeCanvas').on('click', function () {
+        $('#offCanvas').removeClass('show');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Handle collapse/expand card functionality
+        $('.toggle-card').on('click', function () {
+        var $this = $(this);
+        var $card = $this.closest('.card');
+        var $icon = $this.find('i');
+
+        // Toggle card-body visibility and change icon
+        $card.find('.card-body').slideToggle(200, function () {
+            // After slide toggle is complete, toggle class
+            if ($card.hasClass('collapsed-card')) {
+            $card.removeClass('collapsed-card');
+            $icon.removeClass('fa-angle-left').addClass('fa-angle-down');
+            } else {
+            $card.addClass('collapsed-card');
+            $icon.removeClass('fa-angle-down').addClass('fa-angle-left');
+            }
+        });
+        });
+    });
+</script>
+
 {% block script %}{% endblock script %}
