@@ -153,7 +153,7 @@ def satuLantai(request):
             print('Total TK Drainase: ', ttl_tk_drainase)
 
             # hitung tingkat kerusakan bangunan
-            ttl_tk = ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih
+            ttl_tk = tk_pondasi + ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih
             print('Total TK: ', ttl_tk)
 
             # klasifikasi tingkat kerusakan
