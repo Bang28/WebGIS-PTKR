@@ -1,0 +1,177 @@
+{% load static %}
+
+<div class="modal fade" id="modal-helper">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header p-2">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12">
+                        <form id="searchForm" action="">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Cari disini....">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-sm btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Pondasi</h5>
+                        <p class="text-justify searchable">Pondasi yang dimaksud adalah kesatuan komponen struktur pondasi (batukali menerus/tapak) dan balok sloof. Berikut ilustrasi komponen pondasi dan contoh visual kondisi pondasi:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/ilustrasi komponen pondasi.png' %}" alt="ilustrasi komponen pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-1.png' %}" alt="visual kondisi pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-2.png' %}" alt="visual kondisi pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-3.png' %}" alt="visual kondisi pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-4.png' %}" alt="visual kondisi pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-5.png' %}" alt="visual kondisi pondasi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pondasi/visual-6.png' %}" alt="visual kondisi pondasi">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Kolom</h5>
+                        <p class="text-justify searchable">Kolom yang dimaksud adalah kolom struktural yang jika mengalami kegagalan dapat menyebabkan komponen bangunan lain yang terhubung runtuh. Berikut contoh visual kondisi kolom:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-1.png' %}" alt="visual kondisi kolom">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-2.png' %}" alt="visual kondisi kolom">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-3.png' %}" alt="visual kondisi kolom">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-4.png' %}" alt="visual kondisi kolom">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-5.png' %}" alt="visual kondisi kolom">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kolom/visual-6.png' %}" alt="visual kondisi kolom">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Balok</h5>
+                        <p class="text-justify searchable">Balok merupakan elemen yang dibentuk secara horizontal. balok disebut juga elemen lentur yang menahan gaya transversal dan menyalurkannya ke kolom. Balok menahan beban dari rangka plafon, atap dan plat lantai (jika bangunan 2 lantai). Berikut contoh visual kondisi balok:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/balok/visual-1.png' %}" alt="visual kondisi balok">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/balok/visual-2.png' %}" alt="visual kondisi balok">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/balok/visual-3.png' %}" alt="visual kondisi balok">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/balok/visual-4.png' %}" alt="visual kondisi balok">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/balok/visual-5.png' %}" alt="visual kondisi balok">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Plat Lantai dan Tangga</h5>
+                        <p class="text-justify searchable">Pelat dan Tangga yang dimaksud merupakan pelat yang menahan beban struktural. Pelat dapat berupa lantai dasar pada bangunan panggung atau plat lantai 2. Berikut contoh visual kondisi plat lantai:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plantai&tangga/visual-1.png' %}" alt="visual kondisi plantai&tangga">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plantai&tangga/visual-2.png' %}" alt="visual kondisi plantai&tangga">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plantai&tangga/visual-3.png' %}" alt="visual kondisi plantai&tangga">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plantai&tangga/visual-4.png' %}" alt="visual kondisi plantai&tangga">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Atap</h5>
+                        <p class="text-justify searchable">Kerusakan atap merupakan penjumlahan kerusakan penutup atap dan struktur rangka atap termasuk gording. Berikut contoh visual kondisi atap:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-1.png' %}" alt="visual kondisi atap">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-2.png' %}" alt="visual kondisi atap">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-3.png' %}" alt="visual kondisi atap">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-4.png' %}" alt="visual kondisi atap">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-5.png' %}" alt="visual kondisi atap">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/atap/visual-6.png' %}" alt="visual kondisi atap">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Dinding / Partisi</h5>
+                        <p class="text-justify searchable">Prosentase kerusakan dinding adalah penjumlahan (resultante) prosentase luas dinding yang mengalami kerusakan dibandingkan keseluruhan luas dinding pada bangunan tersebut. Berikut contoh visual kondisi dinding/partisi:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-1.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-2.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-3.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-4.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-5.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-6.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-7.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-8.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-9.png' %}" alt="visual kondisi dinding&partisi">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/dinding&partisi/visual-10.png' %}" alt="visual kondisi dinding&partisi">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Plafon</h5>
+                        <p class="text-justify searchable">Kerusakan plafon merupakan penjumlahan kerusakan rangka plafon dan penutup plafon. Berikut contoh visual kondisi plafon:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-1.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-2.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-3.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-4.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-5.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-6.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-7.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-8.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-9.png' %}" alt="visual kondisi plafon">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/plafon/visual-10.png' %}" alt="visual kondisi plafon">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Lantai (Penutup Lantai)</h5>
+                        <p class="text-justify searchable">Penilaian kerusakan pada lantai tersebut dihitung berdasarkan jenis kerusakan lantai dan luasan, dimana yang dihitung hanya elemen penutup lantainya saja, tidak termasuk struktur plat lantai (karena plat struktur lantai tersebut dihitung pada komponen struktur). Lantai yang bukan struktur, merupakan lantai yang langsung menempel dengan tanah maupun beton, dapat berupa finishing beton, keramik, tegel dan penutup lantai lainnya sifat kerusakannya tidak mempengaruhi kekuatan elemen struktur. Berikut contoh visual kondisi penutup lantai:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/lantai/visual-1.png' %}" alt="visual kondisi lantai">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/lantai/visual-2.png' %}" alt="visual kondisi lantai">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/lantai/visual-3.png' %}" alt="visual kondisi lantai">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/lantai/visual-4.png' %}" alt="visual kondisi lantai">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Kusen</h5>
+                        <p class="text-justify searchable">Kusen yang maksud adalah komponen bangunan yang berfungsi pengikat/penyambung elemen dinding terhadap daun pintu maupun daun jendela. Presentase kerusakan kusen adalah penjumlahan (resultante) jumlah kusen yang mengalami kerusakan dibandingkan jumlah total kusen pada bangunan tersebut. Berikut contoh visual kondisi kusen:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kusen/visual-1.png' %}" alt="visual kondisi kusen">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kusen/visual-2.png' %}" alt="visual kondisi kusen">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kusen/visual-3.png' %}" alt="visual kondisi kusen">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kusen/visual-4.png' %}" alt="visual kondisi kusen">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/kusen/visual-5.png' %}" alt="visual kondisi kusen">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Pintu</h5>
+                        <p class="text-justify searchable">Presentase kerusakan pintu adalah penjumlahan (resultante) jumlah pintu yang mengalami kerusakan dibandingkan jumlah total pintu pada bangunan tersebut. Berikut contoh visual kondisi kusen:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pintu/visual-1.png' %}" alt="visual kondisi pintu">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pintu/visual-2.png' %}" alt="visual kondisi pintu">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pintu/visual-3.png' %}" alt="visual kondisi pintu">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pintu/visual-4.png' %}" alt="visual kondisi pintu">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/pintu/visual-5.png' %}" alt="visual kondisi pintu">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Jendela</h5>
+                        <p class="text-justify searchable">Presentase kerusakan jendela adalah penjumlahan (resultante) jumlah jendela yang mengalami kerusakan dibandingkan jumlah total jendela pada bangunan tersebut. Berikut contoh visual kondisi jendela:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-1.png' %}" alt="visual kondisi jendela">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-2.png' %}" alt="visual kondisi jendela">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-3.png' %}" alt="visual kondisi jendela">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-4.png' %}" alt="visual kondisi jendela">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-5.png' %}" alt="visual kondisi jendela">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/jendela/visual-6.png' %}" alt="visual kondisi jendela">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Finishing</h5>
+                        <p class="text-justify searchable">Pada finishing ini yang harus diperhatikan adalah perihal cat ataupun lapisan lainnya yang menempel pada suatu material, yang meliputi:</p>
+                        <ol type="1" class="searchable">
+                            <li>finishing plafon. cat pada lapisan langit-langit;</li>
+                            <li>finishing dinding. cat pada lapisan dinding; dan</li>
+                            <li>finishing kusen/pintu. cat pada lapisan kusen / pintu.</li>
+                        </ol>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-1.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-2.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-3.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-4.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-5.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-6.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-7.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-8.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-9.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-10.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-11.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-12.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-13.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-14.png' %}" alt="visual kondisi finishing">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/finishing/visual-15.png' %}" alt="visual kondisi finishing">
+                    </div>
+                    <div class="col-md-12 border-bottom pb-2 mb-2 searchable">
+                        <h5 class="searchable">Drainase Limbah</h5>
+                        <p class="text-justify searchable">Contoh gambar kerusakan drainase limbah dapat dilihat pada gambar berikut:</p>
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/drainase limbah/visual-1.png' %}" alt="visual kondisi drainase limbah">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/drainase limbah/visual-2.png' %}" alt="visual kondisi drainase limbah">
+                        <img class="img-lg img-bordered-sm mr-2 preview-image pe-auto searchable" src="{% static './dist/bantuan/drainase limbah/visual-3.png' %}" alt="visual kondisi drainase limbah">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

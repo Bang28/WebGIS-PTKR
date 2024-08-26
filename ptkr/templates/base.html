@@ -26,6 +26,8 @@
     <!--Modals & Alerts-->
     {% include "modals&alerts/sign-in.html" %}
     {% include "modals&alerts/alerts.html" %}
+    {% include "modals&alerts/bantuan.html" %}
+    {% include "modals&alerts/preview-image.html" %}
 
     <!--offcanvas-->
     {% include "offcanvas/offcanvas.html" %}
@@ -46,6 +48,7 @@
     });
 </script>
 
+<!--collapsed-card-->
 <script>
     $(document).ready(function () {
         // Handle collapse/expand card functionality
@@ -67,5 +70,62 @@
         });
         });
     });
+</script>
+
+<!--Get prewview image-->
+<script>
+    $(document).ready(function() {
+        // Menambahkan event listener untuk setiap gambar dengan kelas 'preview-image'
+        $('.preview-image').on('click', function() {
+            // Dapatkan sumber gambar yang diklik
+            var imgSrc = $(this).attr('src');
+            
+            // Dapatkan nama file gambar dari src (mengambil teks setelah '/' terakhir)
+            var imgName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+            // Atau, Anda bisa menggunakan atribut alt sebagai caption
+            var imgCaption = $(this).attr('alt');
+
+            // Setel sumber gambar ke modal preview
+            $('#imagePreview').attr('src', imgSrc);
+            
+            // Setel teks caption di modal preview
+            $('#imageCaption').text(imgCaption);
+
+            // Buka modal preview
+            $('#imagePreviewModal').modal('show');
+        });
+    });
+</script>
+
+<!--Live Search pada modals-->
+<script>
+    $(document).ready(function() {
+        // Event listener untuk input pencarian
+        $('#searchInput').on('keyup', function() {
+            // Ambil nilai input dan konversi ke huruf kecil
+            var value = $(this).val().toLowerCase();
+            
+            // Filter elemen yang memiliki kelas 'searchable'
+            $('.searchable').filter(function() {
+                // Periksa teks dari elemen atau atribut 'alt' jika itu adalah gambar
+                if ($(this).is('img')) {
+                    $(this).toggle($(this).attr('alt').toLowerCase().indexOf(value) > -1);
+                } else {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                }
+            });
+        });
+
+        // Mencegah form submit default
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault();
+        });
+    });
+</script>
+
+<!--Live Search pada select-->
+<script>
+
 </script>
 {% block script %}{% endblock script %}

@@ -83,3 +83,7 @@
     flex-grow: 1;
     /* Allows body to grow to fill space */
 }
+
+.pe-auto {
+    cursor: pointer;
+}
