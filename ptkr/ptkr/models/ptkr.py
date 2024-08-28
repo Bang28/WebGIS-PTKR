@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import mark_safe
 import os
 
 class Bencana(models.Model):
@@ -54,6 +55,10 @@ class RumahTerdampak(models.Model):
     ket_atap = models.CharField(_("Indikasi kerusakan atap"), max_length=255)
     ket_dinding = models.CharField(_("Indikasi kerusakan dinding"), max_length=255)
     tingkat_kerusakan = models.CharField(_("Tingkat kerusakan"), max_length=20)
+
+
+    def preview_img(self):
+        return mark_safe(f"<img src='{self.foto.url}' width='275' />")
 
 
     class Meta:

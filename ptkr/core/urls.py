@@ -11,3 +11,9 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# CUSTOM DJANGO ADMIN
+admin.site.site_header = "Dashboard Admin"
+admin.site.site_title = "WEBGIS PTKR"
+admin.site.index_title = "Dashboard Admin"
