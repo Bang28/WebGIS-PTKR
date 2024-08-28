@@ -5,7 +5,7 @@ from ptkr.models.ptkr import RumahTerdampak, Bencana
 def beranda(request):
     shp = Shp.objects.all()
     point = RumahTerdampak.objects.all()
-    list_bencana = Bencana.objects.all().order_by('tanggal_terjadi')
+    list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
 
     # mengambil data rumah terdampak berdasarkan bencana
     per_bencana = []
