@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header border-0">
-                        <h3 class="card-title">Statistik Kerusakan Rumah</h3>
+                        <h3 class="card-title">Statistik Kerusakan Rumah Berdasarkan Kejadian Bencana</h3>
                     </div>
                     <div class="card-body" style="position: relative; height: 50vh;">
                         <canvas id="rumahTerdampakChart"></canvas>
@@ -32,10 +32,23 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header border-0">
-                        <h3 class="card-title">Statistik Kejadian Bencana</h3>
+                        <h3 class="card-title">Statistik Kejadian Bencana Berdasarkan Tanggal Kejadian</h3>
                     </div>
                     <div class="card-body" style="position: relative; height: 50vh;">
                         <canvas id="bencanaChart"></canvas>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-md-6 -->
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Statistik Kejadian Bencana Bulanan</h3>
+                    </div>
+                    <div class="card-body" style="position: relative; height: 50vh;">
+                        <canvas id="chartKejadianBencanaBulanan"></canvas>
                     </div>
                 </div>
                 <!-- /.card -->
@@ -204,6 +217,39 @@
                     }
                 }
             },
+        }
+    });
+
+    // 
+    const chartDataBulanan = JSON.parse('{{ chart_data_bulanan|escapejs }}');
+    var chartKejadianBencanaBulanan = document.getElementById('chartKejadianBencanaBulanan').getContext('2d');
+    var chartKejadianBencanaBulananChart = new Chart(chartKejadianBencanaBulanan, {
+        type: 'bar',
+        data: chartDataBulanan,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'yyyy-MM'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kejadian Bencana Bulanan'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Kejadian'
+                    }
+                }
+            }
         }
     });
 </script>
