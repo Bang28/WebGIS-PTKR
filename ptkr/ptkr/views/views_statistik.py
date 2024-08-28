@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count
-from django.db.models.functions import TruncMonth
+from django.db.models.functions import TruncMonth, ExtractYear
 from collections import defaultdict
 import json
 from ptkr.models.ptkr import Bencana, RumahTerdampak
@@ -27,6 +27,9 @@ def get_statistik_kejadian_bencana_per_bulan_jenis():
     """Mengambil statistik kejadian bencana berdasarkan bulan dan jenis bencana"""
     return Bencana.objects.annotate(month=TruncMonth('tanggal_terjadi')).values('month', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('month', 'jenis_bencana')
 
+def get_statistik_kejadian_bencana_per_tahun():
+    """Mengambil statistik kejadian bencana berdasarkan tahun"""
+    return Bencana.objects.annotate(year=ExtractYear('tanggal_terjadi')).values('year').annotate(jumlah=Count('id')).order_by('year')
 
 def prepare_data_for_chart(rumah_terdampak_bencana, kejadian_bencana):
     """Menyiapkan data untuk chart berdasarkan rumah terdampak dan kejadian bencana"""
@@ -159,6 +162,42 @@ def prepare_bulanan_chart_data_per_jenis(kejadian_bencana_per_bulan_jenis):
     
     return chart_data_bulanan
 
+def prepare_tahunan_pie_chart_data(kejadian_bencana_per_tahun):
+    """Menyiapkan data untuk pie chart statistik kejadian bencana per tahun"""
+
+    labels = []
+    data = []
+
+    for entry in kejadian_bencana_per_tahun:
+        labels.append(str(entry['year']))
+        data.append(entry['jumlah'])
+
+    # Menyiapkan data untuk Chart.js
+    chart_data_tahunan = {
+        'labels': labels,
+        'datasets': [{
+            'data': data,
+            'backgroundColor': [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)'
+            ],
+            'hoverBackgroundColor': [
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(153, 102, 255, 0.7)',
+                'rgba(255, 159, 64, 0.7)'
+            ]
+        }]
+    }
+
+    return chart_data_tahunan
+
 def get_per_bencana_data(list_bencana):
     """Mengambil data rumah terdampak berdasarkan bencana"""
     
@@ -190,10 +229,12 @@ def statistik(request):
     rumah_terdampak_bencana = get_statistik_rumah_terdampak()
     kejadian_bencana = get_statistik_kejadian_bencana()
     kejadian_bencana_per_bulan_jenis = get_statistik_kejadian_bencana_per_bulan_jenis()
+    kejadian_bencana_per_tahun = get_statistik_kejadian_bencana_per_tahun()
     
     kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list = prepare_data_for_chart(rumah_terdampak_bencana, kejadian_bencana)
     chart_data_kerusakan_rumah, chart_data_kejadian_bencana = prepare_chart_data(kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list)
     chart_data_bulanan_jenis = prepare_bulanan_chart_data_per_jenis(kejadian_bencana_per_bulan_jenis)
+    chart_data_tahunan = prepare_tahunan_pie_chart_data(kejadian_bencana_per_tahun)
     per_bencana = get_per_bencana_data(list_bencana)
     
     context = {
@@ -202,6 +243,7 @@ def statistik(request):
         'chart_data_kerusakan_rumah': json.dumps(chart_data_kerusakan_rumah),
         'chart_data_kejadian_bencana': json.dumps(chart_data_kejadian_bencana),
         'chart_data_bulanan': json.dumps(chart_data_bulanan_jenis),
+        'chart_data_tahunan': json.dumps(chart_data_tahunan),
     }
     
     return render(request, 'statistik.html', context)

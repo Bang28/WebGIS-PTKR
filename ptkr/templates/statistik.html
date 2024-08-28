@@ -54,6 +54,19 @@
                 <!-- /.card -->
             </div>
             <!-- /.col-md-6 -->
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Statistik Kejadian Bencana Tahunan</h3>
+                    </div>
+                    <div class="card-body" style="position: relative; height: 50vh;">
+                        <canvas id="chartKejadianBencanaTahunan"></canvas>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-md-6 -->
 
             <div class="col-md-12">
                 <div class="card">
@@ -220,14 +233,15 @@
         }
     });
 
-    // 
+    // bar chart data kejadian bencana Bulanan
     const chartDataBulanan = JSON.parse('{{ chart_data_bulanan|escapejs }}');
-    var chartKejadianBencanaBulanan = document.getElementById('chartKejadianBencanaBulanan').getContext('2d');
-    var chartKejadianBencanaBulananChart = new Chart(chartKejadianBencanaBulanan, {
+    const chartKejadianBencanaBulanan = document.getElementById('chartKejadianBencanaBulanan').getContext('2d');
+    const chartKejadianBencanaBulananChart = new Chart(chartKejadianBencanaBulanan, {
         type: 'bar',
         data: chartDataBulanan,
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',
@@ -252,6 +266,50 @@
             }
         }
     });
+
+    // chart data kejadian bencana tahunan
+    const chartDataTahunan = JSON.parse('{{ chart_data_tahunan|escapejs }}');
+    const chartKejadianBencanaTahunan = document.getElementById('chartKejadianBencanaTahunan').getContext('2d');
+    // Ubah data untuk bar chart
+    const barChartData = {
+        labels: chartDataTahunan.labels, // Label pada sumbu x, misalnya tahun
+        datasets: [{
+            label: 'Jumlah Kejadian Bencana', // Label untuk dataset
+            data: chartDataTahunan.datasets[0].data, // Data jumlah kejadian bencana
+            backgroundColor: 'rgba(75, 192, 192, 0.5)', // Warna bar
+            borderColor: 'rgba(75, 192, 192, 1)', // Warna border bar
+            borderWidth: 1 // Lebar border bar
+        }]
+    };
+    const chartKejadianBencanaTahunanChart = new Chart(chartKejadianBencanaTahunan, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
 </script>
 
 <script>
