@@ -56,8 +56,15 @@
 	
 	// render point
 	{% for p in point %}
-		var lat = {{p.lat}}
-		var lng = {{p.long}}
+		var lat = `{{p.lat}}`;
+		var lng = `{{p.long}}`;
+		// Ganti koma dengan titik
+		lat = lat.replace(",", ".");
+		lng = lng.replace(",", ".");
+
+		// Parsing string ke angka float
+		var latitude = parseFloat(lat);
+		var longitude = parseFloat(lng);
 
 		// Pilih gaya marker berdasarkan tingkat kerusakan
 		var markerStyle;
@@ -69,7 +76,7 @@
 			markerStyle = iconBerat;
 		}
 		
-        var point = L.marker([lat, lng], {icon: markerStyle})
+        var point = L.marker([latitude, longitude], {icon: markerStyle})
 			.bindPopup(`
 			<div class="card" style="width: 20rem">
 				<img src="{{p.foto.url}}" class="card-img-top" style="height:9rem" alt="p.tingkat_kerusakan">

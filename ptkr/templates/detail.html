@@ -75,7 +75,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="post">
+                        <div class="post mb-3">
                             <h6>Tahap 2 - Perhitungan Volume Kerusakan Komponen</h6>
                             <span class="badge badge-success">Ringan</span>
                             <span class="badge badge-warning">Sedang</span>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2 mb-2">
                 <h3 class="text-primary"><i class="fas fa-user"></i> {{detail.pemilik_rumah}}</h3>
                 <p class="text-muted"><i class="fas fa-map-pin"></i>&nbsp; Provinsi {{detail.provinsi|lower|capfirst }} Kota {{detail.kota|lower|capfirst }} Kecamatan {{detail.kecamatan|lower|capfirst }} Kelurahan {{detail.kelurahan|lower|capfirst }} </p>
                 <div>
@@ -111,7 +111,17 @@
 
 {% block script %}
 <script>
-    var map = L.map('map', {zoomControl: false}).setView([{{detail.lat}}, {{detail.long}}], 14);
+    var lat = `{{detail.lat}}`
+    var lng = `{{detail.long}}`
+    // Ganti koma dengan titik
+    lat = lat.replace(",", ".");
+    lng = lng.replace(",", ".");
+
+    // Parsing string ke angka float
+    var latitude = parseFloat(lat);
+    var longitude = parseFloat(lng);
+    
+    var map = L.map('map', {zoomControl: false}).setView([latitude, longitude], 14);
 
     // custom gaya marker
 	var iconRingan = L.icon({
@@ -147,9 +157,7 @@
 		}
     
     // render koordinat lokasi
-    var lat = {{detail.lat}}
-    var long = {{detail.long}}
-    var point = L.marker([lat, long], {icon: markerStyle})
+    var point = L.marker([latitude, longitude], {icon: markerStyle})
         .bindPopup(`<h3>{{detail.pemilik_rumah}}</h3>`)
         .bindTooltip('{{detail.tingkat_kerusakan}}')
 		point.addTo(map)
@@ -187,8 +195,8 @@
     }) {% endcomment %}
 
     // Mendapatkan rute menggunakan leaflet routing machine
-    var latTarget = {{detail.lat}};
-    var longTarget = {{detail.long}};
+    var latTarget = latitude
+    var longTarget = longitude
     var routingControl = null;  // Variabel untuk menyimpan rute
     var isRoutingActive = false;  // Menyimpan status rute aktif atau tidak
     var watchID = null;  // ID untuk melacak posisi secara real-time
