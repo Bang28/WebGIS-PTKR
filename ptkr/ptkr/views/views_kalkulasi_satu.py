@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from ptkr.models.ptkr import Bencana, RumahTerdampak
 from django.contrib import messages
+from ptkr.decorators import user_is_aunthenticated
 
+@user_is_aunthenticated()
 def satuLantai(request):
     """fungsi kalkulasi kerusakan bangunan tipe satu lantai"""
     list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
