@@ -45,10 +45,10 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header border-0">
-                        <h3 class="card-title">Statistik Kejadian Bencana Per Kelurahan</h3>
+                        <h3 class="card-title">Statistik Kejadian Bencana Per Desa</h3>
                     </div>
                     <div class="card-body" style="position: relative; height: 50vh;">
-                        <canvas id="chartKejadianBencanaPerKelurahan"></canvas>
+                        <canvas id="chartKejadianBencanaPerDesa"></canvas>
                     </div>
                 </div>
                 <!-- /.card -->
@@ -116,7 +116,7 @@
                                             <td>{{forloop.counter}}</td>
                                             <td>{{lr.pemilik_rumah}}</td>
                                             <td>{{lr.tipe_bangunan}}</td>
-                                            <td>Kelurahan {{lr.kelurahan|lower|capfirst}} Kecamatan {{lr.kecamatan|lower|capfirst}} {{lr.kota|lower|capfirst}}</td>
+                                            <td>Desa {{lr.kelurahan|lower|capfirst}} Kecamatan {{lr.kecamatan|lower|capfirst}} {{lr.kota|lower|capfirst}}</td>
                                             <td>{{lr.bencana}}</td>
                                             <td>{{lr.tingkat_kerusakan}}</td>
                                             <td>
@@ -248,7 +248,7 @@
 
     // bar chart untuk kejadian bencana per kelurahan
     const chartDataKelurahan = JSON.parse('{{ chart_data_bencana_kelurahan|escapejs }}');
-    const chartKejadianBencanaPerKelurahan = document.getElementById('chartKejadianBencanaPerKelurahan').getContext('2d');
+    const chartKejadianBencanaPerKelurahan = document.getElementById('chartKejadianBencanaPerDesa').getContext('2d');
     const chartKejadianBencanaPerKelurahanChart = new Chart(chartKejadianBencanaPerKelurahan, {
         type: 'bar',
         data: chartDataKelurahan,
@@ -274,7 +274,7 @@
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Kelurahan'
+                        text: 'Desa'
                     }
                 },
                 y: {
