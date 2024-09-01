@@ -7,32 +7,43 @@ from ptkr.models.ptkr import Bencana, RumahTerdampak
 
 def get_data_rumah_terdampak():
     """Mengambil semua data rumah terdampak bencana"""
+    # Query ambil semua data rumah terdampak berdasarkan tanggal publish terbaru
     return RumahTerdampak.objects.all().order_by('-publish')
 
 def get_data_list_bencana():
     """Mengambil semua data bencana"""
+    # Query ambil semua data bencana
     return Bencana.objects.all().order_by('-tanggal_terjadi')
 
 def get_statistik_rumah_terdampak():
     """Mengambil statistik rumah terdampak berdasarkan bencana yang terjadi"""
+    # Query jumlah rumah terdampak berdasarkan jenis bencana
     return RumahTerdampak.objects.values(
         'bencana__jenis_bencana', 'bencana__tanggal_terjadi', 'tingkat_kerusakan'
     ).annotate(jumlah=Count('id')).order_by('bencana__jenis_bencana', 'tingkat_kerusakan')
 
 def get_statistik_kejadian_bencana():
     """Mengambil statistik kejadian bencana berdasarkan tanggal kejadian dan jenis bencana"""
+    # Query jumlah kejadian bencana berdasarkan tanggal terjadi
     return Bencana.objects.values('tanggal_terjadi', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('tanggal_terjadi')
+
+def get_statistik_kejadian_bencana_per_kelurahan():
+    """Mengambil statistik kejadian bencana berdasarkan tempat kejadian (kelurahan)"""
+    # Query jumlah kejadian bencana per kelurahan termasuk jenis bencana
+    return Bencana.objects.values('lokasi_bencana', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('lokasi_bencana', 'jenis_bencana')
 
 def get_statistik_kejadian_bencana_per_bulan_jenis():
     """Mengambil statistik kejadian bencana berdasarkan bulan dan jenis bencana"""
+    # Query jumlah kejadian bencana perbulan berdasarkan jenis bencana
     return Bencana.objects.annotate(month=TruncMonth('tanggal_terjadi')).values('month', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('month', 'jenis_bencana')
 
 def get_statistik_kejadian_bencana_per_tahun():
-    """Mengambil statistik kejadian bencana berdasarkan tahun"""
-    return Bencana.objects.annotate(year=ExtractYear('tanggal_terjadi')).values('year').annotate(jumlah=Count('id')).order_by('year')
+    """Mengambil statistik kejadian bencana berdasarkan tahun dan jenis"""
+    # Query jumlah kejadian bencana tahunan per jenis
+    return Bencana.objects.annotate(year=ExtractYear('tanggal_terjadi')).values('year', 'jenis_bencana').annotate(jumlah=Count('id')).order_by('year', 'jenis_bencana')
 
-def prepare_data_for_chart(rumah_terdampak_bencana, kejadian_bencana):
-    """Menyiapkan data untuk chart berdasarkan rumah terdampak dan kejadian bencana"""
+def prepare_data_rumah_terdampak_bencana(rumah_terdampak_bencana):
+    """Menyiapkan data chart untuk statistik kerusakan rumah terdampak bencana"""
     
     # Menyiapkan list unik dari 'jenis_bencana' + 'tanggal_terjadi'
     kerusakan_rumah_labels = sorted(
@@ -54,20 +65,6 @@ def prepare_data_for_chart(rumah_terdampak_bencana, kejadian_bencana):
             data_sedang[index] = entry['jumlah']
         elif entry['tingkat_kerusakan'] == 'Rusak Berat':
             data_berat[index] = entry['jumlah']
-
-    # Menyiapkan data untuk chart
-    data_per_tanggal = defaultdict(lambda: defaultdict(int))
-    jenis_bencana_list = [choice[0] for choice in Bencana.JENIS_BENCANA_CHOICES]
-    for entry in kejadian_bencana:
-        tanggal = entry['tanggal_terjadi'].strftime('%Y-%m-%d')
-        jenis = entry['jenis_bencana']
-        jumlah = entry['jumlah']
-        data_per_tanggal[tanggal][jenis] = jumlah
-
-    return kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list
-
-def prepare_chart_data(kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list):
-    """Menyiapkan data untuk Chart.js"""
 
     # statistik kerusakan rumah akibat kejadian bencana per tanggal kejadian
     chart_data_kerusakan_rumah = {
@@ -91,7 +88,19 @@ def prepare_chart_data(kerusakan_rumah_labels, data_ringan, data_sedang, data_be
         ]
     }
 
-    # statistik kejadian bencana per tanggal kejadian
+    return chart_data_kerusakan_rumah
+
+def prepare_data_bencana_per_tanggal(kejadian_bencana):
+    """Menyiapkan data chart untuk statistik kejadian bencana per tanggal terjadi"""
+    # Menyiapkan data untuk chart
+    data_per_tanggal = defaultdict(lambda: defaultdict(int))
+    jenis_bencana_list = [choice[0] for choice in Bencana.JENIS_BENCANA_CHOICES]
+    for entry in kejadian_bencana:
+        tanggal = entry['tanggal_terjadi'].strftime('%Y-%m-%d')
+        jenis = entry['jenis_bencana']
+        jumlah = entry['jumlah']
+        data_per_tanggal[tanggal][jenis] = jumlah
+
     # Membentuk struktur data untuk Chart.js
     labels = sorted(data_per_tanggal.keys())
     datasets = []
@@ -121,7 +130,38 @@ def prepare_chart_data(kerusakan_rumah_labels, data_ringan, data_sedang, data_be
         'datasets': datasets
     }
 
-    return chart_data_kerusakan_rumah, chart_data_kejadian_bencana
+    return chart_data_kejadian_bencana
+
+def prepare_bencana_per_kelurahan(kejadian_bencana_per_kelurahan):
+    """Menyiapkan data untuk chart statistik kejadian bencana per kelurahan"""
+    
+    # Organisasi data untuk digunakan dalam chart
+    kelurahan_dict = {}
+    for entry in kejadian_bencana_per_kelurahan:
+        kelurahan = entry['lokasi_bencana']
+        jenis_bencana = entry['jenis_bencana']
+        jumlah = entry['jumlah']
+        
+        if kelurahan not in kelurahan_dict:
+            kelurahan_dict[kelurahan] = {'jumlah': 0, 'jenis_bencana': []}
+        
+        kelurahan_dict[kelurahan]['jumlah'] += jumlah
+        kelurahan_dict[kelurahan]['jenis_bencana'].append(f"{jenis_bencana} ({jumlah})")
+
+    # Persiapkan data untuk chart
+    chart_data_kelurahan = {
+        'labels': list(kelurahan_dict.keys()),
+        'datasets': [{
+            'label': 'Jumlah Kejadian Bencana per Kelurahan',
+            'data': [kelurahan_dict[kel]['jumlah'] for kel in kelurahan_dict],
+            'backgroundColor': 'rgba(54, 162, 235, 0.5)',
+            'borderColor': 'rgba(54, 162, 235, 1)',
+            'borderWidth': 1
+        }],
+        'jenis_bencana': {kel: kelurahan_dict[kel]['jenis_bencana'] for kel in kelurahan_dict}
+    }
+
+    return chart_data_kelurahan
 
 def prepare_bulanan_chart_data_per_jenis(kejadian_bencana_per_bulan_jenis):
     """Menyiapkan data untuk chart statistik kejadian bencana berdasarkan bulan dan jenis bencana"""
@@ -162,21 +202,35 @@ def prepare_bulanan_chart_data_per_jenis(kejadian_bencana_per_bulan_jenis):
     
     return chart_data_bulanan
 
-def prepare_tahunan_pie_chart_data(kejadian_bencana_per_tahun):
-    """Menyiapkan data untuk pie chart statistik kejadian bencana per tahun"""
+def prepare_tahunan_bar_chart_data(kejadian_bencana_per_tahun):
+    """Menyiapkan data untuk bar chart statistik kejadian bencana per tahun"""
+
+    # Mengorganisir data per tahun dengan jumlah kejadian per jenis bencana
+    data_per_tahun = {}
+    for entry in kejadian_bencana_per_tahun:
+        tahun = entry['year']
+        jenis = entry['jenis_bencana']
+        jumlah = entry['jumlah']
+        if tahun not in data_per_tahun:
+            data_per_tahun[tahun] = {}
+        data_per_tahun[tahun][jenis] = jumlah
 
     labels = []
     data = []
+    tooltip_data = []
 
-    for entry in kejadian_bencana_per_tahun:
-        labels.append(str(entry['year']))
-        data.append(entry['jumlah'])
+    for year, jenis_data in data_per_tahun.items():
+        labels.append(str(year))
+        total = sum(jenis_data.values())
+        data.append(total)
+        tooltip_data.append(jenis_data)
 
     # Menyiapkan data untuk Chart.js
     chart_data_tahunan = {
         'labels': labels,
         'datasets': [{
             'data': data,
+            'tooltip_data': tooltip_data,  # Tambahkan data untuk tooltip
             'backgroundColor': [
                 'rgba(255, 99, 132, 0.5)',
                 'rgba(54, 162, 235, 0.5)',
@@ -199,7 +253,7 @@ def prepare_tahunan_pie_chart_data(kejadian_bencana_per_tahun):
     return chart_data_tahunan
 
 def get_per_bencana_data(list_bencana):
-    """Mengambil data rumah terdampak berdasarkan bencana"""
+    """Mengambil data rumah terdampak berdasarkan bencana (table)"""
     
     per_bencana = []
     for bencana in list_bencana:
@@ -224,17 +278,21 @@ def get_per_bencana_data(list_bencana):
 def statistik(request):
     """Fungsi utama untuk menampilkan statistik bencana dan rumah terdampak"""
     
-    all_data = get_data_rumah_terdampak()
+    #akses ke queryset
+    all_data = get_data_rumah_terdampak() 
     list_bencana = get_data_list_bencana()
     rumah_terdampak_bencana = get_statistik_rumah_terdampak()
     kejadian_bencana = get_statistik_kejadian_bencana()
+    kejadian_bencana_per_kelurahan = get_statistik_kejadian_bencana_per_kelurahan()
     kejadian_bencana_per_bulan_jenis = get_statistik_kejadian_bencana_per_bulan_jenis()
     kejadian_bencana_per_tahun = get_statistik_kejadian_bencana_per_tahun()
     
-    kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list = prepare_data_for_chart(rumah_terdampak_bencana, kejadian_bencana)
-    chart_data_kerusakan_rumah, chart_data_kejadian_bencana = prepare_chart_data(kerusakan_rumah_labels, data_ringan, data_sedang, data_berat, data_per_tanggal, jenis_bencana_list)
+    # akses ke prepare data chart
+    chart_data_kerusakan_rumah = prepare_data_rumah_terdampak_bencana(rumah_terdampak_bencana)
+    chart_data_kejadian_bencana = prepare_data_bencana_per_tanggal(kejadian_bencana)
+    chart_data_kelurahan = prepare_bencana_per_kelurahan(kejadian_bencana_per_kelurahan)
     chart_data_bulanan_jenis = prepare_bulanan_chart_data_per_jenis(kejadian_bencana_per_bulan_jenis)
-    chart_data_tahunan = prepare_tahunan_pie_chart_data(kejadian_bencana_per_tahun)
+    chart_data_tahunan = prepare_tahunan_bar_chart_data(kejadian_bencana_per_tahun)
     per_bencana = get_per_bencana_data(list_bencana)
     
     context = {
@@ -242,6 +300,7 @@ def statistik(request):
         'list_per_bencana': per_bencana,
         'chart_data_kerusakan_rumah': json.dumps(chart_data_kerusakan_rumah),
         'chart_data_kejadian_bencana': json.dumps(chart_data_kejadian_bencana),
+        'chart_data_bencana_kelurahan': json.dumps(chart_data_kelurahan),
         'chart_data_bulanan': json.dumps(chart_data_bulanan_jenis),
         'chart_data_tahunan': json.dumps(chart_data_tahunan),
     }
