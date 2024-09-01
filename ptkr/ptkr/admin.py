@@ -12,9 +12,9 @@ class AdminShp(admin.ModelAdmin):
 class CustomGeoAdmin(admin.GISModelAdmin):
     gis_widget_kwargs = {
         'attrs' : {
-            'default_zoom': 10,
-            'default_lat': -7.050,
-            'default_lon': 108.891,
+            'default_zoom': 13,
+            'default_lat': -7.204620857883746,
+            'default_lon':  109.06153678894044,
             # 'map_template': {}
         }
     }
@@ -27,7 +27,7 @@ class AdminBencana(admin.ModelAdmin):
     list_per_page = 10
 
 @admin.register(RumahTerdampak)
-class AdminRumah(ImportExportModelAdmin):
+class AdminRumah(ImportExportModelAdmin, CustomGeoAdmin):
     list_display = ['pemilik_rumah','tipe_bangunan','kelurahan','jenis_bencana','tingkat_kerusakan']
     search_fields = ['pemilik_rumah','lat','long']
     list_filter = ['publish', 'tingkat_kerusakan', 'tipe_bangunan', 'kelurahan', 'bencana']
