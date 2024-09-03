@@ -191,9 +191,17 @@ def satuLantai(request):
                 ket_dinding=visual_data['ket_dinding'],
                 tingkat_kerusakan=tingkat_kerusakan
             )
-            tk_rumah_terdampak.save()
-            messages.success(request, 'Data rumah terdampak berhasil disimpan.')
-            return redirect('ptkr:satu')
+            try:
+                # Memanggil metode full_clean() untuk menjalankan validasi
+                tk_rumah_terdampak.full_clean()
+                # Simpan objek jika tidak ada kesalahan validasi
+                tk_rumah_terdampak.save()
+                messages.success(request, 'Data rumah terdampak berhasil disimpan.')
+                return redirect('ptkr:satu')
+            except Exception as e:
+                messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
+                print(e)
+                return redirect('ptkr:satu')
 
         except Exception as e:
             messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
