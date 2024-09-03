@@ -68,6 +68,7 @@ def satuLantai(request):
             # ambil nilai koordinat lokasi
             lat = float(request.POST.get('lat'))
             long = float(request.POST.get('long'))
+            geom = [long, lat]
 
             # nilai tingkat kerusakan dan bobot komponen
             tk_komponen = [0.00, 0.20, 0.35, 0.50, 0.70, 0.80, 1.00] 
@@ -181,6 +182,7 @@ def satuLantai(request):
                 foto=info_dasar['foto'],
                 lat=lat,
                 long=long,
+                geom=geom,
                 ket_pondasi=visual_data['ket_pondasi'], 
                 ket_kolom=visual_data['ket_kolom'], 
                 ket_balok=visual_data['ket_balok'],
