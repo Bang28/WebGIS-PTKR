@@ -2,6 +2,14 @@ from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import mark_safe
 import os
+from django.core.exceptions import ValidationError
+
+
+def file_size(value):
+    '''fungsi mengatur limit ukuran file yg diupload'''
+    limit = 5242880 
+    if value.size > limit:
+        raise ValidationError('Maksimal ukuran file hanya 5MB')
 
 class Bencana(models.Model):
     JENIS_BENCANA_CHOICES = [
@@ -56,7 +64,7 @@ class RumahTerdampak(models.Model):
     rw = models.CharField(_("RW"), max_length=3)
     rt = models.CharField(_("RT"), max_length=3)
     bencana = models.ForeignKey(Bencana, verbose_name=_("Bencana"), on_delete=models.CASCADE, related_name='rumah_terdampak')
-    foto = models.ImageField(_("Foto sample"), upload_to=file_upload, height_field=None, width_field=None, max_length=None)
+    foto = models.ImageField(_("Foto sample"), upload_to=file_upload, validators=[file_size] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))
     publish = models.DateField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
