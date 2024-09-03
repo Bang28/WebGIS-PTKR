@@ -10,6 +10,14 @@ def file_size(value):
     limit = 5242880 
     if value.size > limit:
         raise ValidationError('Maksimal ukuran file hanya 5MB')
+    
+
+def file_extension(value):
+    '''fungsi mengatur ekstensi file yang diizinkan'''
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.png', '.jpg']
+    if not ext in valid_extensions:
+        raise ValidationError('File tidak didukung, silahkan upload file berupa gambar(png/jpg)')
 
 class Bencana(models.Model):
     JENIS_BENCANA_CHOICES = [
@@ -64,7 +72,7 @@ class RumahTerdampak(models.Model):
     rw = models.CharField(_("RW"), max_length=3)
     rt = models.CharField(_("RT"), max_length=3)
     bencana = models.ForeignKey(Bencana, verbose_name=_("Bencana"), on_delete=models.CASCADE, related_name='rumah_terdampak')
-    foto = models.ImageField(_("Foto sample"), upload_to=file_upload, validators=[file_size] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
+    foto = models.ImageField(_("Foto sample"), upload_to=file_upload, validators=[file_size, file_extension] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))
     publish = models.DateField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
