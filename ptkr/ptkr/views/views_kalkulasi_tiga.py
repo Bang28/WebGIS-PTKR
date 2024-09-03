@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.gis.geos import Point
 from ptkr.models.ptkr import Bencana, RumahTerdampak
 from django.contrib import messages
 from ptkr.decorators import user_is_aunthenticated
@@ -70,7 +71,7 @@ def tigaLantai(request):
             # ambil nilai koordinat lokasi
             lat = float(request.POST.get('lat'))
             long = float(request.POST.get('long'))
-            geom = [long, lat]
+            geom = Point(long, lat)
 
             # nilai tingkat kerusakan dan bobot komponen
             tk_komponen = [0.00, 0.20, 0.35, 0.50, 0.70, 0.80, 1.00] 
