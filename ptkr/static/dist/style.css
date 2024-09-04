@@ -1,0 +1,89 @@
+#map {
+    width: 100%;
+    /* height: 100vh; */
+    height: calc(100vh - 57px);
+}
+
+.map-coordinate {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+    color: #fff;
+    background-color: #17a2b8;
+    border: 1px solid black;
+    border-radius: 2%;
+}
+
+.leaflet-control-layers {
+    cursor: pointer;
+}
+
+.leaflet-control.zoom-to-layer {
+    cursor: pointer;
+}
+
+.zoom-to-layer {
+    padding: 5px;
+    background-color: #fff;
+    position: absolute;
+    right: 11px;
+    top: 130px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.direction {
+    padding: 5px;
+    background-color: #fff;
+    position: absolute;
+    left: 11px;
+    top: 55px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+.offcanvas {
+    position: fixed;
+    bottom: -100%;
+    /* Hide off-canvas */
+    left: 0;
+    right: 0;
+    height: 300px;
+    /* Adjust height as needed */
+    background-color: #fff;
+    transition: bottom 0.3s ease;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    /* Makes sure header and body stack */
+}
+
+.offcanvas.show {
+    bottom: 0;
+    /* Show off-canvas */
+}
+
+.offcanvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    /* Add bottom border to separate header */
+}
+
+.offcanvas-body {
+    padding: 0.5rem;
+    overflow-y: auto;
+    /* Add scrolling if content exceeds height */
+    flex-grow: 1;
+    /* Allows body to grow to fill space */
+}
+
+.pe-auto {
+    cursor: pointer;
+}
