@@ -15,9 +15,9 @@ def file_size(value):
 def file_extension(value):
     '''fungsi mengatur ekstensi file yang diizinkan'''
     ext = os.path.splitext(value.name)[1]
-    valid_extensions = ['.png', '.jpg']
+    valid_extensions = ['.png', '.jpg', 'jpeg']
     if not ext in valid_extensions:
-        raise ValidationError('File tidak didukung, silahkan upload file berupa gambar(png/jpg)')
+        raise ValidationError('File tidak didukung, silahkan upload file berupa gambar(png/jpg/jpeg)')
 
 class Bencana(models.Model):
     JENIS_BENCANA_CHOICES = [
@@ -78,17 +78,17 @@ class Bangunan(models.Model):
     geom = models.PointField(_("Titik Koordinat Lokasi Rumah"))
     
     # komponen struktur
-    ket_pondasi = models.CharField(_("Indikasi kerusakan pondasi"), max_length=255)
+    ket_pondasi = models.CharField(_("Indikasi Kerusakan Pondasi"), max_length=255)
     pondasi = models.FloatField(_("Tingkat Kerusakan Pondasi"))
-    ket_kolom = models.CharField(_("Indikasi kerusakan kolom"), max_length=255)
+    ket_kolom = models.CharField(_("Indikasi Kerusakan Kolom"), max_length=255)
     kolom = models.FloatField(_("Tingkat Kerusakan Kolom"))
-    ket_balok = models.CharField(_("Indikasi kerusakan balok"), max_length=255)
+    ket_balok = models.CharField(_("Indikasi Kerusakan Balok"), max_length=255)
     balok = models.FloatField(_("Tingkat Kerusakan Balok"))
-    ket_plantai = models.CharField(_("Indikasi kerusakan plat lantai"), max_length=255, null=True, blank=True)
+    ket_plantai = models.CharField(_("Indikasi Kerusakan Plat Lantai"), max_length=255, null=True, blank=True)
     plat_lantai = models.FloatField(_("Tingkat Kerusakan Plat Lantai"), null=True, blank=True)
-    ket_tangga = models.CharField(_("Indikasi kerusakan tangga"), max_length=255, null=True, blank=True)
+    ket_tangga = models.CharField(_("Indikasi Kerusakan Tangga"), max_length=255, null=True, blank=True)
     tangga = models.FloatField(_("Tingkat Kerusakan Tangga"), null=True, blank=True)
-    ket_atap = models.CharField(_("Indikasi kerusakan atap"), max_length=255)
+    ket_atap = models.CharField(_("Indikasi Kerusakan Atap"), max_length=255)
     atap = models.FloatField(_("Tingkat Kerusakan Atap"))
 
     # komponen arsitektur
@@ -109,6 +109,7 @@ class Bangunan(models.Model):
     drainase_limbah = models.FloatField(_("Tingkat Kerusakan Drainase Limbah"))
 
     tingkat_kerusakan = models.CharField(_("Tingkat kerusakan"), max_length=20)
+    ttl_nilai_kerusakan = models.FloatField(_("Total Nilai Kerusakan"))
 
     def preview_img(self):
         return mark_safe(f"<img src='{self.foto.url}' width='275' />")

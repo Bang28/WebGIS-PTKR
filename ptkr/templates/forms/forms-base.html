@@ -121,6 +121,22 @@
 <script>
     var map = L.map('peta', {zoomControl: false}).setView([-1.5387473, 118.4170327], 5);
 
+    // list point Koordinat
+    {% for p in list_point %}
+        var lat = `{{p.lat}}`;
+		var lng = `{{p.long}}`;
+		// Ganti koma dengan titik
+		lat = lat.replace(",", ".");
+		lng = lng.replace(",", ".");
+
+		// Parsing string ke angka float
+		var latitude = parseFloat(lat);
+		var longitude = parseFloat(lng);
+
+        var point = L.circle([latitude, longitude], 3).bindTooltip('{{p.pemilik_rumah}}')
+		point.addTo(map)
+    {% endfor %}
+
     // Panggil invalidateSize() setelah peta siap
     map.whenReady(function() {
         setTimeout(function() { 

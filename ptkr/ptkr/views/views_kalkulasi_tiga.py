@@ -8,6 +8,7 @@ from ptkr.decorators import user_is_aunthenticated
 def tigaLantai(request):
     """fungsi kalkulasi kerusakan bangunan tipe satu lantai"""
     list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
+    list_point = Bangunan.objects.all()
 
     if request.method == 'POST':
         try:
@@ -139,8 +140,11 @@ def tigaLantai(request):
             tk_pondasi = pondasi * 0.10 
             print('TK Pondasi: ', tk_pondasi)
             tk_struktur = calc_kerusakan_struktur(data_kerusakan_struktur, kerusakan_komponen_struktur, bobot_struktur)
+            print('TK Struktur', tk_struktur)
             tk_arsitektur = calc_kerusakan_arsitektur(data_kerusakan_arsitektur, kerusakan_komponen_arsitektur, bobot_arsitektur)
+            print('TK Arsitektur', tk_arsitektur)
             tk_drainase = calc_kerusakan_utilitas(data_kerusakan_utilitas, {'drainase': kerusakan_komponen_utilitas['drainase']}, [bobot_utilitas[2]])
+            print('TK Drainase', tk_drainase)
 
             # hitung kerusakan utilitas listrik dan air
             vk_listrik = data_kerusakan_utilitas['utilitas']['vk_listrik']
@@ -158,14 +162,14 @@ def tigaLantai(request):
             ttl_tk_drainase = sum(tk_drainase.values())
             print('Total TK Drainase: ', ttl_tk_drainase)
 
-            # hitung tingkat kerusakan bangunan
-            ttl_tk = tk_pondasi + ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih
-            print('Total TK: ', ttl_tk)
+            # hitung total nilai kerusakan bangunan
+            ttl_nilai_kerusakan = tk_pondasi + ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih
+            print('Total TK: ', ttl_nilai_kerusakan)
 
             # klasifikasi tingkat kerusakan
-            if ttl_tk <= 0.3:
+            if ttl_nilai_kerusakan <= 0.3:
                 tingkat_kerusakan = 'Rusak Ringan'
-            elif 0.3 < ttl_tk <= 0.45:
+            elif 0.3 < ttl_nilai_kerusakan <= 0.45:
                 tingkat_kerusakan = 'Rusak Sedang'
             else:
                 tingkat_kerusakan = 'Rusak Berat'
@@ -186,14 +190,37 @@ def tigaLantai(request):
                 lat=lat,
                 long=long,
                 geom=geom,
+
                 ket_pondasi=visual_data['ket_pondasi'], 
+                pondasi=tk_pondasi,
                 ket_kolom=visual_data['ket_kolom'], 
+                kolom=tk_struktur['kolom'],
                 ket_balok=visual_data['ket_balok'],
+                balok=tk_struktur['balok'],
                 ket_plantai=visual_data['ket_plantai'],
+                plat_lantai=tk_struktur['plantai'],
                 ket_tangga=visual_data['ket_tangga'],
+                tangga=tk_struktur['tangga'],
                 ket_atap=visual_data['ket_atap'], 
+                atap=tk_struktur['atap'],
+                
                 ket_dinding=visual_data['ket_dinding'],
-                tingkat_kerusakan=tingkat_kerusakan
+                dinding=tk_arsitektur['dinding'],
+                plafon=tk_arsitektur['plafon'],
+                lantai=tk_arsitektur['lantai'],
+                kusen=tk_arsitektur['kusen'],
+                pintu=tk_arsitektur['pintu'],
+                jendela=tk_arsitektur['jendela'],
+                f_plafon=tk_arsitektur['fplafon'],
+                f_dinding=tk_arsitektur['fdinding'],
+                f_kusen_pintu=tk_arsitektur['fkupin'],
+
+                instalasi_listrik=tk_instalasi_listrik,
+                instalasi_air_bersih=tk_air_bersih,
+                drainase_limbah=ttl_tk_drainase,
+                
+                tingkat_kerusakan=tingkat_kerusakan,
+                ttl_nilai_kerusakan=ttl_nilai_kerusakan,
             )
             try:
                 # Memanggil metode full_clean() untuk menjalankan validasi
@@ -201,11 +228,11 @@ def tigaLantai(request):
                 # Simpan objek jika tidak ada kesalahan validasi
                 tk_rumah_terdampak.save()
                 messages.success(request, 'Data rumah terdampak berhasil disimpan.')
-                return redirect('ptkr:satu')
+                return redirect('ptkr:tiga')
             except Exception as e:
                 messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
                 print(e)
-                return redirect('ptkr:satu')
+                return redirect('ptkr:tiga')
 
         except Exception as e:
             messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
@@ -215,6 +242,7 @@ def tigaLantai(request):
     else:
         context = {
             'bencana': list_bencana,
+            'list_point': list_point,
         }
         return render(request, 'forms/tiga-lantai.html', context)
         
