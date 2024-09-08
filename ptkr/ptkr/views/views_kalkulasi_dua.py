@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.gis.geos import Point
-from ptkr.models.ptkr import Bencana, RumahTerdampak
+from ptkr.models.ptkr import Bencana, Bangunan
 from django.contrib import messages
 from ptkr.decorators import user_is_aunthenticated
 
@@ -170,7 +170,7 @@ def duaLantai(request):
                 tingkat_kerusakan = 'Rusak Berat'
 
             # simpan ke dalam models
-            tk_rumah_terdampak = RumahTerdampak(
+            tk_rumah_terdampak = Bangunan(
                 pemilik_rumah=info_dasar['pemilik_rumah'],
                 tipe_bangunan=info_dasar['tipe_bangunan'],
                 provinsi=info_dasar['provinsi'],

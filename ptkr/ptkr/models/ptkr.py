@@ -55,13 +55,12 @@ class Bencana(models.Model):
     def __str__(self):
         return f"{self.jenis_bencana} pada {self.tanggal_terjadi} di Desa {self.lokasi_bencana}" 
 
-class RumahTerdampak(models.Model):
+class Bangunan(models.Model):
     def file_upload(instance, filename):
         ext = filename.split('.')[-1]
         filename = "%s.%s" % (instance.pemilik_rumah, ext)
         return os.path.join('foto', filename)
     
-    # fields info personal
     pemilik_rumah = models.CharField(_("Pemilik rumah"), max_length=60)
     tipe_bangunan = models.CharField(_("Tipe bangunan rumah"), max_length=50)
     provinsi = models.CharField(_("Provinsi"), max_length=150)
@@ -72,31 +71,51 @@ class RumahTerdampak(models.Model):
     rw = models.CharField(_("RW"), max_length=3)
     rt = models.CharField(_("RT"), max_length=3)
     bencana = models.ForeignKey(Bencana, verbose_name=_("Bencana"), on_delete=models.CASCADE, related_name='rumah_terdampak')
-    foto = models.ImageField(_("Foto sample"), upload_to=file_upload, validators=[file_size, file_extension] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
+    foto = models.ImageField(_("Foto Rumah"), upload_to=file_upload, validators=[file_size, file_extension] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))
     publish = models.DateField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
     geom = models.PointField(_("Titik Koordinat Lokasi Rumah"))
     
-
-    # fields info kerusakan komponen bangunan
+    # komponen struktur
     ket_pondasi = models.CharField(_("Indikasi kerusakan pondasi"), max_length=255)
+    pondasi = models.FloatField(_("Tingkat Kerusakan Pondasi"))
     ket_kolom = models.CharField(_("Indikasi kerusakan kolom"), max_length=255)
+    kolom = models.FloatField(_("Tingkat Kerusakan Kolom"))
     ket_balok = models.CharField(_("Indikasi kerusakan balok"), max_length=255)
+    balok = models.FloatField(_("Tingkat Kerusakan Balok"))
     ket_plantai = models.CharField(_("Indikasi kerusakan plat lantai"), max_length=255, null=True, blank=True)
+    plat_lantai = models.FloatField(_("Tingkat Kerusakan Plat Lantai"), null=True, blank=True)
     ket_tangga = models.CharField(_("Indikasi kerusakan tangga"), max_length=255, null=True, blank=True)
+    tangga = models.FloatField(_("Tingkat Kerusakan Tangga"), null=True, blank=True)
     ket_atap = models.CharField(_("Indikasi kerusakan atap"), max_length=255)
-    ket_dinding = models.CharField(_("Indikasi kerusakan dinding"), max_length=255)
-    tingkat_kerusakan = models.CharField(_("Tingkat kerusakan"), max_length=20)
+    atap = models.FloatField(_("Tingkat Kerusakan Atap"))
 
+    # komponen arsitektur
+    ket_dinding = models.CharField(_("Indikasi kerusakan dinding"), max_length=255)
+    dinding = models.FloatField(_("Tingkat Kerusakan Dinding"))
+    plafon = models.FloatField(_("Tingkat Kerusakan Plafon"))
+    lantai = models.FloatField(_("Tingkat Kerusakan Lantai"))
+    kusen = models.FloatField(_("Tingkat Kerusakan Kusen"))
+    pintu = models.FloatField(_("Tingkat Kerusakan Pintu"))
+    jendela = models.FloatField(_("Tingkat Kerusakan Jendela"))
+    f_plafon = models.FloatField(_("Tingkat Kerusakan Finishing Plafon"))
+    f_dinding = models.FloatField(_("Tingkat Kerusakan Finishing Dinding"))
+    f_kusen_pintu = models.FloatField(_("Tingkat Kerusakan Finishing Kusen & Pintu"))
+
+    # Komponen utilitas
+    instalasi_listrik = models.FloatField(_("Tingkat Kerusakan Instalasi Listrik"))
+    instalasi_air_bersih = models.FloatField(_("Tingkat Kerusakan Instalasi Air Bersih"))
+    drainase_limbah = models.FloatField(_("Tingkat Kerusakan Drainase Limbah"))
+
+    tingkat_kerusakan = models.CharField(_("Tingkat kerusakan"), max_length=20)
 
     def preview_img(self):
         return mark_safe(f"<img src='{self.foto.url}' width='275' />")
 
-
     class Meta:
-        verbose_name = _("Rumah Terdampak")
-        verbose_name_plural = _("Rumah Terdampak")
+        verbose_name = _("Bangunan Terdampak")
+        verbose_name_plural = _("Bangunan Terdampak")
 
     def __str__(self) -> str:
         return f"{self.pemilik_rumah} tingkat kerusakan {self.tingkat_kerusakan}"

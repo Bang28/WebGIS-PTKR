@@ -3,12 +3,12 @@ from django.db.models import Count
 from django.db.models.functions import TruncMonth, ExtractYear
 from collections import defaultdict
 import json
-from ptkr.models.ptkr import Bencana, RumahTerdampak
+from ptkr.models.ptkr import Bencana, Bangunan
 
 def get_data_rumah_terdampak():
     """Mengambil semua data rumah terdampak bencana"""
     # Query ambil semua data rumah terdampak berdasarkan tanggal publish terbaru
-    return RumahTerdampak.objects.all().order_by('-publish')
+    return Bangunan.objects.all().order_by('-publish')
 
 def get_data_list_bencana():
     """Mengambil semua data bencana"""
@@ -18,7 +18,7 @@ def get_data_list_bencana():
 def get_statistik_rumah_terdampak():
     """Mengambil statistik rumah terdampak berdasarkan bencana yang terjadi"""
     # Query jumlah rumah terdampak berdasarkan jenis bencana
-    return RumahTerdampak.objects.values(
+    return Bangunan.objects.values(
         'bencana__jenis_bencana', 'bencana__tanggal_terjadi', 'tingkat_kerusakan'
     ).annotate(jumlah=Count('id')).order_by('bencana__jenis_bencana', 'tingkat_kerusakan')
 
@@ -257,7 +257,7 @@ def get_per_bencana_data(list_bencana):
     
     per_bencana = []
     for bencana in list_bencana:
-        rumah_terdampak = RumahTerdampak.objects.filter(bencana=bencana)
+        rumah_terdampak = Bangunan.objects.filter(bencana=bencana)
 
         if rumah_terdampak.exists():
             ringan = rumah_terdampak.filter(tingkat_kerusakan='Rusak Ringan').count()

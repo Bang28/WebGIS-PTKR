@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from ptkr.models.shp import Shp
-from ptkr.models.ptkr import RumahTerdampak, Bencana
+from ptkr.models.ptkr import Bangunan, Bencana
 
 def beranda(request):
     shp = Shp.objects.all()
-    point = RumahTerdampak.objects.all()
+    point = Bangunan.objects.all()
     list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
 
     # mengambil data rumah terdampak berdasarkan bencana
     per_bencana = []
     for bencana in list_bencana:
         # Memastikan 'bencana' adalah instance yang valid dari model Bencana
-        rumah_terdampak = RumahTerdampak.objects.filter(bencana=bencana)
+        rumah_terdampak = Bangunan.objects.filter(bencana=bencana)
 
         # Periksa jika ada rumah terdampak yang terkait
         if rumah_terdampak.exists():

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.gis import admin
 from import_export.admin import ImportExportModelAdmin
 from .models.shp import Shp
-from .models.ptkr import Bencana, RumahTerdampak
+from .models.ptkr import Bencana, Bangunan
 
 # Register your models here.
 @admin.register(Shp)
@@ -26,7 +26,7 @@ class AdminBencana(admin.ModelAdmin):
     list_filter = ['jenis_bencana', 'tanggal_terjadi']
     list_per_page = 10
 
-@admin.register(RumahTerdampak)
+@admin.register(Bangunan)
 class AdminRumah(ImportExportModelAdmin, CustomGeoAdmin):
     list_display = ['pemilik_rumah','tipe_bangunan','kelurahan','jenis_bencana','tingkat_kerusakan']
     search_fields = ['pemilik_rumah','lat','long']
