@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load custom_filters %}
+
 {% block title %}PTKR | Detail Rumah Terdampak{% endblock title %}
 
 {% block content %}
@@ -60,7 +62,6 @@
                                         <td>:</td>
                                         <td>{{detail.ket_tangga}}</td>
                                     </tr>
-                                    {% else %}
                                     {% endif %}
                                     <tr>
                                         <td>Atap</td>
@@ -77,9 +78,26 @@
                         </div>
                         <div class="post mb-3">
                             <h6>Tahap 2 - Perhitungan Volume Kerusakan Komponen</h6>
-                            <span class="badge badge-success">Ringan</span>
-                            <span class="badge badge-warning">Sedang</span>
-                            <span class="badge badge-danger">Berat</span>
+                            <span class="badge badge-secondary">Pondasi: {{detail.pondasi|percent}} </span>
+                            <span class="badge badge-secondary">kolom: {{detail.kolom|percent}} </span>
+                            <span class="badge badge-secondary">balok: {{detail.balok|percent}} </span>
+                            {% if detail.tipe_bangunan != 'Satu Lantai' %}
+                            <span class="badge badge-secondary">Plat lantai: {{detail.plat_lantai|percent}} </span>
+                            <span class="badge badge-secondary">Tangga: {{detail.tangga|percent}} </span>
+                            {% endif %}
+                            <span class="badge badge-secondary">Atap: {{detail.atap|percent}} </span>
+                            <span class="badge badge-secondary">Dinding: {{detail.dinding|percent}} </span>
+                            <span class="badge badge-secondary">Plafon: {{detail.plafon|percent}} </span>
+                            <span class="badge badge-secondary">Lantai: {{detail.lantai|percent}} </span>
+                            <span class="badge badge-secondary">Kusen: {{detail.kusen|percent}} </span>
+                            <span class="badge badge-secondary">Pintu: {{detail.pintu|percent}} </span>
+                            <span class="badge badge-secondary">Jendela: {{detail.jendela|percent}} </span>
+                            <span class="badge badge-secondary">Finishing dinding: {{detail.fdinding|percent}} </span>
+                            <span class="badge badge-secondary">Finishing kusen: {{detail.fkusen|percent}} </span>
+                            <span class="badge badge-secondary">Finishing kusen & pintu: {{detail.f_kusen_pintu|percent}} </span>
+                            <span class="badge badge-secondary">Instalasi listrik: {{detail.instalasi_listrik|percent}} </span>
+                            <span class="badge badge-secondary">Instalasi air bersih: {{detail.instalasi_air_bersih|percent}} </span>
+                            <span class="badge badge-secondary">Drainase limbah: {{detail.drainase_limbah|percent}} </span>
                         </div>
                     </div>
                 </div>
