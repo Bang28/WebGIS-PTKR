@@ -1,0 +1,345 @@
+<div class="col-md-12 mb-3">
+    <!--Dinding/Partisi-->
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Arsitektur - Komponen Dinding/Partisi</h3>
+        </div>
+        <div class="card-body">
+            <label class="fieldlabels" for="ket_dinding">Tahap 1 - Lakukanlah pengamatan pada komponen Dinding/Partisi</label> 
+            <Label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
+            <label class="fieldlabels">Berikut adalah kriteria kerusakan Dinding/Partisi yang diindikasi berdampak pada aspek keselamatan.</label> 
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Klasifikasi</th>
+                            <th scope="col">Deskripsi Kerusakan</th>
+                            <th scope="col">Kuantitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Rusak Berat</th>
+                            <td>
+                                <ul>
+                                    <li>Dinding miring atau angkur tidak ada</li>
+                                    <li>Dinding berlubang atau runtuh sebagian</li>
+                                </ul>
+                            </td>
+                            <td>>30% dari seluruh dinding</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Sangat Berat</th>
+                            <td>
+                                <ul>
+                                    <li>Dinding runtuh</li>
+                                </ul>
+                            </td>
+                            <td>Min 1 bidang dinding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_dinding" id="ket_dinding1" value="Tidak ada kerusakan">
+                <label class="form-check-label" for="ket_dinding1">
+                    Tidak ada kerusakan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_dinding" id="ket_dinding2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_dinding2">
+                    Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_dinding" id="ket_dinding3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_dinding3">
+                    Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+
+            <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label>
+            <label class="">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Dinding rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah persentase komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+            <!--Kalkulator-->
+            <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih.</label>
+            <div class="row">
+                <!--Dinding-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_dinding">Panjang Dinding (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="panjang_dinding" placeholder="Masukan panjang dinding" aria-describedby="panjang_dinding">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="tinggi_dinding">Tinggi Dinding (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="tinggi_dinding" placeholder="Masukan tinggi dinding" aria-describedby="tinggi_dinding">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_dinding">Luas Dinding</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_dinding" aria-describedby="luas_dinding" placeholder="Luas Dinding" readonly>
+                    </div>
+                </div>
+                <!--End Dinding-->
+            </div>
+            <div class="row">
+                <!--Pintu-->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="lebar_pintu">Lebar Pintu (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="lebar_pintu" placeholder="Masukan lebar pintu" aria-describedby="lebar_pintu">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="tinggi_pintu">Tinggi Pintu (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="tinggi_pintu" placeholder="Masukan tinggi pintu" aria-describedby="tinggi_pintu">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="jumlah_pintu">Jumlah Pintu (Unit)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="jumlah_pintu" placeholder="Masukan jumlah pintu" aria-describedby="jumlah_pintu">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="luas_pintu">Luas Pintu</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_pintu" aria-describedby="luas_pintu" placeholder="Luas Pintu" readonly>
+                    </div>
+                </div>
+                <!--End Pintu-->
+            </div>
+            <div class="row">
+                <!--Jendela-->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="lebar_jendela">Lebar Jendela (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="lebar_jendela" placeholder="Masukan lebar jendela" aria-describedby="lebar_jendela">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="tinggi_jendela">Tinggi Jendela (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="tinggi_jendela" placeholder="Masukan tinggi jendela" aria-describedby="tinggi_jendela">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="jumlah_jendela">Jumlah Jendela (Unit)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="jumlah_jendela" placeholder="Masukan jumlah jendela" aria-describedby="jumlah_jendela">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="luas_jendela">Luas Jendela</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_jendela" aria-describedby="luas_jendela" placeholder="Luas jendela" readonly>
+                    </div>
+                </div>
+                <!--End Jendela-->
+            </div>
+            <div class="row">
+                <!--Bidang dinding Rusak-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_dinding_rusak">Panjang Bidang dinding yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="panjang_dinding_rusak" placeholder="Masukan panjang Bidang dinding rusak" aria-describedby="panjang Bidang dinding rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_dinding_rusak">Lebar Bidang dinding yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="lebar_dinding_rusak" placeholder="Masukan lebar Bidang dinding rusak" aria-describedby="lebar Bidang dinding rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_dinding_rusak">Luas Bidang dinding yang Rusak</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_dinding_rusak" aria-describedby="luas_dinding_rusak" placeholder="Luas bidang dinding yang rusak" readonly>
+                    </div>
+                </div>
+                <!--End Bidang dinding Rusak-->
+            </div>
+            <div class="row">
+                <!--Presentase Kerusakan Dinding-->
+                <div class="col-md-8">
+                    <label for="kerusakan_dinding">Presentase kerusakan komponen Dinding:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="number" class="form-control form-control-sm" id="kerusakan_dinding" aria-describedby="kerusakan_dinding" placeholder="Nilai kerusakan komponen">
+                        <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-percent"></span>
+                        </div>
+                        </div>
+                        <small>Salin nilai dan isikan pada kolom deskripsi kerusakan yang dipilih.</small>
+                    </div>
+                </div>
+                <!--End Presentase Kerusakan Dinding-->
+            </div>           
+            <!--End Kalkulator--> 
+
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_tr_checked" checked disabled>
+                <label class="form-check-label" for="dinding_tr_checked">
+                    Dinding dalam kondisi baik
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_tr"  id="dinding_tr" class="form-control form-control-sm" placeholder="Kolom ini terisi otomatis" readonly>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_rsr_checked" onclick="toggleInputDinding('dinding_rsr', 'smallMessageDindingRsr')">
+                <label class="form-check-label" for="dinding_rsr_checked">
+                    Retak rambut dipermukaan dinding (lebar retakan < 0.2 mm)
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_dinding_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_rsr" id="dinding_rsr" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingRsr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_rr_checked" onclick="toggleInputDinding('dinding_rr', 'smallMessageDindingRr')">
+                <label class="form-check-label" for="dinding_rr_checked">
+                    Retakan permukaan dinding terlihat jelas (lebar retakan kira-kira 0.2 mm- 1.0 mm)
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_dinding_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_rr"  id="dinding_rr" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingRr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_rs_checked" onclick="toggleInputDinding('dinding_rs', 'smallMessageDindingRs')">
+                <label class="form-check-label" for="dinding_rs_checked">
+                    Dinding retakan meluas (lebar retakan kira-kira 1-2 mm), <br>
+                    Dinding partisi/ penutup plafon terlepas, dan <br>
+                    Retakan besar pada dinding
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_dinding_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_rs"  id="dinding_rs" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingRs" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_rb_checked" onclick="toggleInputDinding('dinding_rb', 'smallMessageDindingRb')">
+                <label class="form-check-label" for="dinding_rb_checked">
+                    Dinding miring atau angkur tidak ada, dan <br>
+                    Dinding berlubang atau runtuh sebagian
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_dinding_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_rb"  id="dinding_rb" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingRb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_rsb_checked" onclick="toggleInputDinding('dinding_rsb', 'smallMessageDindingRsb')">
+                <label class="form-check-label" for="dinding_rsb_checked">
+                    Dinding runtuh
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_dinding_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_rsb" id="dinding_rsb" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingRsb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="dinding_kts_checked"  onclick="toggleInputDinding('dinding_kts', 'smallMessageDindingKts')">
+                <label class="form-check-label" for="dinding_kts_checked">
+                    Komponen Dinding Tidak Sesuai. Material, dimensi, dan konstruksi rangka dinding diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI)
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="dinding_kts" id="dinding_kts" class="form-control form-control-sm" onkeyup="calcDinding()" placeholder="Masukan persentase kerusakan dinding sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageDindingKts" class="form-text text-danger" style="display:none;"></small>
+        </div>
+    </div>
+    <!--End Dinding/Partisi-->
+</div>
+
+<script>
+function toggleInputDinding(inputId, messageId) {
+    var input = document.getElementById(inputId);
+    var message = document.getElementById(messageId);
+    
+    input.disabled = !input.disabled;  // Membalikkan status disabled input
+    
+    // Jika input tidak dinonaktifkan, tampilkan pesan
+    if (!input.disabled) {
+        message.innerHTML = "* Gunakan kalkulator di atas untuk mengetahui persentase kerusakan.";
+        message.style.display = "block"; // Tampilkan pesan di bawah input
+    } else {
+        message.style.display = "none"; // Sembunyikan pesan saat input dinonaktifkan
+    }
+}
+</script>

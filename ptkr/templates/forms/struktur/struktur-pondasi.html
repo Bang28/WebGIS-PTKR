@@ -1,0 +1,145 @@
+{% load static %}
+
+<div class="col-md-12 mb-3">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Struktur - Komponen Pondasi</h3>
+        </div>
+        <div class="card-body">
+            <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Pondasi</Label>
+            <Label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
+            <label class="fieldlabels">Berikut adalah kriteria kerusakan Pondasi yang diindikasi berdampak pada aspek keselamatan.</label> 
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Klasifikasi</th>
+                            <th scope="col">Deskripsi Kerusakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Rusak Ringan</th>
+                            <td>
+                                <ul>
+                                    <li>Penurunan tidak merata, namun perbedaan penurunan tidak melebihi 1/250 L</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Sedang</th>
+                            <td>
+                                <ul>
+                                    <li>Penurunan > 1/250 L sehingga menimbulkan kerusakan struktur atasnya. Tanah disekeliling bangunan naik</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Berat</th>
+                            <td>
+                                <ul>
+                                    <li>Bangunan miring secara kasat mata, dan Lantai dasar naik / menggelembung</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Sangat Berat</th>
+                            <td>
+                                <ul>
+                                    <li>Pondasi patah, bergeser akibat longsor, struktur atas menjadi rusak</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_pondasi" id="ket_pondasi1" value="Tidak ada kerusakan">
+                <label class="form-check-label" for="ket_pondasi1">
+                    Tidak ada kerusakan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_pondasi" id="ket_pondasi2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_pondasi2">
+                    Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_pondasi" id="ket_pondasi3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_pondasi3">
+                    Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+            
+            <label class="fieldlabels mt-3">Tahap 2 - Indikasi kerusakan seperti apa yang terjadi pada komponen Pondasi?</label>     
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi1" value="0.00">
+                <label class="form-check-label" for="vk_pondasi1">
+                    Pondasi diindikasi dalam kondisi baik
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi2" value="0.20">
+                <label class="form-check-label" for="vk_pondasi2">
+                    Penurunan merata pada seluruh struktur bangunan
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_vk_pondasi2">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi3" value="0.35">
+                <label class="form-check-label" for="vk_pondasi3">
+                    Penurunan tidak merata, namun perbedaan penurunan tidak melebihi 1/250 L
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_vk_pondasi3">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi4" value="0.50">
+                <label class="form-check-label" for="vk_pondasi4">
+                    Penurunan > 1/250 L sehingga menimbulkan kerusakan struktur atasnya. Tanah disekeliling bangunan naik
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_vk_pondasi4">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi5" value="0.70">
+                <label class="form-check-label" for="vk_pondasi5">
+                    Bangunan miring secara kasat mata, Lantai dasar naik/menggelembung
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_vk_pondasi5">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi6" value="0.85">
+                <label class="form-check-label" for="vk_pondasi6">
+                    Pondasi patah, bergeser akibat longsor, struktur atas menjadi rusak
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_vk_pondasi6">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="vk_pondasi" id="vk_pondasi7" value="1.00">
+                <label class="form-check-label" for="vk_pondasi7">
+                    Material, dimensi, dan konstruksi pondasi diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI)
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

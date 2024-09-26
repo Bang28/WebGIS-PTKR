@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.gis import admin
 from import_export.admin import ImportExportModelAdmin
 from .models.shp import Shp
-from .models.ptkr import Bencana, Bangunan
+from .models.ptkr import Bencana, Bangunan, StrukturBangunan, ArsitekturBangunan, UtilitasBangunan
 
 # Register your models here.
 @admin.register(Shp)
@@ -26,6 +26,16 @@ class AdminBencana(admin.ModelAdmin):
     list_filter = ['jenis_bencana', 'tanggal_terjadi']
     list_per_page = 10
 
+
+class AdminStrukturBangunan(admin.StackedInline):
+    model = StrukturBangunan
+
+class AdminArsitekturBangunan(admin.StackedInline):
+    model = ArsitekturBangunan
+
+class AdminUtilitasBangunan(admin.StackedInline):
+    model = UtilitasBangunan
+
 @admin.register(Bangunan)
 class AdminRumah(ImportExportModelAdmin, CustomGeoAdmin):
     list_display = ['pemilik_rumah','tipe_bangunan','kelurahan','jenis_bencana','tingkat_kerusakan']
@@ -33,6 +43,12 @@ class AdminRumah(ImportExportModelAdmin, CustomGeoAdmin):
     list_filter = ['publish', 'tingkat_kerusakan', 'tipe_bangunan', 'kelurahan', 'bencana']
     readonly_fields = ['preview_img', 'tingkat_kerusakan', 'publish']
     list_per_page = 10
+
+    inlines = [
+        AdminStrukturBangunan,
+        AdminArsitekturBangunan,
+        AdminUtilitasBangunan,
+    ]
 
     def jenis_bencana(self, obj):
         return obj.bencana.jenis_bencana

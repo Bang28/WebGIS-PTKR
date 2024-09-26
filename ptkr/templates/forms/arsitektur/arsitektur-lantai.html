@@ -1,0 +1,236 @@
+<!--Lantai-->
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Arsitektur - Komponen Lantai</h3>
+        </div>
+        <div class="card-body">
+            <label class="">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen lantai rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah persentase komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+            <!--Kalkulator-->
+            <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih. Ikuti panduan pada gambar ini.</label>
+            <span>
+                <a href="#" class="" data-toggle="modal" data-target="#modal_Lantai_calc">&nbsp;
+                    <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat gambar panduan"></i>
+                </a>
+            </span>
+            <div class="row">
+                <!--Lantai-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_lantai">Panjang Lantai (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcLantai()" id="panjang_lantai" placeholder="Masukan panjang Lantai" aria-describedby="panjang_lantai">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_lantai">Lebar Lantai (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcLantai()" id="lebar_lantai" placeholder="Masukan lebar Lantai" aria-describedby="lebar_lantai">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_Lantai">Luas Lantai</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_Lantai" aria-describedby="luas_Lantai" placeholder="Luas Lantai" readonly>
+                    </div>
+                </div>
+                <!--End Lantai-->
+            </div>
+            <div class="row">
+                <!--Bidang Lantai Rusak-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_lantai_rusak">Panjang Bidang Lantai yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcLantai()" id="panjang_lantai_rusak" placeholder="Masukan panjang Bidang Lantai rusak" aria-describedby="panjang Bidang Lantai rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_lantai_rusak">Lebar Bidang Lantai yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcLantai()" id="lebar_lantai_rusak" placeholder="Masukan lebar Bidang Lantai rusak" aria-describedby="lebar Bidang Lantai rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_lantai_rusak">Luas Bidang Lantai yang Rusak</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_lantai_rusak" aria-describedby="luas_lantai_rusak" placeholder="Luas bidang Lantai yang rusak" readonly>
+                    </div>
+                </div>
+                <!--End Bidang Lantai Rusak-->
+            </div>
+            <div class="row">
+                <!--Persentase Kerusakan Lantai-->
+                <div class="col-md-8">
+                    <label for="kerusakan_lantai">Presentase kerusakan komponen Lantai:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="number" class="form-control form-control-sm" id="kerusakan_lantai" aria-describedby="kerusakan_lantai" placeholder="Nilai kerusakan komponen">
+                        <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-percent"></span>
+                        </div>
+                        </div>
+                        <small>Salin nilai dan isikan pada kolom deskripsi kerusakan yang dipilih.</small>
+                    </div>
+                </div>
+                <!--End Persentase Kerusakan Lantai-->
+            </div>           
+            <!--End Kalkulator--> 
+
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_tr_checked" checked disabled>
+                <label class="form-check-label" for="lantai_tr_checked">
+                    Lantai dalam kondisi baik
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_tr"  id="lantai_tr"class="form-control form-control-sm" placeholder="Kolom ini terisi otomatis" readonly>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_rsr_checked" onclick="toggleInputLantai('lantai_rsr', 'smallMessageLantaiRsr')">
+                <label class="form-check-label" for="lantai_rsr_checked">
+                    Penutup lantai gores
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_lantai_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_rsr" id="lantai_rsr" class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiRsr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_rr_checked" onclick="toggleInputLantai('lantai_rr', 'smallMessageLantaiRr')">
+                <label class="form-check-label" for="lantai_rr_checked">
+                    Penutup lantai retak / remuk sebagian
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_lantai_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_rr"  id="lantai_rr"class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiRr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_rs_checked" onclick="toggleInputLantai('lantai_rs', 'smallMessageLantaiRs')">
+                <label class="form-check-label" for="lantai_rs_checked">
+                    Penutup lantai terlepas sebagian
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_lantai_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_rs"  id="lantai_rs"class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiRs" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_rb_checked" onclick="toggleInputLantai('lantai_rb', 'smallMessageLantaiRb')">
+                <label class="form-check-label" for="lantai_rb_checked">
+                    Penutup lantai sebagian besar terlepas
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_lantai_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_rb"  id="lantai_rb"class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiRb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_rsb_checked" onclick="toggleInputLantai('lantai_rsb', 'smallMessageLantaiRsb')">
+                <label class="form-check-label" for="lantai_rsb_checked">
+                    Penutup lantai meledak dan terlepas
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_lantai_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_rsb" id="lantai_rsb" class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiRsb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="lantai_kts_checked" onclick="toggleInputLantai('lantai_kts', 'smallMessageLantaiKts')">
+                <label class="form-check-label" for="lantai_kts_checked">
+                    Komponen lantai Tidak Sesuai. Material, dimensi, dan konstruksi lantai diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI)
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="lantai_kts" id="lantai_kts" class="form-control form-control-sm" onkeyup="calcLantai()" placeholder="Masukan persentase kerusakan lantai sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageLantaiKts" class="form-text text-danger" style="display:none;"></small>
+        </div>
+    </div>
+</div>
+<!--End Lantai-->
+
+<script>
+function toggleInputLantai(inputId, messageId) {
+    var input = document.getElementById(inputId);
+    var message = document.getElementById(messageId);
+    
+    input.disabled = !input.disabled;  // Membalikkan status disabled input
+    
+    // Jika input tidak dinonaktifkan, tampilkan pesan
+    if (!input.disabled) {
+        message.innerHTML = "* Gunakan kalkulator di atas untuk mengetahui persentase kerusakan.";
+        message.style.display = "block"; // Tampilkan pesan di bawah input
+    } else {
+        message.style.display = "none"; // Sembunyikan pesan saat input dinonaktifkan
+    }
+}
+</script>

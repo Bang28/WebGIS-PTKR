@@ -1,0 +1,343 @@
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Struktur - Komponen Atap</h3>
+        </div>
+        <div class="card-body">
+            <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Atap</label> 
+            <label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
+            <label class="fieldlabels">Berikut adalah kriteria kerusakan Atap yang diindikasi berdampak pada aspek keselamatan.</label> 
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Klasifikasi</th>
+                            <th scope="col">Deskripsi Kerusakan</th>
+                            <th scope="col">Kuantitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Rusak Sedang</th>
+                            <td>
+                                <ul>
+                                    <li>Struktur atap melendut</li>
+                                    <li>(kayu) retak/sobek pada kayu di bagian sambungan paku, baut atau plat</li>
+                                    <li>(besi/baja) flense profil sobek, retak pada sambungan las</li>
+                                    <li>(baja ringan) retak/sobek pada baja ringan di bagian sambungan baut atau sekrup</li>
+                                    <li>Gording/ rangka plafon melendut. Bocoran meluas</li>
+                                </ul>
+                            </td>
+                            <td>>30% dari luas atap</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Berat</th>
+                            <td>
+                                <ul>
+                                    <li>(kayu) Sambungan paku, baut atau pelat bengkok, retak/sobek pada kayu di bagian sambungan meluas, keropos pada kayu meluas di banyak tempat</li>
+                                    <li>(besi/baja) Baut penyambung dan plat sambungan bengkok, profil tertekuk, korosi meluas di banyak tempat</li>
+                                    <li>(baja ringan) retak/sobek pada baja ringan di bagian sambungan baut atau sekrup meluas, lendutan pada rangka baja ringan terjadi di banyak tempat</li>
+                                    <li>Penutup atap melendut sangat besar dengan kemungkinan keruntuhan besar</li>
+                                </ul>
+                            </td>
+                            <td>Min 1 bagian atap</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rusak Sangat Berat</th>
+                            <td>
+                                <ul>
+                                    <li>Rangka atap runtuh</li>
+                                    <li>Komponen struktur tertekuk</li>
+                                    <li>Sambungan putus, profil tertekuk, konstruksi runtuh</li>
+                                </ul>
+                            </td>
+                            <td>Min 1 bagian atap</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_atap" id="ket_atap1" value="Tidak ada kerusakan">
+                <label class="form-check-label" for="ket_atap1">
+                    Tidak ada kerusakan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_atap" id="ket_atap2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_atap2">
+                    Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ket_atap" id="ket_atap3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <label class="form-check-label" for="ket_atap3">
+                    Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
+                </label>
+            </div>
+            
+            <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>
+            <label class="">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Atap rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah persentase komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+            <!--Kalkulator-->
+            <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih. Ikuti panduan pada gambar ini.</label>
+            <span>
+                <a href="#" class="" data-toggle="modal" data-target="#modal_atap_calc">&nbsp;
+                    <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat gambar panduan"></i>
+                </a>
+            </span>
+            <div class="row">
+                <!--Atap sisi A-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_atap_sisi_a">Panjang Atap Sisi A (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="panjang_atap_sisi_a" placeholder="Masukan panjang atap sisi A" aria-describedby="panjang_atap_sisi_a">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_atap_sisi_a">Lebar Atap Sisi A (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="lebar_atap_sisi_a" placeholder="Masukan lebar atap sisi A" aria-describedby="lebar_atap_sisi_a">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_atap_sisi_a">Luas Atap Sisi A</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_atap_sisi_a" aria-describedby="luas_atap_sisi_a" placeholder="Luas Atap sisi A" readonly>
+                    </div>
+                </div>
+                <!--End Atap sisi A-->
+            </div>
+            <div class="row">
+                <!--Atap sisi B-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_atap_sisi_b">Panjang Atap Sisi B (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="panjang_atap_sisi_b" placeholder="Masukan panjang atap sisi B" aria-describedby="panjang_atap_sisi_b">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_atap_sisi_b">Lebar Atap Sisi B (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="lebar_atap_sisi_b" placeholder="Masukan lebar atap sisi B" aria-describedby="lebar_atap_sisi_b">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_atap_sisi_b">Luas Atap Sisi B</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_atap_sisi_b" aria-describedby="luas_atap_sisi_b" placeholder="Luas Atap sisi B" readonly>
+                    </div>
+                </div>
+                <!--End Atap sisi B-->
+            </div>
+            <div class="row">
+                <!--Bidang Atap Rusak-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_atap_rusak">Panjang Bidang Atap yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="panjang_atap_rusak" placeholder="Masukan panjang Bidang atap rusak" aria-describedby="panjang Bidang atap rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_atap_rusak">Lebar Bidang Atap yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcAtap()" id="lebar_atap_rusak" placeholder="Masukan lebar Bidang atap rusak" aria-describedby="lebar Bidang atap rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_atap_rusak">Luas Bidang Atap yang Rusak</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_atap_rusak" aria-describedby="luas_atap_rusak" placeholder="Luas bidang atap yang rusak" readonly>
+                    </div>
+                </div>
+                <!--End Bidang Atap Rusak-->
+            </div>
+            <div class="row">
+                <!--Persentase Kerusakan Atap-->
+                <div class="col-md-8">
+                    <label for="kerusakan_atap">Presentase kerusakan komponen Atap:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="number" class="form-control form-control-sm" id="kerusakan_atap" aria-describedby="kerusakan_atap" placeholder="Nilai kerusakan komponen">
+                        <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-percent"></span>
+                        </div>
+                        </div>
+                        <small>Salin nilai dan isikan pada kolom deskripsi kerusakan yang dipilih.</small>
+                    </div>
+                </div>
+                <!--End Persentase Kerusakan Atap-->
+            </div>           
+            <!--End Kalkulator--> 
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="atap_tr_checked" checked disabled>
+                <label class="form-check-label" for="atap_tr_checked">
+                    Rangka atap dalam kondisi baik
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_tr"  id="atap_tr"class="form-control form-control-sm" placeholder="Kolom ini terisi otomatis" readonly>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="atap_rsr_checked" onclick="toggleInputAtap('atap_rsr', 'smallMessageAtapRsr')">
+                <label class="form-check-label" for="atap_rsr_checked">
+                    (kayu) Keropos rangka mulai terlihat, gording melendut, <br>
+                    (besi/baja) Karat rangka mulai terlihat, gording melendut, <br>
+                    (baja ringan) Lendut pada rangka mulai terlihat, gording melendut, dan <br>
+                    Genteng terlepas dari dudukannya
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_atap_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_rsr" id="atap_rsr" class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapRsr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="atap_rr_checked" onclick="toggleInputAtap('atap_rr', 'smallMessageAtapRr')">
+                <label class="form-check-label" for="atap_rr_checked">
+                    (kayu) Keropos rangka meluas, konstruksi bergetar akibat angin, <br>
+                    (besi/baja) Karat rangka meluas, konstruksi bergetar akibat angin, <br>
+                    (baja ringan) Lendut pada rangka meluas, konstruksi bergetar akibat angin, <br>
+                    Reng rusak, kaso-kaso rusak, dan<br>
+                    Genteng retak dan terdapat bocoran terbatas
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_atap_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_rr"  id="atap_rr"class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapRr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="atap_rs_checked" onclick="toggleInputAtap('atap_rs', 'smallMessageAtapRs')">
+                <label class="form-check-label" for="atap_rs_checked">
+                    Struktur atap melendut, <br>
+                    (kayu) retak/sobek pada kayu di bagian sambungan paku, baut atau pelat, <br>
+                    (besi/baja) flense profil sobek, retak pada sambungan las, <br>
+                    (baja ringan) retak/sobek pada baja ringan di bagian sambungan baut atau sekrup, dan <br>
+                    Gording/ rangka plafon melendut. Bocoran meluas
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_atap_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_rs"  id="atap_rs"class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapRs" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="atap_rb_checked" onclick="toggleInputAtap('atap_rb', 'smallMessageAtapRb')">
+                <label class="form-check-label" for="atap_rb_checked">
+                    (kayu) Sambungan paku, baut atau pelat bengkok, retak/sobek pada kayu di bagian sambungan meluas, keropos pada kayu meluas di banyak tempat, <br>
+                    (besi/baja) Baut penyambung dan plat sambungan bengkok, profil tertekuk, korosi meluas di banyak tempat, <br>
+                    (baja ringan) retak/sobek pada baja ringan di bagian sambungan baut atau sekrup meluas, lendutan pada rangka baja ringan terjadi di banyak tempat, dan <br>
+                    Penutup atap melendut sangat besar dengan kemungkinan keruntuhan besar
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_atap_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_rb"  id="atap_rb"class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapRb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="atap_rsb_checked" onclick="toggleInputAtap('atap_rsb', 'smallMessageAtapRsb')">
+                <label class="form-check-label" for="atap_rsb_checked">
+                    Rangka atap runtuh, <br>
+                    Komponen struktur tertekuk, dan <br>
+                    Sambungan putus, profil tertekuk, konstruksi runtuh
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_atap_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_rsb" id="atap_rsb" class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapRsb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="atap_kts_checked" onclick="toggleInputAtap('atap_kts', 'smallMessageAtapKts')">
+                <label class="form-check-label" for="atap_kts_checked">
+                    Komponen Atap Tidak Sesuai. Material, dimensi, dan konstruksi rangka atap diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI)
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="atap_kts" id="atap_kts" class="form-control form-control-sm" onkeyup="calcAtap()" placeholder="Masukan persentase kerusakan atap sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-percent"></span>
+                    </div>
+                </div>
+            </div>
+            <small id="smallMessageAtapKts" class="form-text text-danger" style="display:none;"></small>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleInputAtap(inputId, messageId) {
+    var input = document.getElementById(inputId);
+    var message = document.getElementById(messageId);
+    
+    input.disabled = !input.disabled;  // Membalikkan status disabled input
+    
+    // Jika input tidak dinonaktifkan, tampilkan pesan
+    if (!input.disabled) {
+        message.innerHTML = "* Gunakan kalkulator di atas untuk mengetahui persentase kerusakan.";
+        message.style.display = "block"; // Tampilkan pesan di bawah input
+    } else {
+        message.style.display = "none"; // Sembunyikan pesan saat input dinonaktifkan
+    }
+}
+</script>

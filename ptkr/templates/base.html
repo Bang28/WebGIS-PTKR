@@ -7,19 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}PTKR | Pemetaan Tingkat Kerusakan Rumah{% endblock title %}</title>
     <link rel="shortcut icon" href="{% static './dist/img/favicon.ico' %}" type="image/x-icon">
-    {% include "./include/styles.html" %}
-
-    <script>
-        function isChromeMobile() {
-            var userAgent = navigator.userAgent.toLowerCase();
-            return /chrome/.test(userAgent) && /mobile/.test(userAgent);
-        }
-
-        if (isChromeMobile()) {
-            document.body.classList.add('chrome-mobile');
-        }
-    </script>
-    
+    {% include "./include/styles.html" %}    
 </head>
 <body class="hold-transition layout-fixed layout-navbar-fixed layout-top-nav">
     <div class="wrapper">
@@ -40,6 +28,7 @@
     {% include "modals&alerts/alerts.html" %}
     {% include "modals&alerts/bantuan.html" %}
     {% include "modals&alerts/preview-image.html" %}
+    {% include "modals&alerts/show-images.html" %}
 
     <!--offcanvas-->
     {% include "offcanvas/offcanvas.html" %}

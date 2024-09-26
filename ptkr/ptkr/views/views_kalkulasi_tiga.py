@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.gis.geos import Point
-from ptkr.models.ptkr import Bencana, Bangunan
+from django.db import transaction
+from ptkr.models.ptkr import Bencana, Bangunan, StrukturBangunan, ArsitekturBangunan, UtilitasBangunan
 from django.contrib import messages
 from ptkr.decorators import user_is_aunthenticated
 
@@ -174,68 +175,222 @@ def tigaLantai(request):
             else:
                 tingkat_kerusakan = 'Rusak Berat'
 
-            # simpan ke dalam models
-            tk_rumah_terdampak = Bangunan(
-                pemilik_rumah=info_dasar['pemilik_rumah'],
-                tipe_bangunan=info_dasar['tipe_bangunan'],
-                provinsi=info_dasar['provinsi'],
-                kota=info_dasar['kota'],
-                kecamatan=info_dasar['kecamatan'],
-                kelurahan=info_dasar['kelurahan'],
-                dusun=info_dasar['dusun'],
-                rw=info_dasar['rw'],
-                rt=info_dasar['rt'],
-                bencana=Bencana.objects.get(id=info_dasar['bencana']),
-                foto=info_dasar['foto'],
-                lat=lat,
-                long=long,
-                geom=geom,
-
-                ket_pondasi=visual_data['ket_pondasi'], 
-                pondasi=tk_pondasi,
-                ket_kolom=visual_data['ket_kolom'], 
-                kolom=tk_struktur['kolom'],
-                ket_balok=visual_data['ket_balok'],
-                balok=tk_struktur['balok'],
-                ket_plantai=visual_data['ket_plantai'],
-                plat_lantai=tk_struktur['plantai'],
-                ket_tangga=visual_data['ket_tangga'],
-                tangga=tk_struktur['tangga'],
-                ket_atap=visual_data['ket_atap'], 
-                atap=tk_struktur['atap'],
-                
-                ket_dinding=visual_data['ket_dinding'],
-                dinding=tk_arsitektur['dinding'],
-                plafon=tk_arsitektur['plafon'],
-                lantai=tk_arsitektur['lantai'],
-                kusen=tk_arsitektur['kusen'],
-                pintu=tk_arsitektur['pintu'],
-                jendela=tk_arsitektur['jendela'],
-                f_plafon=tk_arsitektur['fplafon'],
-                f_dinding=tk_arsitektur['fdinding'],
-                f_kusen_pintu=tk_arsitektur['fkupin'],
-
-                instalasi_listrik=tk_instalasi_listrik,
-                instalasi_air_bersih=tk_air_bersih,
-                drainase_limbah=ttl_tk_drainase,
-                
-                tingkat_kerusakan=tingkat_kerusakan,
-                ttl_nilai_kerusakan=ttl_nilai_kerusakan,
-            )
             try:
-                # Memanggil metode full_clean() untuk menjalankan validasi
-                tk_rumah_terdampak.full_clean()
-                # Simpan objek jika tidak ada kesalahan validasi
-                tk_rumah_terdampak.save()
-                messages.success(request, 'Data rumah terdampak berhasil disimpan.')
-                return redirect('ptkr:tiga')
+                with transaction.atomic():
+                    # simpan data bangunan
+                    bangunan = Bangunan(
+                        pemilik_rumah=info_dasar['pemilik_rumah'],
+                        tipe_bangunan=info_dasar['tipe_bangunan'],
+                        provinsi=info_dasar['provinsi'],
+                        kota=info_dasar['kota'],
+                        kecamatan=info_dasar['kecamatan'],
+                        kelurahan=info_dasar['kelurahan'],
+                        dusun=info_dasar['dusun'],
+                        rw=info_dasar['rw'],
+                        rt=info_dasar['rt'],
+                        bencana=Bencana.objects.get(id=info_dasar['bencana']),
+                        foto=info_dasar['foto'],
+                        lat=lat,
+                        long=long,
+                        koordinat=geom,
+                        
+                        tingkat_kerusakan=tingkat_kerusakan,
+                        ttl_nilai_kerusakan=ttl_nilai_kerusakan,
+                    )
+                    bangunan.full_clean()
+                    bangunan.save()
+
+                    # simpan data struktur bangunan
+                    struktur_bangunan = StrukturBangunan(
+                        ket_pondasi=visual_data['ket_pondasi'], 
+                        vk_pondasi=tk_pondasi,
+                        tk_pondasi=tk_pondasi,
+
+                        ket_kolom=visual_data['ket_kolom'], 
+                        j_kolom=data_kerusakan_struktur['kolom'][0],
+                        kolom_tr=data_kerusakan_struktur['kolom'][1],
+                        kolom_rsr=data_kerusakan_struktur['kolom'][2],
+                        kolom_rr=data_kerusakan_struktur['kolom'][3],
+                        kolom_rs=data_kerusakan_struktur['kolom'][4],
+                        kolom_rb=data_kerusakan_struktur['kolom'][5],
+                        kolom_rsb=data_kerusakan_struktur['kolom'][6],
+                        kolom_ktr=data_kerusakan_struktur['kolom'][7],
+                        tk_kolom=tk_struktur['kolom'],
+
+                        ket_balok=visual_data['ket_balok'],
+                        j_balok=data_kerusakan_struktur['balok'][0],
+                        balok_tr=data_kerusakan_struktur['balok'][1],
+                        balok_rsr=data_kerusakan_struktur['balok'][2],
+                        balok_rr=data_kerusakan_struktur['balok'][3],
+                        balok_rs=data_kerusakan_struktur['balok'][4],
+                        balok_rb=data_kerusakan_struktur['balok'][5],
+                        balok_rsb=data_kerusakan_struktur['balok'][6],
+                        balok_ktr=data_kerusakan_struktur['balok'][7],
+                        tk_balok=tk_struktur['balok'],
+
+                        ket_plantai=visual_data['ket_plantai'],
+                        j_plantai=data_kerusakan_struktur['plantai'][0],
+                        plantai_tr=data_kerusakan_struktur['plantai'][1],
+                        plantai_rsr=data_kerusakan_struktur['plantai'][2],
+                        plantai_rr=data_kerusakan_struktur['plantai'][3],
+                        plantai_rs=data_kerusakan_struktur['plantai'][4],
+                        plantai_rb=data_kerusakan_struktur['plantai'][5],
+                        plantai_rsb=data_kerusakan_struktur['plantai'][6],
+                        plantai_ktr=data_kerusakan_struktur['plantai'][7],
+                        tk_plantai=tk_struktur['plantai'],
+
+                        ket_tangga=visual_data['ket_tangga'],
+                        j_tangga=data_kerusakan_struktur['tangga'][0],
+                        tangga_tr=data_kerusakan_struktur['tangga'][1],
+                        tangga_rsr=data_kerusakan_struktur['tangga'][2],
+                        tangga_rr=data_kerusakan_struktur['tangga'][3],
+                        tangga_rs=data_kerusakan_struktur['tangga'][4],
+                        tangga_rb=data_kerusakan_struktur['tangga'][5],
+                        tangga_rsb=data_kerusakan_struktur['tangga'][6],
+                        tangga_ktr=data_kerusakan_struktur['tangga'][7],
+                        tk_tangga=tk_struktur['tangga'],
+
+                        ket_atap=visual_data['ket_atap'], 
+                        v_atap=data_kerusakan_struktur['atap'][0],
+                        atap_tr=data_kerusakan_struktur['atap'][1],
+                        atap_rsr=data_kerusakan_struktur['atap'][2],
+                        atap_rr=data_kerusakan_struktur['atap'][3],
+                        atap_rs=data_kerusakan_struktur['atap'][4],
+                        atap_rb=data_kerusakan_struktur['atap'][5],
+                        atap_rsb=data_kerusakan_struktur['atap'][6],
+                        atap_ktr=data_kerusakan_struktur['atap'][7],
+                        tk_atap=tk_struktur['atap'],
+
+                        bangunan=bangunan,
+                    )
+                    struktur_bangunan.full_clean()
+                    struktur_bangunan.save()
+                    
+                    # simpan data arsitektur bangunan
+                    arsitektur_bangunan = ArsitekturBangunan(
+                        ket_kolom=visual_data['ket_kolom'], 
+                        v_dinding=data_kerusakan_arsitektur['dinding'][0],
+                        dinding_tr=data_kerusakan_arsitektur['dinding'][1],
+                        dinding_rsr=data_kerusakan_arsitektur['dinding'][2],
+                        dinding_rr=data_kerusakan_arsitektur['dinding'][3],
+                        dinding_rs=data_kerusakan_arsitektur['dinding'][4],
+                        dinding_rb=data_kerusakan_arsitektur['dinding'][5],
+                        dinding_rsb=data_kerusakan_arsitektur['dinding'][6],
+                        dinding_ktr=data_kerusakan_arsitektur['dinding'][7],
+                        tk_dinding=tk_arsitektur['dinding'],
+
+                        v_plafon=data_kerusakan_arsitektur['plafon'][0],
+                        plafon_tr=data_kerusakan_arsitektur['plafon'][1],
+                        plafon_rsr=data_kerusakan_arsitektur['plafon'][2],
+                        plafon_rr=data_kerusakan_arsitektur['plafon'][3],
+                        plafon_rs=data_kerusakan_arsitektur['plafon'][4],
+                        plafon_rb=data_kerusakan_arsitektur['plafon'][5],
+                        plafon_rsb=data_kerusakan_arsitektur['plafon'][6],
+                        plafon_ktr=data_kerusakan_arsitektur['plafon'][7],
+                        tk_plafon=tk_arsitektur['plafon'],
+
+                        v_lantai=data_kerusakan_arsitektur['lantai'][0],
+                        lantai_tr=data_kerusakan_arsitektur['lantai'][1],
+                        lantai_rsr=data_kerusakan_arsitektur['lantai'][2],
+                        lantai_rr=data_kerusakan_arsitektur['lantai'][3],
+                        lantai_rs=data_kerusakan_arsitektur['lantai'][4],
+                        lantai_rb=data_kerusakan_arsitektur['lantai'][5],
+                        lantai_rsb=data_kerusakan_arsitektur['lantai'][6],
+                        lantai_ktr=data_kerusakan_arsitektur['lantai'][7],
+                        tk_lantai=tk_arsitektur['lantai'],
+
+                        j_kusen=data_kerusakan_arsitektur['kusen'][0],
+                        kusen_tr=data_kerusakan_arsitektur['kusen'][1],
+                        kusen_rsr=data_kerusakan_arsitektur['kusen'][2],
+                        kusen_rr=data_kerusakan_arsitektur['kusen'][3],
+                        kusen_rs=data_kerusakan_arsitektur['kusen'][4],
+                        kusen_rb=data_kerusakan_arsitektur['kusen'][5],
+                        kusen_rsb=data_kerusakan_arsitektur['kusen'][6],
+                        kusen_ktr=data_kerusakan_arsitektur['kusen'][7],
+                        tk_kusen=tk_arsitektur['kusen'],
+                        
+                        j_pintu=data_kerusakan_arsitektur['pintu'][0],
+                        pintu_tr=data_kerusakan_arsitektur['pintu'][1],
+                        pintu_rsr=data_kerusakan_arsitektur['pintu'][2],
+                        pintu_rr=data_kerusakan_arsitektur['pintu'][3],
+                        pintu_rs=data_kerusakan_arsitektur['pintu'][4],
+                        pintu_rb=data_kerusakan_arsitektur['pintu'][5],
+                        pintu_rsb=data_kerusakan_arsitektur['pintu'][6],
+                        pintu_ktr=data_kerusakan_arsitektur['pintu'][7],
+                        tk_pintu=tk_arsitektur['pintu'],
+                        
+                        j_jendela=data_kerusakan_arsitektur['jendela'][0],
+                        jendela_tr=data_kerusakan_arsitektur['jendela'][1],
+                        jendela_rsr=data_kerusakan_arsitektur['jendela'][2],
+                        jendela_rr=data_kerusakan_arsitektur['jendela'][3],
+                        jendela_rs=data_kerusakan_arsitektur['jendela'][4],
+                        jendela_rb=data_kerusakan_arsitektur['jendela'][5],
+                        jendela_rsb=data_kerusakan_arsitektur['jendela'][6],
+                        jendela_ktr=data_kerusakan_arsitektur['jendela'][7],
+                        tk_jendela=tk_arsitektur['jendela'],
+
+                        v_fplafon=data_kerusakan_arsitektur['fplafon'][0],
+                        fplafon_tr=data_kerusakan_arsitektur['fplafon'][1],
+                        fplafon_rsr=data_kerusakan_arsitektur['fplafon'][2],
+                        fplafon_rr=data_kerusakan_arsitektur['fplafon'][3],
+                        fplafon_rs=data_kerusakan_arsitektur['fplafon'][4],
+                        fplafon_rb=data_kerusakan_arsitektur['fplafon'][5],
+                        fplafon_rsb=data_kerusakan_arsitektur['fplafon'][6],
+                        fplafon_ktr=data_kerusakan_arsitektur['fplafon'][7],
+                        tk_fplafon=tk_arsitektur['fplafon'],
+                        
+                        v_fdinding=data_kerusakan_arsitektur['fdinding'][0],
+                        fdinding_tr=data_kerusakan_arsitektur['fdinding'][1],
+                        fdinding_rsr=data_kerusakan_arsitektur['fdinding'][2],
+                        fdinding_rr=data_kerusakan_arsitektur['fdinding'][3],
+                        fdinding_rs=data_kerusakan_arsitektur['fdinding'][4],
+                        fdinding_rb=data_kerusakan_arsitektur['fdinding'][5],
+                        fdinding_rsb=data_kerusakan_arsitektur['fdinding'][6],
+                        fdinding_ktr=data_kerusakan_arsitektur['fdinding'][7],
+                        tk_fdinding=tk_arsitektur['fdinding'],
+                        
+                        v_fkupin=data_kerusakan_arsitektur['fkupin'][0],
+                        fkupin_tr=data_kerusakan_arsitektur['fkupin'][1],
+                        fkupin_rsr=data_kerusakan_arsitektur['fkupin'][2],
+                        fkupin_rr=data_kerusakan_arsitektur['fkupin'][3],
+                        fkupin_rs=data_kerusakan_arsitektur['fkupin'][4],
+                        fkupin_rb=data_kerusakan_arsitektur['fkupin'][5],
+                        fkupin_rsb=data_kerusakan_arsitektur['fkupin'][6],
+                        fkupin_ktr=data_kerusakan_arsitektur['fkupin'][7],
+                        tk_fkupin=tk_arsitektur['fkupin'],
+
+                        bangunan=bangunan,
+                    )
+                    arsitektur_bangunan.full_clean()
+                    arsitektur_bangunan.save()
+                    
+                    utilitas_bangunan = UtilitasBangunan(
+                        vk_listrik=data_kerusakan_utilitas['utilitas'][0],
+                        vk_air=data_kerusakan_utilitas['utilitas'][1],
+                        
+                        v_drainase=data_kerusakan_arsitektur['drainase'][0],
+                        drainase_tr=data_kerusakan_arsitektur['drainase'][1],
+                        drainase_rsr=data_kerusakan_arsitektur['drainase'][2],
+                        drainase_rr=data_kerusakan_arsitektur['drainase'][3],
+                        drainase_rs=data_kerusakan_arsitektur['drainase'][4],
+                        drainase_rb=data_kerusakan_arsitektur['drainase'][5],
+                        drainase_rsb=data_kerusakan_arsitektur['drainase'][6],
+                        drainase_ktr=data_kerusakan_arsitektur['drainase'][7],
+                        tk_drainase=tk_arsitektur['drainase'],
+                    )
+                    utilitas_bangunan.full_clean()
+                    utilitas_bangunan.save()
+                    
+                    messages.success(request, 'Data rumah terdampak berhasil disimpan.')
+                    return redirect('ptkr:tiga')
+                
             except Exception as e:
-                messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
+                messages.error(request, f'Terjadi Kesalahan: {str(e)}')
                 print(e)
                 return redirect('ptkr:tiga')
-
+            
         except Exception as e:
-            messages.error(request, f'Terjadi kesalahan saat menyimpan data: {str(e)}')
+            messages.error(request, f'Terjadi kesalahan: {str(e)}')
             print(e)
             return redirect('ptkr:tiga')
     

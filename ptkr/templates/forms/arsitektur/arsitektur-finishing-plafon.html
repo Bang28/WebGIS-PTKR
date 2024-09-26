@@ -1,0 +1,234 @@
+<!--Finishing Plafon-->
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Arsitektur - Komponen Finishing Plafon</h3>
+        </div>
+        <div class="card-body">
+            <label class=" ">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen finishing plafon rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah persentase komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+            <!--Kalkulator-->
+            <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih.</label>
+            <div class="row">
+                <!--Plafon-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_fplafon">Panjang Plafon (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcFPlafon()" id="panjang_fplafon" placeholder="Masukan panjang Plafon" aria-describedby="panjang_fplafon">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_fplafon">Lebar Plafon (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcFPlafon()" id="lebar_fplafon" placeholder="Masukan lebar Plafon" aria-describedby="lebar_fplafon">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_fplafon">Luas Plafon</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_fplafon" aria-describedby="luas_fplafon" placeholder="Luas Plafon" readonly>
+                    </div>
+                </div>
+                <!--End Plafon-->
+            </div>
+            <div class="row">
+                <!--Bidang Plafon Rusak-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="panjang_fplafon_rusak">Panjang Bidang Plafon yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcFPlafon()" id="panjang_fplafon_rusak" placeholder="Masukan panjang Bidang Plafon rusak" aria-describedby="panjang Bidang Plafon rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lebar_fplafon_rusak">Lebar Bidang Plafon yang Rusak (Meter)</label>
+                        <input type="number" class="form-control form-control-sm" onkeyup="calcFPlafon()" id="lebar_fplafon_rusak" placeholder="Masukan lebar Bidang Plafon rusak" aria-describedby="lebar Bidang Plafon rusak">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="luas_fplafon_rusak">Luas Bidang Plafon yang Rusak</label>
+                        <input type="number" class="form-control form-control-sm" id="luas_fplafon_rusak" aria-describedby="luas_fplafon_rusak" placeholder="Luas bidang plafon yang rusak" readonly>
+                    </div>
+                </div>
+                <!--End Bidang Plafon Rusak-->
+            </div>
+            <div class="row">
+                <!--Persentase Kerusakan Plafon-->
+                <div class="col-md-8">
+                    <label for="kerusakan_fplafon">Presentase kerusakan komponen Finishing Plafon:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="number" class="form-control form-control-sm" id="kerusakan_fplafon" aria-describedby="kerusakan_fplafon" placeholder="Nilai kerusakan komponen">
+                        <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-percent"></span>
+                        </div>
+                        </div>
+                        <small>Salin nilai dan isikan pada kolom deskripsi kerusakan yang dipilih.</small>
+                    </div>
+                </div>
+                <!--End Persentase Kerusakan Plafon-->
+            </div>           
+            <!--End Kalkulator--> 
+
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_tr_checked" checked disabled>
+                <label class="form-check-label" for="fplafon_tr_checked">
+                    Finishing plafon dalam kondisi baik
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_tr"  id="fplafon_tr"class="form-control form-control-sm" placeholder="Kolom ini terisi otomatis" readonly>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_rsr_checked" onclick="toggleInputFplafon('fplafon_rsr', 'smallMessageFplafonRsr')">
+                <label class="form-check-label" for="fplafon_rsr_checked">
+                    Perubahan warna pada sebagian lapisan warna finishing plafon
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_fplafon_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_rsr" id="fplafon_rsr" class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonRsr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_rr_checked" onclick="toggleInputFplafon('fplafon_rr', 'smallMessageFplafonRr')">
+                <label class="form-check-label" for="fplafon_rr_checked">
+                    Perubahan warna pada lapisan cat plafon semakin meluas
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_fplafon_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_rr"  id="fplafon_rr"class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonRr" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_rs_checked" onclick="toggleInputFplafon('fplafon_rs', 'smallMessageFplafonRs')">
+                <label class="form-check-label" for="fplafon_rs_checked">
+                    Terlihat retak pada sebagian sambungan plafon, dan <br>
+                    Lapisan cat plafon terkelupas sebagian
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_fplafon_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_rs"  id="fplafon_rs"class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonRs" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_rb_checked" onclick="toggleInputFplafon('fplafon_rb', 'smallMessageFplafonRb')">
+                <label class="form-check-label" for="fplafon_rb_checked">
+                    Retak pada sambungan plafon semakin meluas, dan <br>
+                    Lapisan cat plafon terlihat terkelupas meluas dan berlumut
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_fplafon_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_rb"  id="fplafon_rb"class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonRb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_rsb_checked" onclick="toggleInputFplafon('fplafon_rsb', 'smallMessageFplafonRsb')">
+                <label class="form-check-label" for="fplafon_rsb_checked">
+                    Retak pada sambungan plafon terjadi hampir di seluruh bagian, dan <br>
+                    Lapisan cat plafon terkelupas dan berlumut hampir di seluruh bagian
+                </label>
+                <span>
+                    <a href="#" class="" data-toggle="modal" data-target="#modal_fplafon_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_rsb" id="fplafon_rsb" class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonRsb" class="form-text text-danger" style="display:none;"></small>
+            
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="fplafon_kts_checked" onclick="toggleInputFplafon('fplafon_kts', 'smallMessageFplafonKts')">
+                <label class="form-check-label" for="fplafon_kts_checked">
+                    Komponen finishing Tidak Sesuai. Material, dimensi, dan konstruksi finishing diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI)
+                </label>
+            </div>
+            <div class="input-group mb-0">
+                <input type="number" min="0" name="fplafon_kts" id="fplafon_kts" class="form-control form-control-sm" onkeyup="calcFPlafon()" placeholder="Masukan persentase kerusakan finishing plafon sesuai deskripsi disini" disabled>
+                <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-percent"></span>
+                </div>
+                </div>
+            </div>
+            <small id="smallMessageFplafonKts" class="form-text text-danger" style="display:none;"></small>
+        </div>
+    </div>
+</div>
+<!--End Finishing Plafon-->
+
+<script>
+function toggleInputFplafon(inputId, messageId) {
+    var input = document.getElementById(inputId);
+    var message = document.getElementById(messageId);
+    
+    input.disabled = !input.disabled;  // Membalikkan status disabled input
+    
+    // Jika input tidak dinonaktifkan, tampilkan pesan
+    if (!input.disabled) {
+        message.innerHTML = "* Gunakan kalkulator di atas untuk mengetahui persentase kerusakan.";
+        message.style.display = "block"; // Tampilkan pesan di bawah input
+    } else {
+        message.style.display = "none"; // Sembunyikan pesan saat input dinonaktifkan
+    }
+}
+</script>
