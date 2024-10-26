@@ -1,0 +1,353 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static './plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+        <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+            <h1 class="sitename">WebGIS-PTKR</h1>
+        </a>
+        <nav id="navmenu" class="navmenu">
+            <ul>
+            <li><a href="#hero" class="active">Beranda<br></a></li>
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#fitur">Fitur</a></li>
+            <li><a href="#contact">Kontak Kami</a></li>
+            <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+            <li><a href="{% url 'ptkr:data-bencana' %}">Data Bencana</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+        <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section">
+        <div class="container">
+            <div class="row gy-4">
+            <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                <h1>WebGIS-PTKR</h1>
+                <p>WebGIS-PTKR merupakan web penyedia informasi kerusakan bangunan rumah akibat bencana alam</p>
+                <div class="d-flex">
+                <a href="dashboard-peta.html" class="btn-dash-peta">Dashboard Peta</a>
+                <button type="button" class="btn-lap-damage" data-bs-toggle="modal" data-bs-target="#laporanModal">Buat Laporan</button>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                <img src="{% static './assets/img/disaster.png' %} " class="img-fluid animated" alt="disaster">
+            </div>
+            </div>
+        </div>
+        </section><!-- /Hero Section -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="laporanModal" tabindex="-1" aria-labelledby="laporanModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                <div class="modal-header p-2">
+                    <h1 class="modal-title fs-5" id="laporanModalLabel">Pilih Sesuai Tipe Rumah</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <a href="{% url 'ptkr:satu' %}" class="btn btn-outline-secondary p-3">
+                                <i class="bi bi-house-exclamation-fill" style="font-size: 2em;"></i>
+                            </a>
+                            <p>Satu Lantai</p>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'ptkr:dua' %}" class="btn btn-outline-secondary p-3">
+                                <i class="bi bi-house-exclamation-fill" style="font-size: 2em;"></i>
+                            </a>
+                            <p>Dua Lantai</p>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'ptkr:tiga' %}" class="btn btn-outline-secondary p-3">
+                                <i class="bi bi-house-exclamation-fill" style="font-size: 2em;"></i>
+                            </a>
+                            <p>Tiga Lantai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer p-2">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="about section light-background">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Tentang</h2>
+            <p>WebGIS-PTKR merupakan Sistem Informasi Geografis (SIG) berbasis web yang dirancang untuk memudahkan dalam pengolahan dan penyampaian informasi mengenai kerusakan bangunan rumah akibat bencana alam. WebGIS ini dirancang untuk mendukung kajian cepat pada tahap pasca-bencana sehingga dapat membantu proses perencanaan dan pemulihan.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+            <div class="row gy-5">
+            <div class="col-xl-5">
+                <img src="{% static './assets/img/disaster.png' %} " alt="" class="img-fluid">
+            </div>
+            <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+                <div class="row gy-4">
+                <div class="col-md-6 icon-box position-relative">
+                    <i class="bi bi-map"></i>
+                    <h4><a href="" class="stretched-link">Peta Kerusakan Bangunan</a></h4>
+                    <p>Penyajian informasi kerusakan bangunan dalam bentuk peta.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <h4><a href="" class="stretched-link">Statistik Kejadian Bencana</a></h4>
+                    <p>Penyampaian informasi data kejadian bencana terkini.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                    <i class="bi bi-database"></i>
+                    <h4><a href="" class="stretched-link">Tabel Bangunan Terdampak</a></h4>
+                    <p>Penyampaian informasi data bangunan terdampak bencana.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                    <i class="bi bi-arrow-up-right-square"></i>
+                    <h4><a href="" class="stretched-link">Rute Kelokasi Rumah</a></h4>
+                    <p>Dapatkan rute kelokasi rumah terdampak bencana.</p>
+                </div><!-- Icon-Box -->
+
+                </div>
+            </div>
+            </div>
+        </div>
+        </section><!-- /About Section -->
+
+        <!-- Features Section -->
+        <section id="fitur" class="features section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Fitur</h2>
+            <p>WebGIS-PTKR merupakan Sistem Informasi Geografis (SIG) berbasis web yang dirancang dalam rangka pemenuhan tugas akhir
+            mahasiswa. Terdapat beberapa fitur yang dikembangkan pada WebGIS-PTKR ini.</p>
+        </div><!-- End Section Title -->
+        <div class="container">
+            <div class="row justify-content-between">
+            <div class="col-lg-5 d-flex align-items-center">
+                <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
+                <li class="nav-item">
+                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
+                    <i class="bi bi-map"></i>
+                    <div>
+                        <h4 class="d-none d-lg-block">Peta Kerusakan Bangunan Rumah Akibat Bencana</h4>
+                        <p>
+                        Menyajikan informasi kerusakan bangunan rumah terdampak bencana dalam bentuk peta pada laman web.
+                        Dengan 3 kategori kerusakan, rusak ringan, sedang dan
+                        berat.
+                        </p>
+                    </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <div>
+                        <h4 class="d-none d-lg-block">Statistik Kejadian Bencana Terkini</h4>
+                        <p>
+                        Menyajikan informasi kejadian bencana dalam bentuk chart pada laman web.
+                        Sehingga dapat membantu untuk mengetahui wilayah yang sering
+                        mengalami kejadian bencana.
+                        </p>
+                    </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
+                    <i class="bi bi-table"></i>
+                    <div>
+                        <h4 class="d-none d-lg-block">Tabel Bangunan Rumah Terdampak Bencana</h4>
+                        <p>
+                        Menyajikan informasi bangunan rumah yang terdampak bencana dalam bentuk tabel pada laman web.
+                        Informasi yang ditampilkan, dapat membantu proses perencanaan dan pemulihan pasca
+                        bencana.
+                        </p>
+                    </div>
+                    </a>
+                </li>
+                </ul><!-- End Tab Nav -->
+            </div>
+            <div class="col-lg-6">
+                <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+                <div class="tab-pane fade active show" id="features-tab-1">
+                    <img src="{% static './assets/img/disaster.png' %}" alt="" class="img-fluid">
+                </div><!-- End Tab Content Item -->
+                <div class="tab-pane fade" id="features-tab-2">
+                    <img src="{% static './assets/img/disaster.png' %}" alt="" class="img-fluid">
+                </div><!-- End Tab Content Item -->
+                <div class="tab-pane fade" id="features-tab-3">
+                    <img src="{% static './assets/img/disaster.png' %}" alt="" class="img-fluid">
+                </div><!-- End Tab Content Item -->
+                </div>
+            </div>
+            </div>
+        </div>
+        </section><!-- /Features Section -->
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact section light-background">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Kontak Kami</h2>
+            <p>WebGIS-PTKR merupakan Sistem Informasi Geografis (SIG) berbasis web yang dirancang dalam rangka pemenuhan tugas akhir mahasiswa. Untuk pertanyaan, kritik, dan saran lebih lanjut mengenai halaman web ini dapat menghubungi kontak tertera atau kirim pesan lewat email melalui formulir dibawah.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+            <div class="col-lg-5">
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                    <h3>Alamat</h3>
+                    <p>Jalan Raya Pagojengan Km. 3 Paguyangan Brebes 52276</p>
+                </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                    <h3>Telepon</h3>
+                    <p>+62 822 7979 4813</p>
+                </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                    <h3>Email Us</h3>
+                    <p>mhdmasruri9@gmail.com</p>
+                </div>
+                </div><!-- End Info Item -->
+            </div>
+            <div class="col-lg-7">
+                <form action="{% url "ptkr:email" %}" method="post" class="email-form" data-aos="fade-up" data-aos-delay="500">
+                    {% csrf_token %}
+                    <div class="row gy-4">
+                        <div class="col-md-6">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                        </div>
+                        <div class="col-md-6 ">
+                        <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                        </div>
+                        <div class="col-md-12">
+                        <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                        </div>
+                        <div class="col-md-12">
+                        <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                        </div>
+                        <div class="col-md-12 text-center">
+                        <div class="loading">Loading</div>
+                        <button type="submit">Kirim Pesan</button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- End Contact Form -->
+            </div>
+        </div>
+        </section><!-- /Contact Section -->
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="d-flex align-items-center">
+                <span class="sitename">WebGIS-PTKR</span>
+            </a>
+            <div class="footer-contact pt-3">
+                <p>Universitas Peradaban <br>Fakultas Sains dan Teknologi</p>
+                <p class="mt-3"><strong>Telepon:</strong> <span>+62 822 7979 4813</span></p>
+                <p><strong>Email:</strong> <span>mhdmasruri9@gmail.com</span></p>
+            </div>
+            </div>
+            <div class="col-lg-4 col-md-3 footer-links">
+            <h4>Tautan Web</h4>
+            <ul>
+                <li><i class="bi bi-chevron-right"></i> <a href="#hero">Beranda</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a href="#fitur">Fitur</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a href="#">Statistik Bencana</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a href="#">Data Kerusakan</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a href="#">Dashboard Peta</a></li>
+            </ul>
+            </div>
+            <div class="col-lg-4 col-md-12">
+            <h4>Kuisioner Usabilitas</h4>
+            <p>Mohon untuk mengisi kuisioner usabilitas sehingga diketahui tingkat usabilitas website untuk keperluan penyusunan tugas akhir.</p>
+            <div class="d-flex">
+                <a href="https://forms.gle/rcM48bnowvmQadXk9" target="_blank" class="btn btn-outline-secondary border border-1 border-secondary rounded-5">Kuisioner Usabilitas</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/email-form/email-form.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="{% static './plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+    
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,291 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static './plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+                    <li><a href="{% url 'ptkr:data-bencana' %}" class="active">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container mt-2 mb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb float-end">
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:index" %}">Home</a></li>
+                    <li class="breadcrumb-item active">Data Bencana</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <h4 class="h4" id="data-title">Data Rumah Terdampak</h4>
+                    <div class="col-lg-12">
+                        <!--Filter-->
+                        <form action="{% url "ptkr:data-bencana" %}" class="mb-2">
+                            <h5 class="h5 mb-0">Filter</h5>
+                            <div class="row g-3">
+                                <div class="col-lg-2">
+                                    <select name="bencana" class="form-select form-select-sm" aria-label="Bencana">
+                                        <option selected disabled>Bencana</option>
+                                        {% for b in all_bencana %}
+                                            <option value="{{b.id}}">{{b.jenis_bencana}} pada {{b.tanggal_terjadi|date:'d M Y'}} di Desa {{b.lokasi_bencana}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select id="kategori" name="kategori" class="form-select form-select-sm" aria-label="Kategori">
+                                        <option selected disabled>Kategori</option>
+                                        <option value="Rusak Ringan">Rusak Ringan</option>
+                                        <option value="Rusak Sedang">Rusak Sedang</option>
+                                        <option value="Rusak Berat">Rusak Berat</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-sm btn-primary">Terapkan Filter</button>
+                                    <a href="{% url 'ptkr:data-bencana' %}" class="btn btn-sm btn-secondary">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                        <!--End Filter-->
+
+                        <table class="table table-sm" id="datarumah">
+                            <thead class="border-bottom border-secondary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Pemilik Rumah</th>
+                                    <th>Tipe Rumah</th>
+                                    <th>Alamat</th>
+                                    <th>Bencana</th>
+                                    <th>Tingkat Kerusakan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for all in all_data %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{all.pemilik_rumah}}</td>
+                                    <td>{{all.tipe_bangunan}}</td>
+                                    <td>Dusun {{all.dusun|lower|capfirst}} Desa {{all.kelurahan|lower|capfirst}}</td>
+                                    <td>{{all.bencana.jenis_bencana}} pada {{all.bencana.tanggal_terjadi|date:'d F Y'}}</td>
+                                    <td>{{all.tingkat_kerusakan}}</td>
+                                    <td>
+                                        <a href="{% url 'ptkr:detail-informasi' all.id %}" class="btn btn-sm btn-outline-info">Detail</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="h4">Data Bencana</h4>
+                        <!--Filter-->
+                        <form action="{% url "ptkr:data-bencana" %}" class="mb-2">
+                            <h5 class="h5 mb-0">Filter</h5>
+                            <div class="row g-3">
+                                <div class="col-lg-2">
+                                    <select id="tahun" name="tahun" class="form-select form-select-sm" aria-label="Tahun">
+                                        <option selected>Tahun</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-sm btn-primary">Terapkan Filter</button>
+                                    <a href="{% url 'ptkr:data-bencana' %}" class="btn btn-sm btn-secondary">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                        <!--End Filter-->
+                        <table class="table table-sm" id="dataperbencana">
+                            <thead class="border-bottom border-secondary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Bencana & Tanggal Kejadian</th>
+                                    <th>Daerah Terdampak</th>
+                                    <th>Jumlah Rumah Terdampak</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pb in per_bencana %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{pb.bencana.jenis_bencana}} pada {{pb.tanggal_terjadi|date:'d F Y'}} </td>
+                                    <td>{{pb.daerah|title}}</td>
+                                    <td>Ringan: {{pb.ringan}}, Sedang: {{pb.sedang}}, Berat: {{pb.berat}}</td>
+                                    <td>
+                                        <a href="{% url 'ptkr:detail-bencana' pb.id %}" class="btn btn-sm btn-outline-primary btn-sm">Detail</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="{% static './plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-buttons/js/dataTables.buttons.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %} "></script>
+    <script src="{% static './plugins/jszip/jszip.min.js' %} "></script>
+    <script src="{% static './plugins/pdfmake/pdfmake.min.js' %} "></script>
+    <script src="{% static './plugins/pdfmake/vfs_fonts.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.html5.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.print.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.colVis.min.js' %} "></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>
+
+<script>
+    $(function () {        
+        $('#dataperbencana').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": false,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });
+
+    $(function () {
+        const title = $("#data-title").text(); // Ambil title dari tag h4
+
+        $("#datarumah").DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "ordering": false,
+            "buttons": [
+                {
+                    extend: 'csv',
+                    title: title, // Set title untuk CSV
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Sembunyikan dan Aksi
+                    }
+                },
+                {
+                    extend: 'excel',
+                    title: title, // Set title untuk Excel
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Sembunyikan dan Aksi
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: title, // Set title untuk PDF
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Sembunyikan dan Aksi
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: title, // Set title untuk Print
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Sembunyikan dan Aksi
+                    }
+                }
+            ]
+        }).buttons().container().appendTo('#datarumah_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+<script>
+    // Mendapatkan elemen select
+    const selectTahun = document.getElementById('tahun');
+
+    // Mendapatkan tahun saat ini
+    const currentYear = new Date().getFullYear();
+
+    // Membuat opsi untuk 5 tahun ke belakang
+    for (let i = 0; i <= 5; i++) {
+        const option = document.createElement('option');
+        option.value = currentYear - i;
+        option.text = currentYear - i;
+        selectTahun.appendChild(option);
+    }
+</script>

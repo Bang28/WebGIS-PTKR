@@ -1,32 +1,33 @@
 <!--Kusen-->
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Arsitektur - Komponen Kusen</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Arsitektur - Komponen Kusen</h5>
         </div>
         <div class="card-body">
             <label class="" for="j_kusen">Ada berapa jumlah unit kusen pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_kusen" name="j_kusen" placeholder="Masukan jumlah unit kusen dsini" required/> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_kusen" name="j_kusen" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen dsini" required/> 
             <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen kusen rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
             <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kusen_tr_checked" onclick="toggleInputKusen('kusen_tr')">
+                <input class="form-check-input" type="checkbox" id="kusen_tr_checked" checked disabled>
                 <label class="form-check-label" for="kusen_tr_checked">
                     Kusen dalam kondisi baik
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_tr" name="kusen_tr" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_tr" name="kusen_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+            <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_rsr_checked" onclick="toggleInputKusen('kusen_rsr')">
                 <label class="form-check-label" for="kusen_rsr_checked">
                     Perubahan warna / gores / retak pada sebagian kusen
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kusen_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kusen_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rsr" name="kusen_rsr" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rsr" name="kusen_rsr" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_rr_checked" onclick="toggleInputKusen('kusen_rr')">
                 <label class="form-check-label" for="kusen_rr_checked">
@@ -34,12 +35,12 @@
                     (aluminium/UPVC) sebagian kecil kusen terlihat retak dan gompal / berlubang akibat benturan
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kusen_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kusen_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rr" name="kusen_rr" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rr" name="kusen_rr" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_rs_checked" onclick="toggleInputKusen('kusen_rs')">
                 <label class="form-check-label" for="kusen_rs_checked">
@@ -47,12 +48,12 @@
                     (aluminium/UPVC) terlihat gompal / berlubang terjadi di banyak bagian, sambungan antar batang aluminium mulai terlihat lepas, terjadi deformasi/melengkung
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kusen_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kusen_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rs" name="kusen_rs" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rs" name="kusen_rs" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_rb_checked" onclick="toggleInputKusen('kusen_rb')">
                 <label class="form-check-label" for="kusen_rb_checked">
@@ -60,31 +61,31 @@
                     (aluminium/UPVC) terlihat sambungan antar batang aluminium terlepas, deformasi/melengkung semakin parah sehingga daun pintu/jendela tidak dapat menutup, terjadi patah atau sobek pada plat aluminium di bagian engsel
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kusen_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kusen_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rb" name="kusen_rb" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rb" name="kusen_rb" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_rsb_checked" onclick="toggleInputKusen('kusen_rsb')">
                 <label class="form-check-label" for="kusen_rsb_checked">
                     Kusen dalam kondisi tidak berfungsi menahan daun pintu/jendela akibat akumulasi kerusakan pada sebagian besar kusen
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kusen_rsb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kusen_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rsb" name="kusen_rsb" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_rsb" name="kusen_rsb" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="kusen_kts_checked" onclick="toggleInputKusen('kusen_kts')">
                 <label class="form-check-label" for="kusen_kts_checked">
                     Komponen kusen Tidak Sesuai. Material, dimensi, dan konstruksi kusen diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kusen_kts" name="kusen_kts" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="kusen_kts" name="kusen_kts" onkeyup="calcKusen()" placeholder="Masukan jumlah unit kusen sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>

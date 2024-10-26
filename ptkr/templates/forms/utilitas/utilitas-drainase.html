@@ -1,21 +1,22 @@
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Utilitas - Drainase Limbah</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Utilitas - Drainase Limbah</h5>
         </div>
         <div class="card-body">
             <label class="fieldlabels mt-3">Menghitung volume kerusakan komponen</label> <br>
             <label class="fieldlabels" for="v_drainase">Berapa panjang drainase limbah (M1 / Meter Lari) pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="v_drainase" name="v_drainase" placeholder="Masukan panjang drainase Disini" required/> 
+            <input type="number" min="1" class="form-control form-control-sm" id="v_drainase" name="v_drainase" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase Disini" required/> 
             
             <label class="fieldlabels mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen drainase rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
             <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_tr')" id="checkbox_drainase_tr">
+                <input class="form-check-input" type="checkbox" id="checkbox_drainase_tr" checked disabled>
                 <label class="form-check-label" for="checkbox_drainase_tr">
                     Floor drain, buangan kloset, roof drain, talang vertikal, dan drainase halaman dalam kondisi baik.
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_tr" name="drainase_tr" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled/> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_tr" name="drainase_tr" placeholder="Kolom ini terisi otomatis" readonly/> 
+            <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_rsr')" id="checkbox_drainase_rsr">
                 <label class="form-check-label" for="checkbox_drainase_rsr">
@@ -25,12 +26,12 @@
                     Biaya perbaikan kurang dari 10% dari biaya instalasi baru
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_drainase_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_drainase_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rsr" name="drainase_rsr" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled/> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rsr" name="drainase_rsr" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled/> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_rr')" id="checkbox_drainase_rr">
                 <label class="form-check-label" for="checkbox_drainase_rr">
@@ -40,7 +41,7 @@
                     Baya perbaikan kurang dari 10-25% dari biaya instalasi baru
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rr" name="drainase_rr" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rr" name="drainase_rr" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_rs')" id="checkbox_drainase_rs">
                 <label class="form-check-label" for="checkbox_drainase_rs">
@@ -50,12 +51,12 @@
                     Biaya perbaikan 25-50 % dari biaya instalasi baru
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_drainase_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_drainase_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rs" name="drainase_rs" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rs" name="drainase_rs" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_rb')" id="checkbox_drainase_rb">
                 <label class="form-check-label" for="checkbox_drainase_rb">
@@ -65,12 +66,12 @@
                     Biaya perbaikan lebih dari 50-65% dari biaya instalasi baru
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_drainase_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_drainase_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rb" name="drainase_rb" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rb" name="drainase_rb" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_rsb')" id="checkbox_drainase_rsb">
                 <label class="form-check-label" for="checkbox_drainase_rsb">
@@ -80,14 +81,14 @@
                     Biaya perbaikan lebih dari 65% dari biaya instalasi baru
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rsb" name="drainase_rsb" placeholder="Masukan panjang drainase sesuai deskripsi dsini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_rsb" name="drainase_rsb" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi dsini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" onclick="toggleInputDrainase('drainase_kts')" id="checkbox_drainase_kts">
                 <label class="form-check-label" for="checkbox_drainase_kts">
                     Komponen drainase Tidak Sesuai. Material, dimensi, dan konstruksi drainase diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI).
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="drainase_kts" name="drainase_kts" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="drainase_kts" name="drainase_kts" onkeyup="calcDrainase()" placeholder="Masukan panjang drainase sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>

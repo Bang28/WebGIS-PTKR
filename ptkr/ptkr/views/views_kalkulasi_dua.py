@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.gis.geos import Point
-from ptkr.models.ptkr import Bencana, Bangunan
 from django.contrib import messages
-from ptkr.decorators import user_is_aunthenticated
+from ptkr.models.models_bangunan import Bangunan
+from ptkr.models.models_bencana import Bencana
 
-@user_is_aunthenticated
 def duaLantai(request):
     """fungsi kalkulasi kerusakan bangunan tipe dua lantau"""
     list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
@@ -162,7 +161,8 @@ def duaLantai(request):
             print('Total TK Drainase: ', ttl_tk_drainase)
 
             # hitung tingkat kerusakan bangunan
-            ttl_nilai_kerusakan = tk_pondasi + ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih
+            hasil_akhir = (tk_pondasi + ttl_tk_struktur + ttl_tk_arsitektur + ttl_tk_drainase + tk_instalasi_listrik + tk_air_bersih) * 100
+            ttl_nilai_kerusakan = round(hasil_akhir, 2)
             print('Total TK: ', ttl_nilai_kerusakan)
 
             # klasifikasi tingkat kerusakan

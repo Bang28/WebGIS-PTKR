@@ -1,0 +1,491 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static './plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static './plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    
+    <!--Leaflet-->
+    <link rel="stylesheet" href="{% static './plugins/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.Default.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.css' %}">
+    <!--Leaflet routing machine-->
+    <link rel="stylesheet" href="{% static './plugins/leafletroutingmachine/leaflet-routing-machine.css' %}">
+    
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+    <!--style custom-->
+    <link rel="stylesheet" href="{% static './dist/css/style.css' %}" />
+
+    <style>
+        .full-screen {
+            padding: 5px;
+            background-color: #fff;
+            position: absolute;
+            left: 11px;
+            top: 100px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .start-button button {
+            padding: 5px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+                    <li><a href="{% url 'ptkr:data-bencana' %}">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container mt-2 mb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb float-end">
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:index" %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:data-bencana" %}">Data Bencana</a></li>
+                    <li class="breadcrumb-item active">Detail Informasi</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-7 order-2 order-lg-1">
+                        <h4>Hasil Pengamatan</h4>
+                        <div class="post">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Pondasi</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_pondasi}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kolom</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_kolom}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balok</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_balok}}</td>
+                                    </tr>
+                                    {% if detail.tipe_bangunan != "Satu Lantai" %}
+                                    <tr>
+                                        <td>Plat Lantai</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_plantai}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tangga</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_tangga}}</td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>Atap</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_atap}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dinding</td>
+                                        <td>:</td>
+                                        <td>{{detail.ket_dinding}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-5 order-1 order-lg-2">
+                        <h3 class="text-primary"><i class="fas fa-user"></i> {{detail.pemilik_rumah}}</h3>
+                        <p class="text-muted"><i class="bi bi-map"></i>&nbsp; Provinsi {{detail.provinsi|lower|capfirst }} {{detail.kota|lower|capfirst }} 
+                            Kecamatan {{detail.kecamatan|lower|capfirst }} Desa {{detail.kelurahan|lower|capfirst }} Dukuh {{detail.dusun}} RT {{detail.rt}} RW {{detail.rw}} </p>
+                        <div>
+                            <img class="img-fluid img-bordered-sm preview-image pe-auto" src="{{detail.foto.url}}" alt="{{detail.tingkat_kerusakan}}">
+                        </div>                
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div id="petamap" style="width: 100%; height: 400px;">
+                            <!--Direction-->
+                            <div id="direct" class="leaflet-control direction">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Dapatkan rute" fill="currentColor" class="bi bi-arrow-up-right-circle-fill" viewBox="0 0 16 16">
+                                <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"/>
+                                </svg>
+                            </div>
+
+                            <!-- full browser -->
+                            <div class="leaflet-control full-screen" onclick=fullScreenView()>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Full Screen" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include "./modals&alerts/preview-image.html" %}
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="{% static './plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="{% static './plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+    
+    <!--Leaflet-->
+    <script src="{% static './plugins/leaflet/leaflet.js' %}"></script>
+    <script src="{% static './plugins/leafletmarkercluster/leaflet.markercluster.js' %}"></script>
+    <script src="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.js' %}"></script>
+    <script src="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.js' %}"></script>
+
+    <!--Leaflet routing machine-->
+    <script src="{% static './plugins/leafletroutingmachine/leaflet-routing-machine.js' %}"></script>
+    
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>
+
+<script>
+    var lat = `{{detail.lat}}`
+    var lng = `{{detail.long}}`
+    // Ganti koma dengan titik
+    lat = lat.replace(",", ".");
+    lng = lng.replace(",", ".");
+
+    // Parsing string ke angka float
+    var latitude = parseFloat(lat);
+    var longitude = parseFloat(lng);
+    
+    var map = L.map('petamap', {zoomControl: false}).setView([latitude, longitude], 18);
+
+    // custom gaya marker
+	var iconRingan = L.icon({
+		iconUrl: '{% static './dist/img/ringan.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+	var iconSedang = L.icon({
+		iconUrl: '{% static './dist/img/sedang.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+	var iconBerat = L.icon({
+		iconUrl: '{% static './dist/img/berat.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+        popupAnchor: [0, -20]
+	})
+
+    // Pilih gaya marker berdasarkan tingkat kerusakan
+    var markerStyle;
+		if ("{{ detail.tingkat_kerusakan }}" === "Rusak Ringan") {
+			markerStyle = iconRingan;
+		} else if ("{{ detail.tingkat_kerusakan }}" === "Rusak Sedang") {
+			markerStyle = iconSedang;
+		} else {
+			markerStyle = iconBerat;
+		}
+    
+    // render koordinat lokasi
+    var point = L.marker([latitude, longitude], {icon: markerStyle})
+        .bindPopup(`<h3>{{detail.pemilik_rumah}}</h3>`)
+        .bindTooltip('{{detail.tingkat_kerusakan}}')
+		point.addTo(map)
+
+    // lapisan peta
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    var ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+
+    // leaflet layer control
+    var baseMaps = {
+        'Open Street Map': osm,
+        'Esri World Imagery': ewi,
+    }
+    L.control.layers(baseMaps, {}, {
+		collapsed: true,
+		position: 'bottomleft', // default topright    
+	}).addTo(map);
+</script>
+
+<script>
+    var directButton = document.getElementById('direct');
+    var startButton = null;  // Tombol mulai akan ditambahkan setelah rute didapatkan
+
+    // Mendapatkan rute menggunakan leaflet routing machine
+    var latTarget = latitude;
+    var longTarget = longitude;
+    var routingControl = null;  // Variabel untuk menyimpan rute
+    var isRoutingActive = false;  // Menyimpan status rute aktif atau tidak
+    var watchID = null;  // ID untuk melacak posisi secara real-time
+    var userCircle = null;  // Circle untuk posisi pengguna
+    var isFollowingUser = false; // Status untuk mengaktifkan atau menonaktifkan pusat peta pada pengguna
+
+    directButton.addEventListener('click', function() {
+        if (isRoutingActive) {
+            // Menghapus rute dan hentikan pelacakan posisi
+            if (routingControl) {
+                map.removeControl(routingControl); 
+                routingControl = null;
+            }
+            if (watchID) {
+                navigator.geolocation.clearWatch(watchID); 
+                watchID = null;
+            }
+            if (userCircle) {
+                map.removeLayer(userCircle); 
+                userCircle = null;
+            }
+            if (startButton) {
+                map.removeControl(startButton); // Hapus tombol Mulai
+                startButton = null;
+            }
+            isRoutingActive = false;
+            isFollowingUser = false;
+            return;
+        }
+
+        // Tampilkan animasi loading
+        Swal.fire({
+            title: 'Mohon Tunggu',
+            text: 'Sedang mencari rute...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latLngStart = L.latLng(position.coords.latitude, position.coords.longitude);
+            var latLngEnd = L.latLng(latTarget, longTarget);
+
+            var geocoder = L.Control.Geocoder.nominatim();
+
+            geocoder.reverse(latLngStart, map.options.crs.scale(map.getZoom()), function(results) {
+                var startAddress = results[0].name;
+                geocoder.reverse(latLngEnd, map.options.crs.scale(map.getZoom()), function(results) {
+                    var endAddress = results[0].name;
+
+                    Swal.close(); // Tutup animasi loading
+
+                    // Tampilkan alamat awal dan tujuan
+                    Swal.fire({
+                        title: 'Rute didapatkan!',
+                        html: '<b>Start:</b> ' + startAddress + '<br><b>End:</b> ' + endAddress,
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Tambahkan routing ke peta
+                    routingControl = L.Routing.control({
+                        waypoints: [
+                            latLngStart,
+                            latLngEnd
+                        ],
+                        routeWhileDragging: true
+                    }).addTo(map);
+
+                    isRoutingActive = true;
+
+                    // Tambahkan lingkaran untuk posisi pengguna
+                    userCircle = L.circle(latLngStart, {
+                        color: '#3388ff',
+                        fillColor: '#3388ff',
+                        fillOpacity: 0.3,
+                        radius: 10
+                    }).addTo(map);
+
+                    // Tambahkan tombol "Mulai" untuk memusatkan peta pada posisi pengguna
+                    startButton = L.control({position: 'topright'});
+                    startButton.onAdd = function(map) {
+                        var div = L.DomUtil.create('div', 'start-button');
+                        div.innerHTML = '<button id="start-follow" style="padding: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Mulai</button>';
+                        div.firstChild.onclick = function() {
+                            isFollowingUser = true;  // Aktifkan pemusatan peta
+                            map.setView(userCircle.getLatLng(), 18); // Fokus peta pada pengguna
+                        };
+                        return div;
+                    };
+                    startButton.addTo(map);
+
+                    // Melacak posisi pengguna secara real-time
+                    watchID = navigator.geolocation.watchPosition(function(position) {
+                        var newLatLngStart = L.latLng(position.coords.latitude, position.coords.longitude);
+
+                        // Update posisi lingkaran pengguna
+                        if (userCircle) {
+                            userCircle.setLatLng(newLatLngStart);
+                        } else {
+                            userCircle = L.circle(newLatLngStart, {
+                                color: '#3388ff',
+                                fillColor: '#3388ff',
+                                fillOpacity: 0.3,
+                                radius: 10
+                            }).addTo(map);
+                        }
+
+                        // Update rute dengan posisi pengguna terbaru
+                        routingControl.setWaypoints([newLatLngStart, latLngEnd]);
+
+                        // Memusatkan peta pada pengguna jika "Mulai" ditekan
+                        if (isFollowingUser) {
+                            map.setView(newLatLngStart, 18);
+                        }
+                    }, function(error) {
+                        console.error('Error getting location: ', error);
+                    }, {
+                        enableHighAccuracy: true,
+                        maximumAge: 10000,
+                        timeout: 10000
+                    });
+                });
+            });
+        }, function(error) {
+            Swal.close();
+            Swal.fire({
+                title: 'Gagal Mendapatkan Lokasi',
+                text: 'Tidak dapat menemukan posisi saat ini. Silakan coba lagi.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        });
+    });
+</script>
+
+<script>
+    // leaflet locate control
+    var lc = L.control.locate({
+        locateOptions: {
+            enableHighAccuracy: true
+        }
+    }).addTo(map);
+</script>
+
+<!--Get prewview image-->
+<script>
+    $(document).ready(function() {
+        // Menambahkan event listener untuk setiap gambar dengan kelas 'preview-image'
+        $('.preview-image').on('click', function() {
+            // Dapatkan sumber gambar yang diklik
+            var imgSrc = $(this).attr('src');
+            
+            // Dapatkan nama file gambar dari src (mengambil teks setelah '/' terakhir)
+            var imgName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+            // Atau, Anda bisa menggunakan atribut alt sebagai caption
+            var imgCaption = $(this).attr('alt');
+
+            // Setel sumber gambar ke modal preview
+            $('#imagePreview').attr('src', imgSrc);
+            
+            // Setel teks caption di modal preview
+            $('#imageCaption').text(imgCaption);
+
+            // Buka modal preview
+            $('#imagePreviewModal').modal('show');
+        });
+    });
+</script>
+
+<script>
+    // full screen map view
+    var mapId = document.getElementById('petamap');
+    function fullScreenView() {
+        if (document.fullscreenElement){
+            document.exitFullscreen()
+        }else{
+            mapId.requestFullscreen();
+        }
+    }
+</script>

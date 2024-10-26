@@ -1,3 +1,93 @@
+// Kalkulator Struktur Kolom
+function calcKolom() {
+    // Ambil nilai input
+    var j_kolom = parseFloat(document.getElementById("j_kolom").value) || 0;
+    var kolom_rsr = parseFloat(document.getElementById("kolom_rsr").value) || 0;
+    var kolom_rr = parseFloat(document.getElementById("kolom_rr").value) || 0;
+    var kolom_rs = parseFloat(document.getElementById("kolom_rs").value) || 0;
+    var kolom_rb = parseFloat(document.getElementById("kolom_rb").value) || 0;
+    var kolom_rsb = parseFloat(document.getElementById("kolom_rsb").value) || 0;
+    var kolom_kts = parseFloat(document.getElementById("kolom_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var kolom_tr = j_kolom - (kolom_rsr + kolom_rr + kolom_rs + kolom_rb + kolom_rsb + kolom_kts)
+
+    // Update input luas
+    document.getElementById("kolom_tr").value = kolom_tr;
+}
+
+// Kalkulator Struktur Balok
+function calcBalok() {
+    // Ambil nilai input
+    var j_balok = parseFloat(document.getElementById("j_balok").value) || 0;
+    var balok_rsr = parseFloat(document.getElementById("balok_rsr").value) || 0;
+    var balok_rr = parseFloat(document.getElementById("balok_rr").value) || 0;
+    var balok_rs = parseFloat(document.getElementById("balok_rs").value) || 0;
+    var balok_rb = parseFloat(document.getElementById("balok_rb").value) || 0;
+    var balok_rsb = parseFloat(document.getElementById("balok_rsb").value) || 0;
+    var balok_kts = parseFloat(document.getElementById("balok_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var balok_tr = j_balok - (balok_rsr + balok_rr + balok_rs + balok_rb + balok_rsb + balok_kts)
+
+    // Update input luas
+    document.getElementById("balok_tr").value = balok_tr;
+}
+
+// Kalkulator Struktur PLantai
+function calcPLantai() {
+    // Ambil nilai input
+    var j_plantai = parseFloat(document.getElementById("j_plantai").value) || 0;
+    var plantai_rsr = parseFloat(document.getElementById("plantai_rsr").value) || 0;
+    var plantai_rr = parseFloat(document.getElementById("plantai_rr").value) || 0;
+    var plantai_rs = parseFloat(document.getElementById("plantai_rs").value) || 0;
+    var plantai_rb = parseFloat(document.getElementById("plantai_rb").value) || 0;
+    var plantai_rsb = parseFloat(document.getElementById("plantai_rsb").value) || 0;
+    var plantai_kts = parseFloat(document.getElementById("plantai_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var plantai_tr = j_plantai - (plantai_rsr + plantai_rr + plantai_rs + plantai_rb + plantai_rsb + plantai_kts)
+
+    // Update input luas
+    document.getElementById("plantai_tr").value = plantai_tr;
+}
+
+// Kalkulator Struktur Tangga
+function calcTangga() {
+    // Ambil nilai input
+    var j_tangga = parseFloat(document.getElementById("j_tangga").value) || 0;
+    var tangga_rsr = parseFloat(document.getElementById("tangga_rsr").value) || 0;
+    var tangga_rr = parseFloat(document.getElementById("tangga_rr").value) || 0;
+    var tangga_rs = parseFloat(document.getElementById("tangga_rs").value) || 0;
+    var tangga_rb = parseFloat(document.getElementById("tangga_rb").value) || 0;
+    var tangga_rsb = parseFloat(document.getElementById("tangga_rsb").value) || 0;
+    var tangga_kts = parseFloat(document.getElementById("tangga_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var tangga_tr = j_tangga - (tangga_rsr + tangga_rr + tangga_rs + tangga_rb + tangga_rsb + tangga_kts)
+
+    // Update input luas
+    document.getElementById("tangga_tr").value = tangga_tr;
+}
+
+// Kalkulator Struktur Balok
+function calcBalok() {
+    // Ambil nilai input
+    var j_balok = parseFloat(document.getElementById("j_balok").value) || 0;
+    var balok_rsr = parseFloat(document.getElementById("balok_rsr").value) || 0;
+    var balok_rr = parseFloat(document.getElementById("balok_rr").value) || 0;
+    var balok_rs = parseFloat(document.getElementById("balok_rs").value) || 0;
+    var balok_rb = parseFloat(document.getElementById("balok_rb").value) || 0;
+    var balok_rsb = parseFloat(document.getElementById("balok_rsb").value) || 0;
+    var balok_kts = parseFloat(document.getElementById("balok_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var balok_tr = j_balok - (balok_rsr + balok_rr + balok_rs + balok_rb + balok_rsb + balok_kts)
+
+    // Update input luas
+    document.getElementById("balok_tr").value = balok_tr;
+}
+
 // Kalkulator Struktur Atap
 function calcAtap() {
     function calculateAreaAtap(panjang, lebar) {
@@ -258,6 +348,60 @@ function calcFDinding() {
     document.getElementById("kerusakan_fdinding").value = kerusakan_fdinding.toFixed(2);
 }
 
+// Kalkulator Arsitektur Kusen
+function calcKusen() {
+    // Ambil nilai input
+    var j_kusen = parseFloat(document.getElementById("j_kusen").value) || 0;
+    var kusen_rsr = parseFloat(document.getElementById("kusen_rsr").value) || 0;
+    var kusen_rr = parseFloat(document.getElementById("kusen_rr").value) || 0;
+    var kusen_rs = parseFloat(document.getElementById("kusen_rs").value) || 0;
+    var kusen_rb = parseFloat(document.getElementById("kusen_rb").value) || 0;
+    var kusen_rsb = parseFloat(document.getElementById("kusen_rsb").value) || 0;
+    var kusen_kts = parseFloat(document.getElementById("kusen_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var kusen_tr = j_kusen - (kusen_rsr + kusen_rr + kusen_rs + kusen_rb + kusen_rsb + kusen_kts)
+
+    // Update input luas
+    document.getElementById("kusen_tr").value = kusen_tr;
+}
+
+// Kalkulator Arsitektur Pintu
+function calcPintu() {
+    // Ambil nilai input
+    var j_pintu = parseFloat(document.getElementById("j_pintu").value) || 0;
+    var pintu_rsr = parseFloat(document.getElementById("pintu_rsr").value) || 0;
+    var pintu_rr = parseFloat(document.getElementById("pintu_rr").value) || 0;
+    var pintu_rs = parseFloat(document.getElementById("pintu_rs").value) || 0;
+    var pintu_rb = parseFloat(document.getElementById("pintu_rb").value) || 0;
+    var pintu_rsb = parseFloat(document.getElementById("pintu_rsb").value) || 0;
+    var pintu_kts = parseFloat(document.getElementById("pintu_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var pintu_tr = j_pintu - (pintu_rsr + pintu_rr + pintu_rs + pintu_rb + pintu_rsb + pintu_kts)
+
+    // Update input luas
+    document.getElementById("pintu_tr").value = pintu_tr;
+}
+
+// Kalkulator Arsitektur Jendela
+function calcJendela() {
+    // Ambil nilai input
+    var j_jendela = parseFloat(document.getElementById("j_jendela").value) || 0;
+    var jendela_rsr = parseFloat(document.getElementById("jendela_rsr").value) || 0;
+    var jendela_rr = parseFloat(document.getElementById("jendela_rr").value) || 0;
+    var jendela_rs = parseFloat(document.getElementById("jendela_rs").value) || 0;
+    var jendela_rb = parseFloat(document.getElementById("jendela_rb").value) || 0;
+    var jendela_rsb = parseFloat(document.getElementById("jendela_rsb").value) || 0;
+    var jendela_kts = parseFloat(document.getElementById("jendela_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var jendela_tr = j_jendela - (jendela_rsr + jendela_rr + jendela_rs + jendela_rb + jendela_rsb + jendela_kts)
+
+    // Update input luas
+    document.getElementById("jendela_tr").value = jendela_tr;
+}
+
 // Kalkulator Finishing Kupin
 function calcFKupin() {
     function calculateAreaFKusen(tinggi, jpv, panjang, jph, tebal_balok, lebar_balok) {
@@ -322,4 +466,22 @@ function calcFKupin() {
 
     // Tampilkan hasil
     document.getElementById("kerusakan_fkupin").value = kerusakan_fkupin.toFixed(2);
+}
+
+// Kalkulator Utilitas Drainase
+function calcDrainase() {
+    // Ambil nilai input
+    var v_drainase = parseFloat(document.getElementById("v_drainase").value) || 0;
+    var drainase_rsr = parseFloat(document.getElementById("drainase_rsr").value) || 0;
+    var drainase_rr = parseFloat(document.getElementById("drainase_rr").value) || 0;
+    var drainase_rs = parseFloat(document.getElementById("drainase_rs").value) || 0;
+    var drainase_rb = parseFloat(document.getElementById("drainase_rb").value) || 0;
+    var drainase_rsb = parseFloat(document.getElementById("drainase_rsb").value) || 0;
+    var drainase_kts = parseFloat(document.getElementById("drainase_kts").value) || 0;
+
+    // Hitung luas bidang tidak rusak
+    var drainase_tr = v_drainase - (drainase_rsr + drainase_rr + drainase_rs + drainase_rb + drainase_rsb + drainase_kts)
+
+    // Update input luas
+    document.getElementById("drainase_tr").value = drainase_tr;
 }

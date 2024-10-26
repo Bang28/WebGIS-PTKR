@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Struktur - Komponen Balok</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Struktur - Komponen Balok</h5>
         </div>
         <div class="card-body">
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Balok</label> 
@@ -51,119 +51,133 @@
                 </table>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok1" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok1" onclick="toggleCollapseBalok(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_balok1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok2" onclick="toggleCollapseBalok(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_balok2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok3" onclick="toggleCollapseBalok(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_balok3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
 
             <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
-            <label class="" for="j_balok">Ada berapa jumlah unit Balok pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_balok" name="j_balok" placeholder="Masukan jumlah unit Balok dsini" required/> 
-            
-            <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Balok rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_tr_checkbox" onclick="toggleInputBalok('balok_tr')">
-                <label class="form-check-label" for="balok_tr_checkbox">
-                    Balok dalam kondisi baik
-                </label>
+            <label class="" for="j_balok">Ada berapa jumlah unit Balok pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_balok" name="j_balok" onkeyup="calcBalok()" placeholder="Masukan jumlah unit Balok dsini" required/> 
+
+            <div class="collapse" id="collapseBalok">
+                <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Balok rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_tr_checkbox" checked disabled>
+                    <label class="form-check-label" for="balok_tr_checkbox">
+                        Balok dalam kondisi baik
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_tr" name="balok_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+                <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_rsr_checkbox" onclick="toggleInputBalok('balok_rsr')">
+                    <label class="form-check-label" for="balok_rsr_checkbox">
+                        Plat lantai bergetar jika ada orang berjalan, retak rambut < 0.2 mm
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_balok_rsr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_rsr" name="balok_rsr" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_rr_checkbox" onclick="toggleInputBalok('balok_rr')">
+                    <label class="form-check-label" for="balok_rr_checkbox">
+                        Retak 0.2 – 1.00 mm, retakan pada tengah bentang plat
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_balok_rr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_rr" name="balok_rr" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_rs_checkbox" onclick="toggleInputBalok('balok_rs')">
+                    <label class="form-check-label" for="balok_rs_checkbox">
+                        Balok melendut, lebar retak > 1.0 mm, <br>
+                        Retak meluas pada beberapa tempat, dan <br>
+                        Retak melingkar pada zona tulangan tarik
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_balok_rs">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_rs" name="balok_rs" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_rb_checkbox" onclick="toggleInputBalok('balok_rb')">
+                    <label class="form-check-label" for="balok_rb_checkbox">
+                        Balok melendut, selimut beton hancur, tulangan terlihat
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_balok_rb">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_rb" name="balok_rb" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_rsb_checkbox" onclick="toggleInputBalok('balok_rsb')">
+                    <label class="form-check-label" for="balok_rsb_checkbox">
+                        Balok patah/ runtuh, dan <br>
+                        Plat dan balok lain yang menumpu pada balok tersebut ikut rusak
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_balok_rsb">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_rsb" name="balok_rsb" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="balok_kts_checkbox" onclick="toggleInputBalok('balok_kts')">
+                    <label class="form-check-label" for="balok_kts_checkbox">
+                        Komponen Balok Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="balok_kts" name="balok_kts" onkeyup="calcBalok()" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_tr" name="balok_tr" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_rsr_checkbox" onclick="toggleInputBalok('balok_rsr')">
-                <label class="form-check-label" for="balok_rsr_checkbox">
-                    Plat lantai bergetar jika ada orang berjalan, retak rambut < 0.2 mm
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_balok_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_rsr" name="balok_rsr" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_rr_checkbox" onclick="toggleInputBalok('balok_rr')">
-                <label class="form-check-label" for="balok_rr_checkbox">
-                    Retak 0.2 – 1.00 mm, retakan pada tengah bentang plat
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_balok_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_rr" name="balok_rr" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_rs_checkbox" onclick="toggleInputBalok('balok_rs')">
-                <label class="form-check-label" for="balok_rs_checkbox">
-                    Balok melendut, lebar retak > 1.0 mm, <br>
-                    Retak meluas pada beberapa tempat, dan <br>
-                    Retak melingkar pada zona tulangan tarik
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_balok_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_rs" name="balok_rs" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_rb_checkbox" onclick="toggleInputBalok('balok_rb')">
-                <label class="form-check-label" for="balok_rb_checkbox">
-                    Balok melendut, selimut beton hancur, tulangan terlihat
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_balok_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_rb" name="balok_rb" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_rsb_checkbox" onclick="toggleInputBalok('balok_rsb')">
-                <label class="form-check-label" for="balok_rsb_checkbox">
-                    Balok patah/ runtuh, dan <br>
-                    Plat dan balok lain yang menumpu pada balok tersebut ikut rusak
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_balok_rsb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_rsb" name="balok_rsb" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="balok_kts_checkbox" onclick="toggleInputBalok('balok_kts')">
-                <label class="form-check-label" for="balok_kts_checkbox">
-                    Komponen Balok Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="balok_kts" name="balok_kts" placeholder="Masukan jumlah unit balok sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>
 
 <script>
-function toggleInputBalok(inputId) {
-    var input = document.getElementById(inputId);
-    input.disabled = !input.disabled;  // Membalikkan status disabled input
-}
+    function toggleInputBalok(inputId) {
+        var input = document.getElementById(inputId);
+        input.disabled = !input.disabled;  // Membalikkan status disabled input
+    }
+</script>
+
+<script>
+    function toggleCollapseBalok(isDamaged) {
+        const collapseBalok = document.getElementById('collapseBalok');
+        if (isDamaged) {
+            collapseBalok.classList.add('show');
+        } else {
+            collapseBalok.classList.remove('show');
+        }
+    }
 </script>

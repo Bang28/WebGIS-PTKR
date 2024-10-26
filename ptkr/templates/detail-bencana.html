@@ -1,35 +1,117 @@
-{% extends "base.html" %}
-
 {% load static %}
 
-{% block title %}PTKR | Detail Bencana{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-    <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Rumah Terdampak Berdasarkan Kejadian Bencana</h1>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
 
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-outline card-info">
-                    <div class="card-body">
-                        <table id="tbBencana" class="table table-striped mb-3">
-                            <thead>
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static './plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+    <!--Leaflet-->
+    <link rel="stylesheet" href="{% static './plugins/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.Default.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.css' %}">
+    <!--Leaflet routing machine-->
+    <link rel="stylesheet" href="{% static './plugins/leafletroutingmachine/leaflet-routing-machine.css' %}">
+    
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+    <!--style custom-->
+    <link rel="stylesheet" href="{% static './dist/css/style.css' %}" />
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+                    <li><a href="{% url 'ptkr:data-bencana' %}">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container mt-2 mb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb float-end">
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:index" %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:data-bencana" %}">Data Bencana</a></li>
+                    <li class="breadcrumb-item active">Detail Bencana</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <h4 class="h4" id="data-title">Data Korban Bencana | {{bencana.jenis_bencana}} | {{bencana.lokasi_bencana}} | {{bencana.tanggal_terjadi|date:'d m Y'}} </h4>
+                    <div class="col-md-12">
+                        <!--Filter-->
+                        <form action="{% url "ptkr:detail-bencana" bencana.id %}" class="mb-2">
+                            <h5 class="h5 mb-0">Filter</h5>
+                            <div class="row g-3">
+                                <div class="col-lg-2">
+                                    <select id="kategori" name="kategori" class="form-select form-select-sm" aria-label="Kategori">
+                                        <option selected disabled>Kategori</option>
+                                        <option value="Rusak Ringan">Rusak Ringan</option>
+                                        <option value="Rusak Sedang">Rusak Sedang</option>
+                                        <option value="Rusak Berat">Rusak Berat</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-sm btn-primary">Terapkan Filter</button>
+                                    <a href="{% url 'ptkr:detail-bencana' bencana.id %}" class="btn btn-sm btn-secondary">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                        <!--End Filter-->
+                        <table id="tbBencana" class="table table-sm">
+                            <thead class="border-bottom border-secondary">
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Pemilik</th>
-                                    <th>Alamat</th>
+                                    <th>Pemilik Rumah</th>
+                                    <th>Kecamatan</th>
+                                    <th>Desa</th>
+                                    <th>Alamat Lengkap</th>
                                     <th>Tingkat Kerusakan</th>
                                     <th>Foto</th>
                                     <th>Aksi</th>
@@ -39,31 +121,118 @@
                                 {% for r in rumah_terdampak %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
-                                    <td>{{r.pemilik_rumah}}</td>
-                                    <td>Kel. {{r.kelurahan|title}}, Dk. {{r.dusun}}, RW {{r.rw}} RT {{r.rt}} </td>
+                                    <td>{{r.pemilik_rumah|title}}</td>
+                                    <td>{{r.kecamatan|title}}</td>
+                                    <td>{{r.kelurahan|title}}</td>
+                                    <td>Dk. {{r.dusun|title}}, RT {{r.rt}} RW {{r.rw}} </td>
                                     <td>{{r.tingkat_kerusakan}}</td>
                                     <td>
                                         <img class="img-fluid preview-image pe-auto" style="width: 50px;" src="{{r.foto.url}}" alt="{{r.tingkat_kerusakan}}">
                                     </td>
                                     <td>
-                                        <a href="{% url 'ptkr:detail-rumah' r.id %}" class="btn btn-sm btn-outline-primary btn-sm">Detail</a>
+                                        <a href="{% url 'ptkr:detail-informasi' r.id %}" class="btn btn-sm btn-outline-primary btn-sm">Detail</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <div id="map" style="width: 100%; height: 400px;">
-
-                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div id="peta" style="width: 100%; height: 400px;"></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-{% endblock content %}
+        </section>
+    </main>
 
-{% block script %}
+    {% include "./modals&alerts/preview-image.html" %}
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="{% static './plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static './plugins/datatables-buttons/js/dataTables.buttons.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %} "></script>
+    <script src="{% static './plugins/jszip/jszip.min.js' %} "></script>
+    <script src="{% static './plugins/pdfmake/pdfmake.min.js' %} "></script>
+    <script src="{% static './plugins/pdfmake/vfs_fonts.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.html5.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.print.min.js' %} "></script>
+    <script src="{% static './plugins/datatables-buttons/js/buttons.colVis.min.js' %} "></script>
+
+    <!--Leaflet-->
+    <script src="{% static './plugins/leaflet/leaflet.js' %}"></script>
+    <script src="{% static './plugins/leafletmarkercluster/leaflet.markercluster.js' %}"></script>
+    <script src="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.js' %}"></script>
+    <script src="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.js' %}"></script>
+    
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>
+
+<script>
+    $(function () {
+        const title = $("#data-title").text(); // Ambil title dari tag h4
+
+        $("#tbBencana").DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "ordering": false,
+            "buttons": [
+                {
+                    extend: 'csv',
+                    title: title, // Set title untuk CSV
+                    exportOptions: {
+                        columns: ':not(:last-child):not(:nth-last-child(2))' // Sembunyikan kolom Foto dan Aksi
+                    }
+                },
+                {
+                    extend: 'excel',
+                    title: title, // Set title untuk Excel
+                    exportOptions: {
+                        columns: ':not(:last-child):not(:nth-last-child(2))' // Sembunyikan kolom Foto dan Aksi
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: title, // Set title untuk PDF
+                    exportOptions: {
+                        columns: ':not(:last-child):not(:nth-last-child(2))' // Sembunyikan kolom Foto dan Aksi
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: title, // Set title untuk Print
+                    exportOptions: {
+                        columns: ':not(:last-child):not(:nth-last-child(2))' // Sembunyikan kolom Foto dan Aksi
+                    }
+                }
+            ]
+        }).buttons().container().appendTo('#tbBencana_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
 <script>
     var lat = `{{first.lat}}`
     var lng = `{{first.long}}`
@@ -75,7 +244,7 @@
     var latitude = parseFloat(lat);
     var longitude = parseFloat(lng);
     
-    var map = L.map('map', {zoomControl: false}).setView([latitude, longitude], 16);
+    var map = L.map('peta', {zoomControl: false}).setView([latitude, longitude], 16);
 
 	// custom gaya marker
 	var iconRingan = L.icon({
@@ -132,15 +301,28 @@
     var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 </script>
 
+<!--Get prewview image-->
 <script>
-    $('#tbBencana').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": true,
-        "responsive": true,
+    $(document).ready(function() {
+        // Menambahkan event listener untuk setiap gambar dengan kelas 'preview-image'
+        $('.preview-image').on('click', function() {
+            // Dapatkan sumber gambar yang diklik
+            var imgSrc = $(this).attr('src');
+            
+            // Dapatkan nama file gambar dari src (mengambil teks setelah '/' terakhir)
+            var imgName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+            // Atau, Anda bisa menggunakan atribut alt sebagai caption
+            var imgCaption = $(this).attr('alt');
+
+            // Setel sumber gambar ke modal preview
+            $('#imagePreview').attr('src', imgSrc);
+            
+            // Setel teks caption di modal preview
+            $('#imageCaption').text(imgCaption);
+
+            // Buka modal preview
+            $('#imagePreviewModal').modal('show');
+        });
     });
 </script>
-{% endblock script %}

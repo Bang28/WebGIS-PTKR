@@ -1,0 +1,438 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    
+    <!--Leaflet-->
+    <link rel="stylesheet" href="{% static './plugins/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletmarkercluster/MarkerCluster.Default.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.css' %}">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+    <!--style custom-->
+    <link rel="stylesheet" href="{% static './dist/css/style.css' %}" />
+
+    <style>
+        /* Untuk tampilan handphone dan tablet */
+        @media (max-width: 991.98px) {
+            .row {
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .artikel-container {
+                display: flex;
+                flex-direction: row;
+                width: max-content;
+            }
+
+            .card {
+                min-width: 300px;
+                margin-right: 10px;
+            }
+
+            /* Pastikan peta tetap berukuran penuh */
+            #map {
+                height: calc(100vh - 300px);
+            }
+        }
+
+        /* Untuk tampilan desktop */
+        @media (min-width: 992px) {
+            .artikel-container {
+                display: block;
+                overflow-y: auto; /* Scroll secara vertikal */
+                height: calc(100vh - 60px); /* Sesuaikan tinggi container artikel */
+            }
+
+            .card {
+                width: 100%; /* Artikel tetap dalam tampilan penuh di desktop */
+            }
+        }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+                    <li><a href="{% url "ptkr:data-bencana" %}">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <div class="row gy-4 d-lg-flex">
+            <div class="col-lg-3 artikel-container overflow-auto">
+                {% for a in artikel %}
+                <div class="card my-3 border border-1 border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ a.bencana.jenis_bencana }}</h5>
+                        <p class="text-sm mb-1"><i class="bi bi-calendar-check-fill"></i> {{ a.tanggal_terjadi|date:'d F Y' }}</p>
+                        <p class="text-sm mb-1 text-lowercase"><i class="bi bi-geo-fill"></i> {{ a.lokasi|title }}</p>
+                        <p class="text-sm mb-1"><i class="bi bi-house-fill"></i> Rumah terdampak: {{a.all}} </p>
+                        <a data-bs-toggle="collapse" href="#collapseArtikel{{a.id}}" role="button"
+                            aria-expanded="false" aria-controls="collapseArtikel{{a.id}}">
+                            Selengkapnya
+                        </a>
+                        <div class="collapse" id="collapseArtikel{{a.id}}">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="rounded-5 bg-secondary px-2 my-2 text-light">
+                                        Ringan: {{a.ringan}}
+                                    </div>
+                                    <div class="rounded-5 bg-warning px-2 my-2 text-light">
+                                        Sedang: {{a.sedang}}
+                                    </div>
+                                    <div class="rounded-5 bg-danger px-2 my-2 text-light">
+                                        Berat: {{a.berat}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-outline-primary btn-sm tampilkan-peta" data-bencana-id="{{ a.bencana.id }}">Tampilkan Dipeta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-9">
+                <div id="map">
+                    <!-- map coordinate -->
+                    <div class="leaflet-control map-coordinate">
+                        <div class="coordinate"></div>
+                    </div>
+
+                    <!-- zoom to layer -->
+                    <div class="leaflet-control zoom-to-layer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Zoom to layer" fill="currentColor"
+                            class="bi bi-house" viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <!--Leaflet-->
+    <script src="{% static './plugins/leaflet/leaflet.js' %}"></script>
+    <script src="{% static './plugins/leafletmarkercluster/leaflet.markercluster.js' %}"></script>
+    <script src="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.js' %}"></script>
+    <script src="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.js' %}"></script>
+    <script src="{% static './dist/js/main.js' %}"></script>
+    <script src="{% static './dist/js/web-GIS.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>
+
+<script>
+	// grouping point/marker
+	var pointGroup = L.markerClusterGroup({
+		zoomToBoundsOnClick: false,
+	})
+	pointGroup.addTo(map)
+
+	// custom gaya marker
+	var iconRingan = L.icon({
+		iconUrl: '{% static './dist/img/ringan.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+		popupAnchor: [0, -20]
+	})
+	var iconSedang = L.icon({
+		iconUrl: '{% static './dist/img/sedang.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+		popupAnchor: [0, -20]
+	})
+	var iconBerat = L.icon({
+		iconUrl: '{% static './dist/img/berat.png' %}',
+		iconSize: [44, 44],
+		iconAnchor: [22, 44],
+		tooltipAnchor: [22, -20],
+		popupAnchor: [0, -20]
+	})
+	
+	// render point
+	{% for p in point %}
+		var lat = `{{p.lat}}`;
+		var lng = `{{p.long}}`;
+		// Ganti koma dengan titik
+		lat = lat.replace(",", ".");
+		lng = lng.replace(",", ".");
+
+		// Parsing string ke angka float
+		var latitude = parseFloat(lat);
+		var longitude = parseFloat(lng);
+
+		// Pilih gaya marker berdasarkan tingkat kerusakan
+		var markerStyle;
+		if ("{{ p.tingkat_kerusakan }}" === "Rusak Ringan") {
+			markerStyle = iconRingan;
+		} else if ("{{ p.tingkat_kerusakan }}" === "Rusak Sedang") {
+			markerStyle = iconSedang;
+		} else {
+			markerStyle = iconBerat;
+		}
+		
+        var point = L.marker([latitude, longitude], {icon: markerStyle})
+			.bindPopup(`
+			<div class="card" style="width: 20rem">
+				<img src="{{p.foto.url}}" class="card-img-top" style="height:9rem" alt="p.tingkat_kerusakan">
+				<div class="card-body pb-0">
+					<h5 class="card-title font-weight-bold"><i class="bi bi-person-circle"></i>&nbsp{{p.pemilik_rumah}}</h5>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-4 col-sm-4 border-right">
+							<div class="description-block">
+							<h6 class="description-header">Bencana</h6>
+							<span class="description-text">{{p.bencana.jenis_bencana}}</span> <br>
+                            <span class="description-text">{{p.bencana.tanggal_terjadi|date:'d m Y'}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-4 col-sm-4 border-right">
+							<div class="description-block">
+							<h6 class="description-header">Koordinat</h6>
+							<span class="description-text">{{p.lat}}</span> <br>
+							<span class="description-text">{{p.long}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-4 col-sm-4">
+							<div class="description-block">
+							<h6 class="description-header">Kerusakan</h6>
+							<span class="description-text">{{p.tingkat_kerusakan}}</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+                     <div class="d-grid">
+                        <a href="{% url 'ptkr:detail-informasi' p.id %}" class="btn btn-sm btn-outline-info float-right">Detail</a>
+                     </div>
+				</div>
+			</div>
+			`, {
+				maxWidth: 480
+			})
+			.bindTooltip('{{p.tingkat_kerusakan}}')
+		point.addTo(pointGroup)
+	{% endfor %}
+
+	// Tambahkan event listener untuk clusterclick
+	pointGroup.on('clusterclick', function (a) {
+		// Zoom ke batas cluster
+		a.layer.zoomToBounds();
+
+		// Jika Anda ingin zoom lebih dekat ke titik tertentu dalam cluster, gunakan berikut ini:
+		var markers = a.layer.getAllChildMarkers();
+		if (markers.length > 0) {
+			// Zoom ke marker pertama dalam cluster
+			map.setView(markers[0].getLatLng(), map.getZoom() + 2);  // Anda bisa mengubah zoom level sesuai kebutuhan
+		}
+	});
+	
+	// map layers
+	var overLayMaps = {};
+	// render shp files
+	{% for s in shp %}
+		var {{s.name}} = L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+            layers: '{{s.name}}',
+			transparent: true,
+            format: 'image/png',
+        }).addTo(map)
+
+        overLayMaps['{{s.name}}'] = {{s.name}}
+	{% endfor %}
+	
+	L.control.layers(baseMaps, overLayMaps, {
+		collapsed: true,
+		position: 'topleft', // default topright    
+	}).addTo(map);
+</script>
+
+<script>
+	map.on('click', function(e){
+		console.log(e)
+		console.log("Latitude: " + e.latlng.lat)
+		console.log("Longitude: " + e.latlng.lng)
+	})
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+
+<script>
+    // Kode untuk menampilkan titik lokasi rumah
+    function displayMarkers(lokasiRumah) {
+        // Hapus marker sebelumnya
+        pointGroup.clearLayers();
+
+        // Tambahkan marker baru
+        lokasiRumah.forEach(rumah => {
+            var markerStyle;
+            // Pilih gaya marker berdasarkan tingkat kerusakan
+            if (rumah.tingkat_kerusakan === "Rusak Ringan") {
+                markerStyle = iconRingan;
+            } else if (rumah.tingkat_kerusakan === "Rusak Sedang") {
+                markerStyle = iconSedang;
+            } else {
+                markerStyle = iconBerat;
+            }
+
+            var marker = L.marker([rumah.lat, rumah.lng], { icon: markerStyle })
+                //.bindPopup(`Tingkat kerusakan: ${rumah.tingkat_kerusakan}`);
+                .bindPopup(`
+                <div class="card" style="width: 20rem">
+                    <img src="${rumah.foto}" class="card-img-top" style="height:9rem" alt="${rumah.tingkat_kerusakan}">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title font-weight-bold"><i class="bi bi-person-circle"></i>&nbsp${rumah.pemilik_rumah}</h5>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-4 col-sm-4 border-right">
+                                <div class="description-block">
+                                <h6 class="description-header">Bencana</h6>
+                                <span class="description-text">${rumah.bencana}</span> <br>
+                                <span class="description-text">${rumah.tanggal}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4 col-sm-4 border-right">
+                                <div class="description-block">
+                                <h6 class="description-header">Koordinat</h6>
+                                <span class="description-text">${rumah.lat}</span> <br>
+                                <span class="description-text">${rumah.lng}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4 col-sm-4">
+                                <div class="description-block">
+                                <h6 class="description-header">Kerusakan</h6>
+                                <span class="description-text">${rumah.tingkat_kerusakan}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <div class="d-grid">
+                            <a href="${rumah.url}" class="btn btn-sm btn-outline-info float-right">Detail</a>
+                        </div>
+                    </div>
+                </div>
+                `, {
+                    maxWidth: 480
+                })
+			    .bindTooltip(`${rumah.tingkat_kerusakan}`)
+            marker.addTo(pointGroup)
+        });
+
+        console.log(lokasiRumah)
+    }
+
+    document.querySelectorAll('.tampilkan-peta').forEach(button => {
+        button.addEventListener('click', function() {
+            const bencanaId = this.getAttribute('data-bencana-id');
+
+            fetch(`/get-titik-lokasi/${bencanaId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const lokasiRumah = data.lokasi_rumah;
+                    displayMarkers(lokasiRumah); // Tampilkan marker baru
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengambil data lokasi. Silakan coba lagi.'); // Pesan kepada pengguna
+                });
+        });
+    });
+</script>

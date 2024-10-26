@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Struktur - Komponen Tangga</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Struktur - Komponen Tangga</h5>
         </div>
         <div class="card-body">
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Tangga</label> 
@@ -50,96 +50,112 @@
                 </table>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga1" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga1" onclick="toggleCollapseTangga(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_tangga1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga2" onclick="toggleCollapseTangga(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_tangga2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga3" onclick="toggleCollapseTangga(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_tangga3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
-            
+
             <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
-            <label class="" for="j_tangga">Ada berapa jumlah unit Tangga pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_tangga" name="j_tangga" placeholder="Masukan jumlah unit Tangga dsini" required/> 
-            
-            <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Tangga rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_tr_checked" onclick="toggleInputTangga('tangga_tr')">
-                <label class="form-check-label" for="tangga_tr_checked">
-                    Tangga dalam kondisi baik
-                </label>
+            <label class="" for="j_tangga">Ada berapa jumlah unit Tangga pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_tangga" name="j_tangga" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga dsini" required/> 
+
+            <div class="collapse" id="collapseTangga">
+                
+                <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Tangga rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_tr_checked" checked disabled>
+                    <label class="form-check-label" for="tangga_tr_checked">
+                        Tangga dalam kondisi baik
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_tr" name="tangga_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+                <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_rsr_checked" onclick="toggleInputTangga('tangga_rsr')">
+                    <label class="form-check-label" for="tangga_rsr_checked">
+                        Retak rambut < 0.2 mm, <br>
+                        Plesteran balok retak, dan <br>
+                        Retak pada tumpuan atau lapangan
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_rsr" name="tangga_rsr" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_rr_checked" onclick="toggleInputTangga('tangga_rr')">
+                    <label class="form-check-label" for="tangga_rr_checked">
+                        Retak 0.2 – 1.00 mm, dan <br>
+                        Retakan pada tumpuan atau lapangan
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_rr" name="tangga_rr" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_rs_checked" onclick="toggleInputTangga('tangga_rs')">
+                    <label class="form-check-label" for="tangga_rs_checked">
+                        Tangga melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom, <br>
+                        Selimut beton hancur di beberapa tempat, dan <br>
+                        Tangga bergetar (kurang kaku)
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_rs" name="tangga_rs" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_rb_checked" onclick="toggleInputTangga('tangga_rb')">
+                    <label class="form-check-label" for="tangga_rb_checked">
+                        Tangga melendut, retak tembus, tulangan terlihat, selimut beton hancur
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_rb" name="tangga_rb" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_rsb_checked" onclick="toggleInputTangga('tangga_rsb')">
+                    <label class="form-check-label" for="tangga_rsb_checked">
+                        Tangga hancur
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_rsb" name="tangga_rsb" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="tangga_kts_checked" onclick="toggleInputTangga('tangga_kts')">
+                    <label class="form-check-label" for="tangga_kts_checked">
+                        Komponen Tangga Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="tangga_kts" name="tangga_kts" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_tr" name="tangga_tr" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
             
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_rsr_checked" onclick="toggleInputTangga('tangga_rsr')">
-                <label class="form-check-label" for="tangga_rsr_checked">
-                    Retak rambut < 0.2 mm, <br>
-                    Plesteran balok retak, dan <br>
-                    Retak pada tumpuan atau lapangan
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_rsr" name="tangga_rsr" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_rr_checked" onclick="toggleInputTangga('tangga_rr')">
-                <label class="form-check-label" for="tangga_rr_checked">
-                    Retak 0.2 – 1.00 mm, dan <br>
-                    Retakan pada tumpuan atau lapangan
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_rr" name="tangga_rr" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_rs_checked" onclick="toggleInputTangga('tangga_rs')">
-                <label class="form-check-label" for="tangga_rs_checked">
-                    Tangga melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom, <br>
-                    Selimut beton hancur di beberapa tempat, dan <br>
-                    Tangga bergetar (kurang kaku)
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_rs" name="tangga_rs" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_rb_checked" onclick="toggleInputTangga('tangga_rb')">
-                <label class="form-check-label" for="tangga_rb_checked">
-                    Tangga melendut, retak tembus, tulangan terlihat, selimut beton hancur
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_rb" name="tangga_rb" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_rsb_checked" onclick="toggleInputTangga('tangga_rsb')">
-                <label class="form-check-label" for="tangga_rsb_checked">
-                    Tangga hancur
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_rsb" name="tangga_rsb" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="tangga_kts_checked" onclick="toggleInputTangga('tangga_kts')">
-                <label class="form-check-label" for="tangga_kts_checked">
-                    Komponen Tangga Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="tangga_kts" name="tangga_kts" placeholder="Masukan jumlah unit Tangga sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>
 
 <script>
-function toggleInputTangga(inputId) {
-    var input = document.getElementById(inputId);
-    input.disabled = !input.disabled;  // Membalikkan status disabled input
-}
+    function toggleInputTangga(inputId) {
+        var input = document.getElementById(inputId);
+        input.disabled = !input.disabled;  // Membalikkan status disabled input
+    }
+</script>
+
+<script>
+    function toggleCollapseTangga(isDamaged) {
+        const collapseTangga = document.getElementById('collapseTangga');
+        if (isDamaged) {
+            collapseTangga.classList.add('show');
+        } else {
+            collapseTangga.classList.remove('show');
+        }
+    }
 </script>

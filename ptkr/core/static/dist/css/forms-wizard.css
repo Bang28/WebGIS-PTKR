@@ -1,6 +1,6 @@
 #heading{
     text-transform: uppercase;
-    color: #673AB7;
+    color: #007bff;
     font-weight: bold;
 }
 
@@ -33,43 +33,8 @@
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: px solid #673AB7;
+    border: px solid #007bff;
     outline-width: 1;
-}
-
-#msform .action-button{
-    width: 100px;
-    background: #673AB7;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 0px 10px 5px;
-    float: right;
-}
-#msform .action-button:hover,
-#msform .action-button:focus {
-    background-color: #311B92
-}
-
-#msform .action-button-previous {
-    width: 100px;
-    background: #616161;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px 10px 0px;
-    float: right
-}
-
-#msform .action-button-previous:hover,
-#msform .action-button-previous:focus {
-    background-color: #000000
 }
 
 .card {
@@ -79,15 +44,10 @@
 
 .fs-title {
     font-size: 25px;
-    color: #673AB7;
+    color: gray;
     margin-bottom: 15px;
     font-weight: normal;
     text-align: left
-}
-
-.purple-text {
-    color: #673AB7;
-    font-weight: normal
 }
 
 .steps {
@@ -108,7 +68,7 @@
 }
 
 .progress-bar {
-    background-color: #673AB7
+    background-color: #007bff
 }
 
 .fit-image {

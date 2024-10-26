@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Struktur - Komponen Kolom</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Struktur - Komponen Kolom</h5>
         </div>
         <div class="card-body">
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Kolom</label> 
@@ -54,119 +54,133 @@
                 </table>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom1" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom1" onclick="toggleCollapseKolom(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_kolom1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom2" onclick="toggleCollapseKolom(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_kolom2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom3" onclick="toggleCollapseKolom(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_kolom3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
 
             <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>
-            <label class="" for="j_kolom">Ada berapa jumlah unit Kolom pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_kolom" name="j_kolom" placeholder="Masukan Jumlah Unit Kolom Disini" required/> 
+            <label class="" for="j_kolom">Ada berapa jumlah unit Kolom pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_kolom" name="j_kolom" onkeyup="calcKolom()" placeholder="Masukan Jumlah Unit Kolom Disini" required/> 
             
-            <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Kolom rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_tr_checkbox" onclick="toggleInputKolom('kolom_tr')">
-                <label class="form-check-label" for="kolom_tr_checkbox">
-                    Kolom dalam kondisi baik.
-                </label>
+            <div class="collapse" id="collapseKolom">
+                <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Kolom rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_tr_checkbox" checked disabled>
+                    <label class="form-check-label" for="kolom_tr_checkbox">
+                        Kolom dalam kondisi baik.
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_tr" name="kolom_tr" placeholder="Kolom ini terisi otomatis" readonly/> 
+                <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_rsr_checkbox" onclick="toggleInputKolom('kolom_rsr')">
+                    <label class="form-check-label" for="kolom_rsr_checkbox">
+                        Sudut kolom pecah dan Plesteran kolom retak rambut.
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kolom_rsr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_rsr" name="kolom_rsr" onkeyup="calcKolom()" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled/> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_rr_checkbox" onclick="toggleInputKolom('kolom_rr')">
+                    <label class="form-check-label" for="kolom_rr_checkbox">
+                        Retak pada permukaan kolom, lebar retak 0.2 mm - 1.0 mm.
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kolom_rr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_rr" name="kolom_rr" onkeyup="calcKolom()" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_rs_checkbox" onclick="toggleInputKolom('kolom_rs')">
+                    <label class="form-check-label" for="kolom_rs_checkbox">
+                        Retak pada permukaan kolom, lebar retak >1.0 mm. <br>
+                        Selimut beton gembur, beberapa tulangan terlihat. <br>
+                        Tulangan diindikasi mengalami korosi. <br>
+                        Retakan/penyambungan cor terjadi pada area sendi plastis.
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kolom_rs">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_rs" name="kolom_rs" onkeyup="calcKolom()" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_rb_checkbox" onclick="toggleInputKolom('kolom_rb')">
+                    <label class="form-check-label" for="kolom_rb_checkbox">
+                        Tulangan kolom terlihat 4 sisi pada 1 titik<br>
+                        Selimut beton hancur pada beberapa titik
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kolom_rb">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_rb" name="kolom_rb" onkeyup="calcKolom()" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_rsb_checkbox" onclick="toggleInputKolom('kolom_rsb')">
+                    <label class="form-check-label" for="kolom_rsb_checkbox">
+                        Beton inti kolom hancur, baja tulangan tertekuk dan kolom patah
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_kolom_rsb">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_rsb" name="kolom_rsb" onkeyup="calcKolom()" placeholder="Masukan jumlah unit kolom sesuai deskripsi dsini" disabled/> 
+    
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="kolom_kts_checkbox" onclick="toggleInputKolom('kolom_kts')">
+                    <label class="form-check-label" for="kolom_kts_checkbox">
+                        Komponen Kolom Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI).
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="kolom_kts" name="kolom_kts" onkeyup="calcKolom()" placeholder="Masukan jumlah unit Kolom sesuai deskripsi disini" disabled /> 
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_tr" name="kolom_tr" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled/> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_rsr_checkbox" onclick="toggleInputKolom('kolom_rsr')">
-                <label class="form-check-label" for="kolom_rsr_checkbox">
-                    Sudut kolom pecah dan Plesteran kolom retak rambut.
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kolom_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_rsr" name="kolom_rsr" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled/> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_rr_checkbox" onclick="toggleInputKolom('kolom_rr')">
-                <label class="form-check-label" for="kolom_rr_checkbox">
-                    Retak pada permukaan kolom, lebar retak 0.2 mm - 1.0 mm.
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kolom_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_rr" name="kolom_rr" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_rs_checkbox" onclick="toggleInputKolom('kolom_rs')">
-                <label class="form-check-label" for="kolom_rs_checkbox">
-                    Retak pada permukaan kolom, lebar retak >1.0 mm. <br>
-                    Selimut beton gembur, beberapa tulangan terlihat. <br>
-                    Tulangan diindikasi mengalami korosi. <br>
-                    Retakan/penyambungan cor terjadi pada area sendi plastis.
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kolom_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_rs" name="kolom_rs" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_rb_checkbox" onclick="toggleInputKolom('kolom_rb')">
-                <label class="form-check-label" for="kolom_rb_checkbox">
-                    Tulangan kolom terlihat 4 sisi pada 1 titik<br>
-                    Selimut beton hancur pada beberapa titik
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kolom_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_rb" name="kolom_rb" placeholder="Masukan jumlah unit kolom sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_rsb_checkbox" onclick="toggleInputKolom('kolom_rsb')">
-                <label class="form-check-label" for="kolom_rsb_checkbox">
-                    Beton inti kolom hancur, baja tulangan tertekuk dan kolom patah
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_kolom_rsb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_rsb" name="kolom_rsb" placeholder="Masukan jumlah unit kolom sesuai deskripsi dsini" disabled/> 
-
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="kolom_kts_checkbox" onclick="toggleInputKolom('kolom_kts')">
-                <label class="form-check-label" for="kolom_kts_checkbox">
-                    Komponen Kolom Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI).
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="kolom_kts" name="kolom_kts" placeholder="Masukan jumlah unit Kolom sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>
 
 <script>
-function toggleInputKolom(inputId) {
-    var input = document.getElementById(inputId);
-    input.disabled = !input.disabled;  // Membalikkan status disabled input
-}
+    function toggleInputKolom(inputId) {
+        var input = document.getElementById(inputId);
+        input.disabled = !input.disabled;  // Membalikkan status disabled input
+    }
+</script>
+
+<script>
+    function toggleCollapseKolom(isDamaged) {
+        const collapseKolom = document.getElementById('collapseKolom');
+        if (isDamaged) {
+            collapseKolom.classList.add('show');
+        } else {
+            collapseKolom.classList.remove('show');
+        }
+    }
 </script>

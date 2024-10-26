@@ -1,32 +1,33 @@
 <!--Pintu-->
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Arsitektur - Komponen Pintu</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Arsitektur - Komponen Pintu</h5>
         </div>
         <div class="card-body">
             <label class="" for="j_pintu">Ada berapa jumlah unit pintu pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_pintu" name="j_pintu" placeholder="Masukan jumlah unit pintu dsini" required/> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_pintu" name="j_pintu" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu dsini" required/> 
             <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen pintu rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
             <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="pintu_tr_checked" onclick="toggleInputPintu('pintu_tr')">
+                <input class="form-check-input" type="checkbox" id="pintu_tr_checked" checked disabled>
                 <label class="form-check-label" for="pintu_tr_checked">
                     pintu dalam kondisi baik
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_tr" name="pintu_tr" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_tr" name="pintu_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+            <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_rsr_checked" onclick="toggleInputPintu('pintu_rsr')">
                 <label class="form-check-label" for="pintu_rsr_checked">
                     Perubahan warna / gores / retak pada sebagian pintu
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_pintu_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_pintu_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rsr" name="pintu_rsr" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rsr" name="pintu_rsr" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_rr_checked" onclick="toggleInputPintu('pintu_rr')">
                 <label class="form-check-label" for="pintu_rr_checked">
@@ -34,12 +35,12 @@
                     (aluminium/UPVC) sebagian kecil pintu terlihat retak dan gompal / berlubang akibat benturan
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_pintu_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_pintu_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rr" name="pintu_rr" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rr" name="pintu_rr" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_rs_checked" onclick="toggleInputPintu('pintu_rs')">
                 <label class="form-check-label" for="pintu_rs_checked">
@@ -47,12 +48,12 @@
                     (aluminium/UPVC) terlihat gompal / berlubang terjadi di banyak bagian, handle dan kunci tidak berfungsi baik
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_pintu_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_pintu_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rs" name="pintu_rs" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rs" name="pintu_rs" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_rb_checked" onclick="toggleInputPintu('pintu_rb')">
                 <label class="form-check-label" for="pintu_rb_checked">
@@ -60,31 +61,31 @@
                     (aluminium/UPVC) terlihat rangka / lapisan daun pintu patah / lepas sampungan, handle dan kunci tidak ada
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_pintu_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_pintu_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rb" name="pintu_rb" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rb" name="pintu_rb" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_rsb_checked" onclick="toggleInputPintu('pintu_rsb')">
                 <label class="form-check-label" for="pintu_rsb_checked">
                     Daun pintu dalam kondisi tidak berfungsi / berlubang besar / tidak dapat menutup / dilepaskan akibat akumulasi kerusakan pada sebagian besar bagiannya
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_pintu_rsb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_pintu_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rsb" name="pintu_rsb" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_rsb" name="pintu_rsb" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="pintu_kts_checked" onclick="toggleInputPintu('pintu_kts')">
                 <label class="form-check-label" for="pintu_kts_checked">
                     Komponen pintu Tidak Sesuai. Material, dimensi, dan konstruksi pintu diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="pintu_kts" name="pintu_kts" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="pintu_kts" name="pintu_kts" onkeyup="calcPintu()" placeholder="Masukan jumlah unit pintu sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>

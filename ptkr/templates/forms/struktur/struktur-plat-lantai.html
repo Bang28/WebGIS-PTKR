@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Struktur - Komponen Plat Lantai</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Struktur - Komponen Plat Lantai</h5>
         </div>
         <div class="card-body">
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Plat Lantai</label> 
@@ -50,116 +50,130 @@
                 </table>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai1" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai1" onclick="toggleCollapsePLantai(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_plantai1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai2" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai2" onclick="toggleCollapsePLantai(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_plantai2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai3" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_plantai" id="ket_plantai3" onclick="toggleCollapsePLantai(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_plantai3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             
             <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
-            <label class="" for="j_plantai">Ada berapa jumlah unit Plat Lantai pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_plantai" name="j_plantai" placeholder="Masukan jumlah unit Plat Lantai dsini" required/> 
-            
-            <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Plat Lantai rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_tr_checkbox" onclick="toggleInputPlantai('plantai_tr')">
-                <label class="form-check-label" for="plantai_tr_checkbox">
-                    Plat Lantai dalam kondisi baik
-                </label>
+            <label class="" for="j_plantai">Ada berapa jumlah unit Plat Lantai pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_plantai" name="j_plantai" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit Plat Lantai dsini" required/> 
+
+            <div class="collapse" id="collapsePLantai">
+                <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Plat Lantai rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_tr_checkbox" checked disabled>
+                    <label class="form-check-label" for="plantai_tr_checkbox">
+                        Plat Lantai dalam kondisi baik
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_tr" name="plantai_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+                <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_rsr_checkbox" onclick="toggleInputPlantai('plantai_rsr')">
+                    <label class="form-check-label" for="plantai_rsr_checkbox">
+                        Retak rambut < 0.2 mm, <br>
+                        Plesteran balok retak, dan <br>
+                        Retak pada tumpuan atau lapangan
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_plantai_rsr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_rsr" name="plantai_rsr" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_rr_checkbox" onclick="toggleInputPlantai('plantai_rr')">
+                    <label class="form-check-label" for="plantai_rr_checkbox">
+                        Retak 0.2 – 1.00 mm, dan <br>
+                        Retakan pada tumpuan atau lapangan
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_plantai_rr">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_rr" name="plantai_rr" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_rs_checkbox" onclick="toggleInputPlantai('plantai_rs')">
+                    <label class="form-check-label" for="plantai_rs_checkbox">
+                        Plat lantai melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom, <br>
+                        Selimut beton hancur di beberapa tempat, dan <br>
+                        Plat lantai bergetar (kurang kaku)
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_plantai_rs">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_rs" name="plantai_rs" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_rb_checkbox" onclick="toggleInputPlantai('plantai_rb')">
+                    <label class="form-check-label" for="plantai_rb_checkbox">
+                        Plat lantai melendut, retak tembus, tulangan terlihat, selimut beton hancur
+                    </label>
+                    <span>
+                        <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_plantai_rb">&nbsp;
+                            <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_rb" name="plantai_rb" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_rsb_checkbox" onclick="toggleInputPlantai('plantai_rsb')">
+                    <label class="form-check-label" for="plantai_rsb_checkbox">
+                        Plat lantai hancur
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_rsb" name="plantai_rsb" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
+                
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="plantai_kts_checkbox" onclick="toggleInputPlantai('plantai_kts')">
+                    <label class="form-check-label" for="plantai_kts_checkbox">
+                        Komponen Plat Lantai Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
+                    </label>
+                </div>
+                <input type="number" min="0" class="form-control form-control-sm" id="plantai_kts" name="plantai_kts" onkeyup="calcPLantai()" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_tr" name="plantai_tr" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_rsr_checkbox" onclick="toggleInputPlantai('plantai_rsr')">
-                <label class="form-check-label" for="plantai_rsr_checkbox">
-                    Retak rambut < 0.2 mm, <br>
-                    Plesteran balok retak, dan <br>
-                    Retak pada tumpuan atau lapangan
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_plantai_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_rsr" name="plantai_rsr" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_rr_checkbox" onclick="toggleInputPlantai('plantai_rr')">
-                <label class="form-check-label" for="plantai_rr_checkbox">
-                    Retak 0.2 – 1.00 mm, dan <br>
-                    Retakan pada tumpuan atau lapangan
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_plantai_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_rr" name="plantai_rr" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_rs_checkbox" onclick="toggleInputPlantai('plantai_rs')">
-                <label class="form-check-label" for="plantai_rs_checkbox">
-                    Plat lantai melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom, <br>
-                    Selimut beton hancur di beberapa tempat, dan <br>
-                    Plat lantai bergetar (kurang kaku)
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_plantai_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_rs" name="plantai_rs" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_rb_checkbox" onclick="toggleInputPlantai('plantai_rb')">
-                <label class="form-check-label" for="plantai_rb_checkbox">
-                    Plat lantai melendut, retak tembus, tulangan terlihat, selimut beton hancur
-                </label>
-                <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_plantai_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
-                    </a>
-                </span>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_rb" name="plantai_rb" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_rsb_checkbox" onclick="toggleInputPlantai('plantai_rsb')">
-                <label class="form-check-label" for="plantai_rsb_checkbox">
-                    Plat lantai hancur
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_rsb" name="plantai_rsb" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
-            
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="plantai_kts_checkbox" onclick="toggleInputPlantai('plantai_kts')">
-                <label class="form-check-label" for="plantai_kts_checkbox">
-                    Komponen Plat Lantai Tidak Sesuai. Material, dimensi, dan konstruksi kolom diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
-                </label>
-            </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="plantai_kts" name="plantai_kts" placeholder="Masukan jumlah unit plat lantai sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>
 
 <script>
-function toggleInputPlantai(inputId) {
-    var input = document.getElementById(inputId);
-    input.disabled = !input.disabled;  // Membalikkan status disabled input
-}
+    function toggleInputPlantai(inputId) {
+        var input = document.getElementById(inputId);
+        input.disabled = !input.disabled;  // Membalikkan status disabled input
+    }
+</script>
+
+<script>
+    function toggleCollapsePLantai(isDamaged) {
+        const collapsePLantai = document.getElementById('collapsePLantai');
+        if (isDamaged) {
+            collapsePLantai.classList.add('show');
+        } else {
+            collapsePLantai.classList.remove('show');
+        }
+    }
 </script>

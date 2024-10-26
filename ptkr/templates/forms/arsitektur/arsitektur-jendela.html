@@ -1,32 +1,33 @@
 <!--Jendela-->
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Arsitektur - Komponen Jendela</h3>
+        <div class="card-header py-1">
+            <h5 class="card-title">Arsitektur - Komponen Jendela</h5>
         </div>
         <div class="card-body">
             <label class="" for="j_jendela">Ada berapa jumlah unit jendela pada bangunan rumah Bapak/Ibu?</label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_jendela" name="j_jendela" placeholder="Masukan jumlah unit jendela dsini" required/> 
+            <input type="number" min="1" class="form-control form-control-sm" id="j_jendela" name="j_jendela" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela dsini" required/> 
             <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen jendela rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
             <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="jendela_tr_checked" onclick="toggleInputJendela('jendela_tr')">
+                <input class="form-check-input" type="checkbox" id="jendela_tr_checked" checked disabled>
                 <label class="form-check-label" for="jendela_tr_checked">
                     Jendela dalam kondisi baik
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_tr" name="jendela_tr" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_tr" name="jendela_tr" placeholder="Kolom ini terisi otomatis" readonly /> 
+            <small id="smallMessageAtapTr" class="form-text text-info">Abaikan, kolom ini akan terisi otomatis.</small>
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_rsr_checked" onclick="toggleInputJendela('jendela_rsr')">
                 <label class="form-check-label" for="jendela_rsr_checked">
                     Perubahan warna / gores / retak pada sebagian jendela
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_jendela_rsr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_jendela_rsr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rsr" name="jendela_rsr" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rsr" name="jendela_rsr" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_rr_checked" onclick="toggleInputJendela('jendela_rr')">
                 <label class="form-check-label" for="jendela_rr_checked">
@@ -34,12 +35,12 @@
                     Terlihat retak pada sebagian kecil kaca 
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_jendela_rr">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_jendela_rr">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rr" name="jendela_rr" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rr" name="jendela_rr" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_rs_checked" onclick="toggleInputJendela('jendela_rs')">
                 <label class="form-check-label" for="jendela_rs_checked">
@@ -47,12 +48,12 @@
                     Terlihat retak lebar pada kaca
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_jendela_rs">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_jendela_rs">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rs" name="jendela_rs" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rs" name="jendela_rs" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_rb_checked" onclick="toggleInputJendela('jendela_rb')">
                 <label class="form-check-label" for="jendela_rb_checked">
@@ -60,12 +61,12 @@
                     Terlihat pecah pada kaca
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_jendela_rb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_jendela_rb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rb" name="jendela_rb" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rb" name="jendela_rb" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_rsb_checked" onclick="toggleInputJendela('jendela_rsb')">
                 <label class="form-check-label" for="jendela_rsb_checked">
@@ -73,19 +74,19 @@
                     Terlihat pecah menyeluruh pada kaca
                 </label>
                 <span>
-                    <a href="#" class="" data-toggle="modal" data-target="#modal_jendela_rsb">&nbsp;
-                        <i class="far fa-eye" style="color: #c0c0c0;" data-toggle="tooltip" data-placement="top" title="Lihat contoh gambar"></i>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_jendela_rsb">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat contoh gambar"></i>
                     </a>
                 </span>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rsb" name="jendela_rsb" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_rsb" name="jendela_rsb" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
             <div class="form-check mt-2">
                 <input class="form-check-input" type="checkbox" id="jendela_kts_checked" onclick="toggleInputJendela('jendela_kts')">
                 <label class="form-check-label" for="jendela_kts_checked">
                     Komponen jendela Tidak Sesuai. Material, dimensi, dan konstruksi jendela diindikasi tidak sesuai dengan persyaratan teknis (merujuk pada Rencana Teknis apabila ada, Petunjuk Teknis, dan/atau SNI). 
                 </label>
             </div>
-            <input type="number" min="0" class="form-control form-control-sm" id="jendela_kts" name="jendela_kts" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
+            <input type="number" min="0" class="form-control form-control-sm" id="jendela_kts" name="jendela_kts" onkeyup="calcJendela()" placeholder="Masukan jumlah unit jendela sesuai deskripsi disini" disabled /> 
         </div>
     </div>
 </div>

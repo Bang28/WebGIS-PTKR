@@ -1,8 +1,15 @@
 from django.contrib import admin
+
+# Register your models here.
+from django.contrib import admin
 from django.contrib.gis import admin
 from import_export.admin import ImportExportModelAdmin
-from .models.shp import Shp
-from .models.ptkr import Bencana, Bangunan, StrukturBangunan, ArsitekturBangunan, UtilitasBangunan
+from ptkr.models.models_shp import Shp
+from ptkr.models.models_bangunan import Bangunan
+from ptkr.models.models_bencana import Bencana
+from ptkr.models.models_struktur_bangunan import StrukturBangunan
+from ptkr.models.models_arsitektur_bangunan import ArsitekturBangunan
+from ptkr.models.models_utilitas_bangunan import UtilitasBangunan
 
 # Register your models here.
 @admin.register(Shp)

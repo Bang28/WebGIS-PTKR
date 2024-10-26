@@ -1,38 +1,60 @@
-<div class="col-md-6">
-    <label class="fieldlabels" for="pemilik_rumah">Pemilik Rumah: *</label> 
-    <input type="text" class="form-control form-control-sm" id="pemilik_rumah" name="pemilik_rumah" placeholder="Pemilik Rumah" required /> 
-    <label class="fieldlabels" for="provinsi">Provinsi: *</label> 
-    <select name="provinsi" id="provinsi" class="form-control form-control-sm">
-        <option>Pilih</option>
-    </select>
-    <label class="fieldlabels" for="kota">Kota: *</label> 
-    <select name="kota" id="kota" class="form-control form-control-sm">
-        <option>Pilih</option>
-    </select>
-    <label class="fieldlabels" for="kecamatan">Kecamatan: *</label> 
-    <select name="kecamatan" id="kecamatan" class="form-control form-control-sm">
-        <option>Pilih</option>
-    </select>
-    <label class="fieldlabels" for="kelurahan">Desa: *</label> 
-    <select name="kelurahan" id="kelurahan" class="form-control form-control-sm">
-        <option>Pilih</option>
-    </select>
-</div>
-<div class="col-md-6">
-    <label class="fieldlabels" for="Dusun">Dusun: *</label> 
-    <input type="text" class="form-control form-control-sm" id="Dusun" name="dusun" placeholder="Dusun" /> 
-    <label class="fieldlabels" for="rw">RW: *</label> 
-    <input type="number" class="form-control form-control-sm" id="rw" name="rw" placeholder="RW" /> 
-    <label class="fieldlabels" for="rt">RT: *</label> 
-    <input type="number" class="form-control form-control-sm" id="rt" name="rt" placeholder="RT" /> 
-    <label class="fieldlabels" for="bencana">Bencana: *</label> 
-    <select name="bencana" id="bencana" class="form-control form-control-sm select2">
-        <option value="">Pilih</option>
-        {% for b in bencana %}
-            <option value="{{b.id}}">{{b.jenis_bencana}} pada {{b.tanggal_terjadi|date:'d M Y'}} di Desa {{b.lokasi_bencana}}</option>
-        {% endfor %}
-    </select>
-    <label class="fieldlabels" for="Foto">Foto: *</label> 
-    <input type="file" class="form-control-file" id="Foto" name="foto"/>
-    <small>Maksimal ukuran foto 5MB.</small>
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-2">
+            <label class="fieldlabels" for="pemilik_rumah">Pemilik Rumah: <b class="text-danger">*</b></label> 
+            <input type="text" class="form-control form-control-sm" id="pemilik_rumah" name="pemilik_rumah" required placeholder="Pemilik Rumah" /> 
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="provinsi">Provinsi: <b class="text-danger">*</b></label> 
+            <select name="provinsi" id="provinsi" class="form-control form-control-sm" required>
+                <option value="" disabled selected>Pilih</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="kota">Kota: <b class="text-danger">*</b></label> 
+            <select name="kota" id="kota" class="form-control form-control-sm" required>
+                <option value="" disabled selected>Pilih</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="kecamatan">Kecamatan: <b class="text-danger">*</b></label> 
+            <select name="kecamatan" id="kecamatan" class="form-control form-control-sm" required>
+                <option value="" disabled selected>Pilih</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="kelurahan">Desa: <b class="text-danger">*</b></label> 
+            <select name="kelurahan" id="kelurahan" class="form-control form-control-sm" required>
+                <option value="" disabled selected>Pilih</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-2">
+            <label class="fieldlabels" for="Dusun">Dusun: <b class="text-danger">*</b></label> 
+            <input type="text" class="form-control form-control-sm" id="Dusun" name="dusun" required placeholder="Dusun" /> 
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="rt">RT: <b class="text-danger">*</b></label> 
+            <input type="number" class="form-control form-control-sm" id="rt" name="rt" required placeholder="RT" /> 
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="rw">RW: <b class="text-danger">*</b></label> 
+            <input type="number" class="form-control form-control-sm" id="rw" name="rw" required placeholder="RW" /> 
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="bencana">Bencana: <b class="text-danger">*</b></label> 
+            <select name="bencana" id="bencana" class="form-control form-control-sm select2" required>
+                <option value="" disabled selected>Pilih</option>
+                {% for b in bencana %}
+                    <option value="{{b.id}}">{{b.jenis_bencana}} pada {{b.tanggal_terjadi|date:'d M Y'}} di Desa {{b.lokasi_bencana}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-2">
+            <label class="fieldlabels" for="Foto">Foto: <b class="text-danger">*</b></label> 
+            <input type="file" class="form-control-file" id="Foto" name="foto" required />
+            <small>Maksimal ukuran foto 5MB.</small>
+        </div>
+    </div>
 </div>

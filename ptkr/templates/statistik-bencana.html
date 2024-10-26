@@ -1,0 +1,421 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}" class="active">Statistik Bencana</a></li>
+                    <li><a href="{% url "ptkr:data-bencana" %}">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container mt-2 mb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb float-end">
+                    <li class="breadcrumb-item"><a href="{% url "ptkr:index" %}">Home</a></li>
+                    <li class="breadcrumb-item active">Statistik Bencana</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container-fluid">
+                <div class="row">
+                    <!--Filter-->
+                    <form action="{% url "ptkr:statistik-bencana" %}" class="mb-2">
+                        <h5 class="h5 mb-0">Filter</h5>
+                        <div class="row g-3">
+                            <div class="col-lg-2">
+                                <select name="tahun" class="tahun form-select form-select-sm" aria-label="Tahun">
+                                    <option selected>Tahun</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-sm btn-primary">Filter</button>
+                                <a href="{% url 'ptkr:statistik-bencana' %}" class="btn btn-sm btn-secondary">Reset</a>
+                                <buttontype="button" class="btn btn-sm btn-success" id="downloadButton">Unduh</buttontype=>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End Filter-->
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6 mb-2">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h6 class="card-title">Statistik Kerusakan Rumah Berdasarkan Kejadian Bencana</h6>
+                            </div>
+                            <div class="card-body" style="position: relative; height: 50vh;">
+                                <canvas id="rumahTerdampakChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h6 class="card-title">Statistik Kejadian Bencana Per Desa</h6>
+                            </div>
+                            <div class="card-body" style="position: relative; height: 50vh;">
+                                <canvas id="chartKejadianBencanaPerDesa"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h6 class="card-title">Statistik Kejadian Bencana (Bulan)</h6>
+                            </div>
+                            <div class="card-body" style="position: relative; height: 50vh;">
+                                <canvas id="chartKejadianBencanaBulanan"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h6 class="card-title">Statistik Kejadian Bencana (Tahun)</h6>
+                            </div>
+                            <div class="card-body" style="position: relative; height: 50vh;">
+                                <canvas id="chartKejadianBencanaTahunan"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <!-- ChartJS -->
+    <script src="{% static './plugins/chartjs/Chart.js' %}"></script>
+    <script src="{% static './plugins/chartjs/chartjs-adapter-date-fns.js' %}"></script>
+    <script src="{% static './plugins/xlsx/xlsx.full.min.js' %} "></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>
+
+<script>
+    // Data chart yang dikirim dari view untuk data kerusakan rumah akibat bencana
+    const chartDataRumah = JSON.parse('{{ chart_data_kerusakan_rumah|escapejs }}');
+
+    const ctx = document.getElementById('rumahTerdampakChart').getContext('2d');
+    const rumahTerdampakChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartDataRumah,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jenis Bencana',
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Rumah Terdampak'
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' rumah';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // bar chart untuk kejadian bencana per kelurahan
+    const chartDataKelurahan = JSON.parse('{{ chart_data_bencana_kelurahan|escapejs }}');
+    const chartKejadianBencanaPerKelurahan = document.getElementById('chartKejadianBencanaPerDesa').getContext('2d');
+    const chartKejadianBencanaPerKelurahanChart = new Chart(chartKejadianBencanaPerKelurahan, {
+        type: 'bar',
+        data: chartDataKelurahan,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const kelurahan = tooltipItem.label;
+                            const jenisBencana = chartDataKelurahan.jenis_bencana[kelurahan].join(', ');
+                            return `${kelurahan}: ${tooltipItem.raw} kejadian (${jenisBencana})`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Desa'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Bencana'
+                    }
+                }
+            }
+        }
+    });
+
+    // bar chart data kejadian bencana Bulanan
+    const chartDataBulanan = JSON.parse('{{ chart_data_bulanan|escapejs }}');
+    const chartKejadianBencanaBulanan = document.getElementById('chartKejadianBencanaBulanan').getContext('2d');
+    const chartKejadianBencanaBulananChart = new Chart(chartKejadianBencanaBulanan, {
+        type: 'bar',
+        data: chartDataBulanan,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'yyyy-MM'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kejadian Bencana Bulanan'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Kejadian'
+                    }
+                }
+            }
+        }
+    });
+
+    // chart data kejadian bencana tahunan
+    const chartDataTahunan = JSON.parse('{{ chart_data_tahunan|escapejs }}');
+    const chartKejadianBencanaTahunan = document.getElementById('chartKejadianBencanaTahunan').getContext('2d');
+
+    // Ubah data untuk bar chart
+    const barChartData = {
+        labels: chartDataTahunan.labels,
+        datasets: [{
+            label: 'Jumlah Kejadian Bencana',
+            data: chartDataTahunan.datasets[0].data,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const chartKejadianBencanaTahunanChart = new Chart(chartKejadianBencanaTahunan, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const yearIndex = context.dataIndex;
+                            const total = context.dataset.data[yearIndex];
+                            const jenisData = chartDataTahunan.datasets[0].tooltip_data[yearIndex];
+                            
+                            let tooltipText = 'Jumlah Total: ' + total + '\n';
+                            for (const [jenis, jumlah] of Object.entries(jenisData)) {
+                                tooltipText += `${jenis}: ${jumlah}\n`;
+                            }
+                            return tooltipText;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>
+
+<script>
+    // Mendapatkan semua elemen select dengan class 'tahun'
+    const selectTahunElements = document.querySelectorAll('.tahun');
+
+    // Mendapatkan tahun saat ini
+    const currentYear = new Date().getFullYear();
+
+    // Loop melalui semua elemen select dengan class 'tahun'
+    selectTahunElements.forEach(selectTahun => {
+        // Membuat opsi untuk 5 tahun ke belakang
+        for (let i = 0; i <= 5; i++) {
+            const option = document.createElement('option');
+            option.value = currentYear - i;
+            option.text = currentYear - i;
+            selectTahun.appendChild(option);
+        }
+    });
+</script>
+
+<script>
+    // Fungsi untuk mengunduh data chart
+    function downloadChartData() {
+        console.log("Tombol unduh diklik"); // Log untuk verifikasi
+
+        const workbook = XLSX.utils.book_new();
+
+        // Data untuk rumah terdampak
+        const rumahData = chartDataRumah.datasets.flatMap((dataset, datasetIndex) => 
+            dataset.data.map((value, index) => ({
+                JenisBencana: chartDataRumah.labels[datasetIndex],
+                JumlahRumahTerdampak: value,
+            }))
+        );
+        console.log("Data rumah:", rumahData); // Log data rumah
+        const rumahWorksheet = XLSX.utils.json_to_sheet(rumahData);
+        XLSX.utils.book_append_sheet(workbook, rumahWorksheet, 'Kerusakan Rumah');
+
+        // Data untuk kejadian bencana per desa
+        const kelurahanData = JSON.parse('{{ chart_data_bencana_kelurahan|escapejs }}');
+        const kelurahanDataProcessed = kelurahanData.datasets.flatMap((dataset) => 
+            dataset.data.map((value, index) => ({
+                Desa: kelurahanData.labels[index],
+                JumlahKejadian: value,
+            }))
+        );
+        console.log("Data kelurahan:", kelurahanDataProcessed); // Log data kelurahan
+        const kelurahanWorksheet = XLSX.utils.json_to_sheet(kelurahanDataProcessed);
+        XLSX.utils.book_append_sheet(workbook, kelurahanWorksheet, 'Kejadian Bencana Per Desa');
+
+        // Data untuk kejadian bencana bulanan
+        const bulananData = JSON.parse('{{ chart_data_bulanan|escapejs }}');
+        const bulananDataProcessed = bulananData.datasets.flatMap((dataset) => 
+            dataset.data.map((value, index) => ({
+                Bulan: bulananData.labels[index],
+                JumlahKejadian: value,
+            }))
+        );
+        console.log("Data bulanan:", bulananDataProcessed); // Log data bulanan
+        const bulananWorksheet = XLSX.utils.json_to_sheet(bulananDataProcessed);
+        XLSX.utils.book_append_sheet(workbook, bulananWorksheet, 'Kejadian Bencana Bulanan');
+
+        // Data untuk kejadian bencana tahunan
+        const tahunanData = JSON.parse('{{ chart_data_tahunan|escapejs }}');
+        const tahunanDataProcessed = tahunanData.datasets.flatMap((dataset) => 
+            dataset.data.map((value, index) => ({
+                Tahun: tahunanData.labels[index],
+                JumlahKejadian: value,
+            }))
+        );
+        console.log("Data tahunan:", tahunanDataProcessed); // Log data tahunan
+        const tahunanWorksheet = XLSX.utils.json_to_sheet(tahunanDataProcessed);
+        XLSX.utils.book_append_sheet(workbook, tahunanWorksheet, 'Kejadian Bencana Tahunan');
+
+        // Unduh file Excel
+        XLSX.writeFile(workbook, 'Statistik_Bencana.xlsx');
+    }
+
+    // Event listener untuk tombol unduh
+    document.getElementById('downloadButton').addEventListener('click', downloadChartData);
+</script>

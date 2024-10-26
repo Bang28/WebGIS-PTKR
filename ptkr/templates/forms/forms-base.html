@@ -1,383 +1,506 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block content %}
-<!-- partial:index.partial.html -->
-<div class="container-fluid">
-    <div class="p-0 mt-3 mb-2">
-        <br>
-        <div class="card card-outline card-info px-4 pt-4 pb-0 mb-3">
-            <div>
-                <div class="card-tools float-right">
-                    <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#modal-helper">
-                        <i class="fas fa-question-circle fa-lg" data-toggle="tooltip" data-placement="bottom" title="Bantuan"></i>
-                    </button>
-                </div>
-            </div>
-            <h2 id="heading" class="text-center">
-                {% block form-title %}{% endblock form-title %}
-            </h2>
-            <p class="text-center">Masukan data sesuai hasil pengamatan</p>
-            <form id="msform" method="POST" {% block action %}{% endblock action %} enctype="multipart/form-data">
-                {% csrf_token %}
-                <!-- progressbar -->
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                </div> <br> 
-                <!-- fieldsets -->
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Personal</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_personal %}
-                                <h2 class="steps">Step 1 - 19</h2>
-                                {% endblock step_personal %}
-                            </div> <br>
-                            {% include './partials/personal.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Pondasi</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_pondasi %}
-                                <h2 class="steps">Step 2 - 19</h2>
-                                {% endblock step_pondasi %}
-                            </div> <br>
-                            {% include './struktur/struktur-pondasi.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Kolom</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_kolom %}
-                                <h2 class="steps">Step 3 - 19</h2>
-                                {% endblock step_kolom %}
-                            </div> <br>
-                            {% include './struktur/struktur-kolom.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Balok</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_balok %}
-                                <h2 class="steps">Step 4 - 19</h2>
-                                {% endblock step_balok %}
-                            </div> <br>
-                            {% include './struktur/struktur-balok.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                {% block plat_lantai_tangga %}
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Plat Lantai</h2>
-                            </div>
-                            <div class="col-5">
-                                <h2 class="steps">Step 5 - 19</h2>
-                            </div> <br>
-                            {% include './struktur/struktur-plat-lantai.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Tangga</h2>
-                            </div>
-                            <div class="col-5">
-                                <h2 class="steps">Step 6 - 19</h2>
-                            </div> <br>
-                            {% include './struktur/struktur-tangga.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                {% endblock plat_lantai_tangga %}
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Struktur - Atap</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_atap %}
-                                <h2 class="steps">Step 7 - 19</h2>
-                                {% endblock step_atap %}
-                            </div> <br>
-                            {% include './struktur/struktur-atap.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Dinding</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_dinding %}
-                                <h2 class="steps">Step 8 - 19</h2>
-                                {% endblock step_dinding %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-dinding.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Plafon</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_plafon %}
-                                <h2 class="steps">Step 9 - 19</h2>
-                                {% endblock step_plafon %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-plafon.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Lantai</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_lantai %}
-                                <h2 class="steps">Step 10 - 19</h2>
-                                {% endblock step_lantai %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-lantai.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Kusen</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_kusen %}
-                                <h2 class="steps">Step 11 - 19</h2>
-                                {% endblock step_kusen %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-kusen.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Pintu</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_pintu %}
-                                <h2 class="steps">Step 12 - 19</h2>
-                                {% endblock step_pintu %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-pintu.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Jendela</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_jendela %}
-                                <h2 class="steps">Step 13 - 19</h2>
-                                {% endblock step_jendela %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-jendela.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Finishing Plafon</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_fplafon %}
-                                <h2 class="steps">Step 14 - 19</h2>
-                                {% endblock step_fplafon %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-finishing-plafon.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Finishing Dinding</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_fdinding %}
-                                <h2 class="steps">Step 15 - 19</h2>
-                                {% endblock step_fdinding %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-finishing-dinding.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Arsitektur - Finishing Kusen & Pintu</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_fkupin %}
-                                <h2 class="steps">Step 16 - 19</h2>
-                                {% endblock step_fkupin %}
-                            </div> <br>
-                            {% include './arsitektur/arsitektur-finishing-kupin.html' %} 
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Utilitas - Instalasi</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_instalasi %}
-                                <h2 class="steps">Step 17 - 19</h2>
-                                {% endblock step_instalasi %}
-                            </div> <br>
-                            {% include './utilitas/utilitas-instalasi.html' %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Utilitas - Drainase Limbah</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_drainase %}
-                                <h2 class="steps">Step 18 - 19</h2>
-                                {% endblock step_drainase %}
-                            </div><br>
-                            {% include "./utilitas/utilitas-drainase.html" %}
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="fs-title">Koordinat Lokasi:</h2>
-                            </div>
-                            <div class="col-5">
-                                {% block step_lokasi %}
-                                <h2 class="steps">Step 19 - 19</h2>
-                                {% endblock step_lokasi %}
-                            </div> <br>
-                            <div class="col-md-12 mb-3">
-                                <!--map-->
-                                <div id="peta">
-                                    <!--add mark-->
-                                    <div id="addmark" class="leaflet-control addmark">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group input-group-sm mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="latitude">Latitude</span>
-                                    </div>
-                                    <input type="text" name="lat" class="form-control lat" aria-label="Latitude" aria-describedby="latitude">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group input-group-sm mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="longitude">Longitude</span>
-                                    </div>
-                                    <input type="text" name="long" class="form-control long" aria-label="Longitude" aria-describedby="longitude">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="submit" name="next" class="next action-button" value="Submit" /> 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                </fieldset>
-            </form>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WebGIS - PTKR</title>
+    <meta name="description" content="pemetaan kerusakan bangunan">
+    <meta name="keywords" content="pemetaan kerusakan bangunan">
+
+    <!-- Favicons -->
+    <link href="{% static './assets/img/favicon.ico' %} " rel="icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static './assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static './assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static './plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static './plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{% static './plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static './plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <!--Leaflet-->
+    <link rel="stylesheet" href="{% static './plugins/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.css' %}" />
+    <link rel="stylesheet" href="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.css' %}">
+    <!--style custom-->
+    <link rel="stylesheet" href="{% static './dist/css/style.css' %}" />
+    <!--form wizard-->
+    <link rel="stylesheet" href="{% static './dist/css/forms-wizard.css' %}">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'ptkr:index' %}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">WebGIS-PTKR</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'ptkr:index' %}#hero" >Beranda<br></a></li>
+                    <li><a href="{% url 'ptkr:index' %}#about">Tentang</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#fitur">Fitur</a></li>
+                    <li><a href="{% url 'ptkr:index' %}#contact">Kontak Kami</a></li>
+                    <li><a href="{% url "ptkr:statistik-bencana" %}">Statistik Bencana</a></li>
+                    <li><a href="{% url 'ptkr:data-bencana' %}">Data Bencana</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{% url "ptkr:dash-peta" %}">Dashboard Peta</a>
         </div>
-    </div>
-</div>
-<!-- partial -->
-{% endblock content %}
+    </header>
 
-{% block script %}
+    <main class="main">
+        {% block breadcrumb %}
+        {% endblock breadcrumb %}
+        <section class="section">
+            <div class="container">
+                <!-- partial:index.partial.html -->
+                <div class="card px-4 pt-4 pb-0 mb-3">
+                    <h2 id="heading" class="text-center">
+                        {% block form-title %}{% endblock form-title %}
+                    </h2>
+                    <p class="text-center">Masukan data sesuai hasil pengamatan</p>
+                    <form id="msform" method="POST" {% block action %}{% endblock action %} enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- progressbar -->
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div> <br> 
+                        <!-- fieldsets -->
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Personal</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_personal %}
+                                        <h2 class="steps">Step 1 - 19</h2>
+                                        {% endblock step_personal %}
+                                    </div> <br>
+                                </div>
+                                {% include './partials/personal.html' %}
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Pondasi</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_pondasi %}
+                                        <h2 class="steps">Step 2 - 19</h2>
+                                        {% endblock step_pondasi %}
+                                    </div> <br>
+                                    {% include './struktur/struktur-pondasi.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Kolom</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_kolom %}
+                                        <h2 class="steps">Step 3 - 19</h2>
+                                        {% endblock step_kolom %}
+                                    </div> <br>
+                                    {% include './struktur/struktur-kolom.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Balok</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_balok %}
+                                        <h2 class="steps">Step 4 - 19</h2>
+                                        {% endblock step_balok %}
+                                    </div> <br>
+                                    {% include './struktur/struktur-balok.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        {% block plat_lantai_tangga %}
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Plat Lantai</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 5 - 19</h2>
+                                    </div> <br>
+                                    {% include './struktur/struktur-plat-lantai.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Tangga</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 6 - 19</h2>
+                                    </div> <br>
+                                    {% include './struktur/struktur-tangga.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        {% endblock plat_lantai_tangga %}
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Struktur - Atap</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_atap %}
+                                        <h2 class="steps">Step 7 - 19</h2>
+                                        {% endblock step_atap %}
+                                    </div> <br>
+                                    {% include './struktur/struktur-atap.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Dinding</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_dinding %}
+                                        <h2 class="steps">Step 8 - 19</h2>
+                                        {% endblock step_dinding %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-dinding.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Plafon</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_plafon %}
+                                        <h2 class="steps">Step 9 - 19</h2>
+                                        {% endblock step_plafon %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-plafon.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Lantai</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_lantai %}
+                                        <h2 class="steps">Step 10 - 19</h2>
+                                        {% endblock step_lantai %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-lantai.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Kusen</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_kusen %}
+                                        <h2 class="steps">Step 11 - 19</h2>
+                                        {% endblock step_kusen %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-kusen.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Pintu</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_pintu %}
+                                        <h2 class="steps">Step 12 - 19</h2>
+                                        {% endblock step_pintu %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-pintu.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Jendela</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_jendela %}
+                                        <h2 class="steps">Step 13 - 19</h2>
+                                        {% endblock step_jendela %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-jendela.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Finishing Plafon</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_fplafon %}
+                                        <h2 class="steps">Step 14 - 19</h2>
+                                        {% endblock step_fplafon %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-finishing-plafon.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Finishing Dinding</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_fdinding %}
+                                        <h2 class="steps">Step 15 - 19</h2>
+                                        {% endblock step_fdinding %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-finishing-dinding.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Arsitektur - Finishing Kusen & Pintu</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_fkupin %}
+                                        <h2 class="steps">Step 16 - 19</h2>
+                                        {% endblock step_fkupin %}
+                                    </div> <br>
+                                    {% include './arsitektur/arsitektur-finishing-kupin.html' %} 
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Utilitas - Instalasi</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_instalasi %}
+                                        <h2 class="steps">Step 17 - 19</h2>
+                                        {% endblock step_instalasi %}
+                                    </div> <br>
+                                    {% include './utilitas/utilitas-instalasi.html' %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Utilitas - Drainase Limbah</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_drainase %}
+                                        <h2 class="steps">Step 18 - 19</h2>
+                                        {% endblock step_drainase %}
+                                    </div><br>
+                                    {% include "./utilitas/utilitas-drainase.html" %}
+                                </div>
+                            </div>
+                            <input type="button" name="next" class="next btn btn-primary float-end" value="Berikutnya" /> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-card mb-2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Koordinat Lokasi:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        {% block step_lokasi %}
+                                        <h2 class="steps">Step 19 - 19</h2>
+                                        {% endblock step_lokasi %}
+                                    </div> <br>
+                                    <div class="col-md-12 mb-3">
+                                        <!--map-->
+                                        <div id="peta">
+                                            <!--add mark-->
+                                            <div id="addmark" class="leaflet-control addmark">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="latitude">Latitude</span>
+                                            </div>
+                                            <input type="text" name="lat" class="form-control lat" aria-label="Latitude" aria-describedby="latitude" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="longitude">Longitude</span>
+                                            </div>
+                                            <input type="text" name="long" class="form-control long" aria-label="Longitude" aria-describedby="longitude" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary float-end">Kirim</button> 
+                            <input type="button" name="previous" class="previous btn btn-secondary float-end mx-2" value="Sebelumnya" />
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- partial -->
+            </div>
+        </section>
+
+    </main>
+
+    {% include "modals&alerts/alerts.html" %}
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!--modals-->
+    {% include "modals&alerts/show-images.html" %}
+
+    <!-- Vendor JS Files -->
+    <script src="{% static './assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static './assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static './assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static './assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static './assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static './assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+    <!-- Select2 -->
+    <script src="{% static './plugins/select2/js/select2.full.min.js' %}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $(document).ready(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <!-- SweetAlert2 -->
+    <script src="{% static './plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+    <!--Leaflet-->
+    <script src="{% static './plugins/leaflet/leaflet.js' %}"></script>
+    <script src="{% static './plugins/leafletcontrolgeocoder/Control.Geocoder.js' %}"></script>
+    <script src="{% static './plugins/leafletlocatecontrol/L.Control.Locate.min.js' %}"></script>
+    <!--form wizard-->
+    <script src="{% static './dist/js/forms-wizard.js' %}"></script>
+    <!--Kalkulator-->
+    <script src="{% static './dist/js/calculate.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#bencana').select2({
+                width: '100%'
+            });
+        });
+    </script>
+</body>
+
+</html>
+
 <!--Map-->
 <script>
     var map = L.map('peta', {zoomControl: false}).setView([-1.5387473, 118.4170327], 5);
@@ -601,4 +724,9 @@
         window.dispatchEvent(new Event('resize'));
     }, 1000);
 </script>
-{% endblock script %}
+
+<!--Select2-->
+<script>
+    // Inisialisasi Select2 pada elemen dengan kelas .select2
+    $('.select2').select2();
+</script>

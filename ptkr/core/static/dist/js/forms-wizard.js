@@ -47,18 +47,11 @@ $(document).ready(function () {
 
         // Validasi saat klik Next
         if (!validateForm(current_fs)) {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 5000,
-                timerProgressBar: true,
-            });
-
-            Toast.fire({
+            Swal.fire({
                 icon: 'warning',
                 title: 'Kolom Kosong/Belum Di ISI',
-                text: 'Terdapat kolom yang tidak boleh kosong, silahkan kembali ke Step sebelumnya!'
+                text: 'Terdapat kolom yang tidak boleh kosong, silahkan kembali ke Step sebelumnya!',
+                confirmButtonText: 'OK',
             });
             // return; // Jangan lanjutkan jika validasi gagal
         }
@@ -119,18 +112,11 @@ $(document).ready(function () {
         // Memeriksa apakah input adalah angka
         if (value === '' || isNaN(value) || !/^\d*\.?\d+$/.test(value)) {
             valid = false;
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 5000,
-                timerProgressBar: true,
-            });
-
-            Toast.fire({
+            Swal.fire({
                 icon: 'warning',
                 title: 'Input Salah',
-                text: 'Input berupa angka dan gunakan titik (.) sebagai pemisah angka / pengganti koma!'
+                text: 'Input berupa angka dan gunakan titik (.) sebagai pemisah angka / pengganti koma!',
+                confirmButtonText: 'OK',
             });
             $(this).addClass('error');
         }
