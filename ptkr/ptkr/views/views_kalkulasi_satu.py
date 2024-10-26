@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.gis.geos import Point
 from django.db import transaction
@@ -10,8 +11,10 @@ from ptkr.models.models_utilitas_bangunan import UtilitasBangunan
 
 def satuLantai(request):
     """fungsi kalkulasi kerusakan bangunan tipe satu lantai"""
+    tahun_sekarang = datetime.now().year
+    
     list_bencana = Bencana.objects.all().order_by('-tanggal_terjadi')
-    list_point = Bangunan.objects.all()
+    list_point = Bangunan.objects.filter(publish__year=tahun_sekarang)
 
     if request.method == 'POST':
         try:
@@ -380,7 +383,7 @@ def satuLantai(request):
                     )
                     utilitas_bangunan.save()
                     
-                    messages.success(request, 'Data rumah terdampak berhasil disimpan.')
+                    messages.success(request, 'Data laporan kerusakan rumah berhasil disimpan.')
                     return redirect('ptkr:satu')
                 
             except Exception as e:

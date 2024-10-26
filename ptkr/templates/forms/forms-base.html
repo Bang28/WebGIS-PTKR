@@ -730,3 +730,15 @@
     // Inisialisasi Select2 pada elemen dengan kelas .select2
     $('.select2').select2();
 </script>
+
+<!--Alerts-->
+<script>
+    {% for message in messages %}
+        Swal.fire({
+            icon: '{{message.tags}}',
+            title: 'Input Data',
+            text: '{{message}}',
+            confirmButtonText: 'OK',
+        });
+    {% endfor %}
+</script>
