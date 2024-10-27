@@ -18,7 +18,7 @@ def get_titik_lokasi(request, bencana_id):
                 'pemilik_rumah': rumah.pemilik_rumah,
                 'foto': rumah.foto.url,
                 'bencana':rumah.bencana.jenis_bencana,
-                'tanggal':rumah.bencana.tanggal_terjadi.date(),
+                'tanggal':rumah.bencana.tanggal_terjadi,
                 'lat': rumah.lat,
                 'lng': rumah.long,
                 'tingkat_kerusakan': rumah.tingkat_kerusakan,
