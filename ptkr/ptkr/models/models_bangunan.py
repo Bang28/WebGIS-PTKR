@@ -39,7 +39,7 @@ class Bangunan(models.Model):
     foto = models.ImageField(_("Foto Rumah"), upload_to=file_upload, validators=[file_size, file_extension] , height_field=None, width_field=None, max_length=None, help_text='Ukuran foto maksimal 5MB.')
     lat = models.FloatField(_("Latitude"))
     long = models.FloatField(_("Longitude"))
-    publish = models.DateField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
+    publish = models.DateTimeField(_("Tanggal diunggah"), auto_now=False, auto_now_add=True)
     koordinat = models.PointField(_("Titik Koordinat Lokasi Rumah"))
 
     ket_pondasi = models.CharField(_("Visual Pondasi"), max_length=255)

@@ -48,7 +48,7 @@ class ArsitekturBangunan(models.Model):
     tk_kusen = models.FloatField(_("Tingkat Kerusakan Komponen Kusen"))
     
     # Pintu
-    j_pintu = models.FloatField(_("Volume Pintu (%)"))
+    j_pintu = models.FloatField(_("Jumlah Pintu (Unit)"))
     pintu_tr = models.FloatField(_("Pintu Tidak Rusak"))
     pintu_rsr = models.FloatField(_("Pintu Rusak Sangat Ringan"))
     pintu_rr = models.FloatField(_("Pintu Rusak Ringan"))
@@ -59,7 +59,7 @@ class ArsitekturBangunan(models.Model):
     tk_pintu = models.FloatField(_("Tingkat Kerusakan Komponen Pintu"))
     
     # Jendela
-    j_jendela = models.FloatField(_("Volume Jendela (%)"))
+    j_jendela = models.FloatField(_("Jumlah Jendela (Unit)"))
     jendela_tr = models.FloatField(_("Jendela Tidak Rusak"))
     jendela_rsr = models.FloatField(_("Jendela Rusak Sangat Ringan"))
     jendela_rr = models.FloatField(_("Jendela Rusak Ringan"))

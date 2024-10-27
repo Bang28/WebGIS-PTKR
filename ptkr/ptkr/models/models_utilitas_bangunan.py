@@ -3,13 +3,13 @@ from django.utils.translation import gettext_lazy as _
 from . models_bangunan import Bangunan
 
 class UtilitasBangunan(models.Model):
-    vk_listrik = models.FloatField(_("Voluke Kerusakan Instalasi Listrik (Estimasi)"))
+    vk_listrik = models.FloatField(_("Volume Kerusakan Instalasi Listrik (Estimasi)"))
     tk_listrik = models.FloatField(_("Tingkat Kerusakan Instalasi Listrik"))
     vk_air = models.FloatField(_("Voluke Kerusakan Instalasi Air Bersih (Estimasi)"))
     tk_air = models.FloatField(_("Tingkat Kerusakan Instalasi Air Bersih"))
 
     # Drainase
-    v_drainase = models.PositiveSmallIntegerField(_("Volume Drainase M1(Meter Lari)"))
+    v_drainase = models.PositiveSmallIntegerField(_("Panjang Drainase M1(Meter Lari)"))
     drainase_tr = models.PositiveSmallIntegerField(_("Drainase Tidak Rusak"))
     drainase_rsr = models.PositiveSmallIntegerField(_("Drainase Rusak Sangat Ringan"))
     drainase_rr = models.PositiveSmallIntegerField(_("Drainase Rusak Ringan"))

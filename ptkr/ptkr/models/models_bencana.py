@@ -26,7 +26,7 @@ class Bencana(models.Model):
         ('Wanareja', 'Wanareja'),
     ]
     jenis_bencana = models.CharField(_("Jenis bencana"), max_length=50, choices=JENIS_BENCANA_CHOICES)
-    tanggal_terjadi = models.DateTimeField(_("Tanggal terjadi"), auto_now=False, auto_now_add=False)
+    tanggal_terjadi = models.DateField(_("Tanggal terjadi"), auto_now=False, auto_now_add=False)
     lokasi_bencana = models.CharField(_("Desa Tempat Bencana Terjadi"), max_length=50, choices=LOKASI_BENCANA_CHOICES)
     deskripsi = models.TextField(_("Deskripsi bencana"), max_length=1000, null=True, blank=True, help_text="Opsional, boleh diisi boleh tidak.")
 

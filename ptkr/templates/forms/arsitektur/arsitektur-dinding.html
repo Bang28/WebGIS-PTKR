@@ -63,12 +63,17 @@
                 <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label>
                 <label class="">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Dinding rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah persentase komponen yang mengalami kerusakan sesuai deskripsi.</label> 
                 <!--Kalkulator-->
-                <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih.</label>
+                <label class="fieldlabels">Gunakan kalkulator berikut untuk mencari nilai persentase kerusakan sesuai deskripsi yang dipilih. Ikuti panduan pada gambah ini</label>
+                <span>
+                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#modal_rumus_dinding">&nbsp;
+                        <i class="far fa-eye" style="color: #c0c0c0;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lihat gambar panduan"></i>
+                    </a>
+                </span>
                 <div class="row">
                     <!--Dinding-->
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="panjang_dinding">Panjang Dinding (Meter)</label>
+                            <label for="panjang_dinding">Panjang Total Dinding (Meter)</label>
                             <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="panjang_dinding" placeholder="Masukan panjang dinding" aria-describedby="panjang_dinding">
                         </div>
                     </div>
@@ -90,13 +95,13 @@
                     <!--Pintu-->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="lebar_pintu">Lebar Pintu (Meter)</label>
+                            <label for="lebar_pintu">Lebar Kusen Pintu (Meter)</label>
                             <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="lebar_pintu" placeholder="Masukan lebar pintu" aria-describedby="lebar_pintu">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="tinggi_pintu">Tinggi Pintu (Meter)</label>
+                            <label for="tinggi_pintu">Tinggi Kusen Pintu (Meter)</label>
                             <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="tinggi_pintu" placeholder="Masukan tinggi pintu" aria-describedby="tinggi_pintu">
                         </div>
                     </div>
@@ -118,13 +123,13 @@
                     <!--Jendela-->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="lebar_jendela">Lebar Jendela (Meter)</label>
+                            <label for="lebar_jendela">Lebar Kusen Jendela (Meter)</label>
                             <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="lebar_jendela" placeholder="Masukan lebar jendela" aria-describedby="lebar_jendela">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="tinggi_jendela">Tinggi Jendela (Meter)</label>
+                            <label for="tinggi_jendela">Tinggi Kusen Jendela (Meter)</label>
                             <input type="number" class="form-control form-control-sm" onkeyup="calcDinding()" id="tinggi_jendela" placeholder="Masukan tinggi jendela" aria-describedby="tinggi_jendela">
                         </div>
                     </div>
