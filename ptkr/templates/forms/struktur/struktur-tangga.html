@@ -4,76 +4,82 @@
             <h5 class="card-title">Struktur - Komponen Tangga</h5>
         </div>
         <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label" for="j_tangga">Ada berapa jumlah unit Tangga pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+                <input type="number" min="1" class="form-control form-control-sm" id="j_tangga" name="j_tangga" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga dsini" required/> 
+            </div>
+            
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Tangga</label> 
             <label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
-            <label class="fieldlabels">Berikut adalah kriteria kerusakan Tangga yang diindikasi berdampak pada aspek keselamatan.</label> 
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Klasifikasi</th>
-                            <th scope="col">Deskripsi Kerusakan</th>
-                            <th scope="col">Kuantitas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Rusak Sedang</th>
-                            <td>
-                                <ul>
-                                    <li>Tangga melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom</li>
-                                    <li>Selimut beton hancur di beberapa tempat</li>
-                                    <li>Tangga bergetar (kurang kaku)</li>
-                                </ul>
-                            </td>
-                            <td>>30% dari seluruh tangga</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Tangga melendut, retak tembus, tulangan terlihat, selimut beton hancur</li>
-                                </ul>
-                            </td>
-                            <td>Min 1 bidang tangga</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Sangat Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Tangga hancur</li>
-                                </ul>
-                            </td>
-                            <td>Min 1 bidang tangga</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleCollapseIndikasiTangga(true)">Lihat indikasi kerusakan</button>
+            
+            <div class="collapse" id="collapseIndikasiTangga">
+                <label class="fieldlabels">Berikut adalah kriteria kerusakan Tangga yang diindikasi berdampak pada aspek keselamatan.</label> 
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Klasifikasi</th>
+                                <th scope="col">Deskripsi Kerusakan</th>
+                                <th scope="col">Kuantitas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Rusak Sedang</th>
+                                <td>
+                                    <ul>
+                                        <li>Tangga melendut, retakan 1.0 mm meluas dari tengah menuju sudut kolom</li>
+                                        <li>Selimut beton hancur di beberapa tempat</li>
+                                        <li>Tangga bergetar (kurang kaku)</li>
+                                    </ul>
+                                </td>
+                                <td>>30% dari seluruh tangga</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Tangga melendut, retak tembus, tulangan terlihat, selimut beton hancur</li>
+                                    </ul>
+                                </td>
+                                <td>Min 1 bidang tangga</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Sangat Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Tangga hancur</li>
+                                    </ul>
+                                </td>
+                                <td>Min 1 bidang tangga</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga1" onclick="toggleCollapseTangga(false)" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga1" onclick="toggleCollapseTangga(false), toggleCollapseIndikasiTangga(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_tangga1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga2" onclick="toggleCollapseTangga(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga2" onclick="toggleCollapseTangga(true), toggleCollapseIndikasiTangga(false)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_tangga2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga3" onclick="toggleCollapseTangga(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_tangga" id="ket_tangga3" onclick="toggleCollapseTangga(true), toggleCollapseIndikasiTangga(false)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_tangga3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
-
-            <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
-            <label class="" for="j_tangga">Ada berapa jumlah unit Tangga pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_tangga" name="j_tangga" onkeyup="calcTangga()" placeholder="Masukan jumlah unit Tangga dsini" required/> 
-
+            
             <div class="collapse" id="collapseTangga">
-                
+                <label class="fieldlabels my-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
                 <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Tangga rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
                 <div class="form-check mt-2">
                     <input class="form-check-input" type="checkbox" id="tangga_tr_checked" checked disabled>
@@ -150,12 +156,25 @@
 </script>
 
 <script>
+    function toggleCollapseIndikasiTangga(isDamaged) {
+        const collapseIndikasiTangga = document.getElementById('collapseIndikasiTangga');
+        
+        if (isDamaged) {
+            collapseIndikasiTangga.classList.add('show');
+        } else {
+            collapseIndikasiTangga.classList.remove('show');
+        }
+    }
+    
     function toggleCollapseTangga(isDamaged) {
         const collapseTangga = document.getElementById('collapseTangga');
+        const j_tangga = document.getElementById('j_tangga').value;
+
         if (isDamaged) {
             collapseTangga.classList.add('show');
         } else {
             collapseTangga.classList.remove('show');
+            document.getElementById('tangga_tr').value = j_tangga;
         }
     }
 </script>
