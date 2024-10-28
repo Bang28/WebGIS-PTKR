@@ -354,10 +354,12 @@
 <script>
     function toggleCollapseDinding(isDamaged) {
         const collapseDinding = document.getElementById('collapseDinding');
+        
         if (isDamaged) {
             collapseDinding.classList.add('show');
         } else {
             collapseDinding.classList.remove('show');
+            document.getElementById('dinding_tr').value = 100;
         }
     }
 </script>

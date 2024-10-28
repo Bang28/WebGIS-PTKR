@@ -206,7 +206,7 @@ function calcPlafon() {
     var luas_plafon_rusak = calculateAreaPlafon(p_plafon_rusak, l_plafon_rusak);
 
     // Hitung luas bidang tidak rusak
-    var plafon_tr = 100 - (plafon_rsr + plafon_rr + plafon_rs + plafon_rb + plafon_rsb + plafon_kts)
+    var plafon_tr = 100 - (plafon_rsr + plafon_rr + plafon_rs + plafon_rb + plafon_rsb + plafon_kts);
 
     // Update input luas
     document.getElementById("luas_plafon").value = luas_plafon;
@@ -218,6 +218,7 @@ function calcPlafon() {
 
     // Tampilkan hasil
     document.getElementById("kerusakan_plafon").value = kerusakan_plafon.toFixed(2);
+
 }
 
 // Kalkulator Arsitektur Lantai

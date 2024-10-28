@@ -4,79 +4,86 @@
             <h5 class="card-title">Struktur - Komponen Kolom</h5>
         </div>
         <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label" for="j_kolom">Ada berapa jumlah unit Kolom pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+                <input type="number" min="1" class="form-control form-control-sm" id="j_kolom" name="j_kolom" onkeyup="calcKolom()" placeholder="Masukan Jumlah Unit Kolom Disini" required/> 
+            </div>
+
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Kolom</label> 
             <label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
-            <label class="fieldlabels">Berikut adalah kriteria kerusakan Kolom yang diindikasi berdampak pada aspek keselamatan.</label> 
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Klasifikasi</th>
-                            <th scope="col">Deskripsi Kerusakan</th>
-                            <th scope="col">Kuantitas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Rusak Sedang</th>
-                            <td>
-                                <ul>
-                                    <li>Retak pada permukaan kolom, lebar retak >1.0 mm</li>
-                                    <li>Selimut beton gembur, beberapa tulangan terlihat</li>
-                                    <li>Tulangan diindikasi mengalami korosi</li>
-                                    <li>Retakan/penyambungan cor terjadi pada area sendi plastis</li>
-                                </ul>
-                            </td>
-                            <td>>30% dari seluruh kolom struktur</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Posisi ketegakan kolom miring atau angkur tidak ada</li>
-                                    <li>Tulangan kolom terlihat 4 sisi pada 1 titik</li>
-                                    <li>Selimut beton hancur pada beberapa titik</li>
-                                </ul>
-                            </td>
-                            <td>Min 2 unit kolom struktural yang berdampingan atau > 2 unit kolom struktural yang tidak berdampingan</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Sangat Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Beton inti kolom hancur, baja tulangan tertekuk</li>
-                                    <li>kolom patah</li>
-                                </ul>
-                            </td>
-                            <td>Min 1 unit kolom struktur</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleCollapseIndikasiKolom(true)">Lihat indikasi kerusakan</button>
+            
+            <div class="collapse" id="collapseIndikasiKolom">
+                <label class="fieldlabels">Berikut adalah kriteria kerusakan Kolom yang diindikasi berdampak pada aspek keselamatan.</label> 
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Klasifikasi</th>
+                                <th scope="col">Deskripsi Kerusakan</th>
+                                <th scope="col">Kuantitas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Rusak Sedang</th>
+                                <td>
+                                    <ul>
+                                        <li>Retak pada permukaan kolom, lebar retak >1.0 mm</li>
+                                        <li>Selimut beton gembur, beberapa tulangan terlihat</li>
+                                        <li>Tulangan diindikasi mengalami korosi</li>
+                                        <li>Retakan/penyambungan cor terjadi pada area sendi plastis</li>
+                                    </ul>
+                                </td>
+                                <td>>30% dari seluruh kolom struktur</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Posisi ketegakan kolom miring atau angkur tidak ada</li>
+                                        <li>Tulangan kolom terlihat 4 sisi pada 1 titik</li>
+                                        <li>Selimut beton hancur pada beberapa titik</li>
+                                    </ul>
+                                </td>
+                                <td>Min 2 unit kolom struktural yang berdampingan atau > 2 unit kolom struktural yang tidak berdampingan</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Sangat Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Beton inti kolom hancur, baja tulangan tertekuk</li>
+                                        <li>kolom patah</li>
+                                    </ul>
+                                </td>
+                                <td>Min 1 unit kolom struktur</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom1" onclick="toggleCollapseKolom(false)" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom1" onclick="toggleCollapseKolom(false), toggleCollapseIndikasiKolom(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_kolom1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom2" onclick="toggleCollapseKolom(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom2" onclick="toggleCollapseKolom(true), toggleCollapseIndikasiKolom(false)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_kolom2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom3" onclick="toggleCollapseKolom(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_kolom" id="ket_kolom3" onclick="toggleCollapseKolom(true), toggleCollapseIndikasiKolom(false)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_kolom3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
-
-            <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>
-            <label class="" for="j_kolom">Ada berapa jumlah unit Kolom pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_kolom" name="j_kolom" onkeyup="calcKolom()" placeholder="Masukan Jumlah Unit Kolom Disini" required/> 
             
             <div class="collapse" id="collapseKolom">
+                <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>
                 <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Kolom rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
                 <div class="form-check mt-2">
                     <input class="form-check-input" type="checkbox" id="kolom_tr_checkbox" checked disabled>
@@ -175,12 +182,25 @@
 </script>
 
 <script>
+    function toggleCollapseIndikasiKolom(isDamaged) {
+        const collapseIndikasiKolom = document.getElementById('collapseIndikasiKolom');
+        
+        if (isDamaged) {
+            collapseIndikasiKolom.classList.add('show');
+        } else {
+            collapseIndikasiKolom.classList.remove('show');
+        }
+    }
+
     function toggleCollapseKolom(isDamaged) {
         const collapseKolom = document.getElementById('collapseKolom');
+        const j_kolom = document.getElementById('j_kolom').value;
+        
         if (isDamaged) {
             collapseKolom.classList.add('show');
         } else {
             collapseKolom.classList.remove('show');
+            document.getElementById('kolom_tr').value = j_kolom;
         }
     }
 </script>

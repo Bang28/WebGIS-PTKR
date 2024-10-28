@@ -4,76 +4,83 @@
             <h5 class="card-title">Struktur - Komponen Balok</h5>
         </div>
         <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label" for="j_balok">Ada berapa jumlah unit Balok pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
+                <input type="number" min="1" class="form-control form-control-sm" id="j_balok" name="j_balok" onkeyup="calcBalok()" placeholder="Masukan jumlah unit Balok dsini" required/> 
+            </div>
+            
             <label class="fieldlabels">Tahap 1 - Lakukanlah Pengamatan pada Komponen Balok</label> 
             <label class="">Apakah ada atau tidaknya kerusakan dan indikasi dampak kerusakan terhadap keselamatan pemanfaatan ruangan atau bangunan?</label> 
-            <label class="fieldlabels">Berikut adalah kriteria kerusakan Balok yang diindikasi berdampak pada aspek keselamatan.</label> 
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Klasifikasi</th>
-                            <th scope="col">Deskripsi Kerusakan</th>
-                            <th scope="col">Kuantitas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Rusak Sedang</th>
-                            <td>
-                                <ul>
-                                    <li>Balok melendut, lebar retak > 1.0 mm</li>
-                                    <li>Retak meluas pada beberapa tempat</li>
-                                    <li>Retak melingkar pada zona tulangan tarik</li>
-                                </ul>
-                            </td>
-                            <td>>30% dari seluruh balok utama</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Balok melendut, selimut beton hancur, tulangan terlihat</li>
-                                    <li>Balok patah/ runtuh</li>
-                                </ul>
-                            </td>
-                            <td>Min 1 unit balok struktur</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rusak Sangat Berat</th>
-                            <td>
-                                <ul>
-                                    <li>Plat dan balok lain yang menumpu pada balok tersebut ikut rusak</li>
-                                </ul>
-                            </td>
-                            <td>Min 1 unit balok struktur</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleCollapseIndikasiBalok(true)">Lihat indikasi kerusakan</button>
+            
+            <div class="collapse" id="collapseIndikasiBalok">
+                <label class="fieldlabels">Berikut adalah kriteria kerusakan Balok yang diindikasi berdampak pada aspek keselamatan.</label> 
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Klasifikasi</th>
+                                <th scope="col">Deskripsi Kerusakan</th>
+                                <th scope="col">Kuantitas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Rusak Sedang</th>
+                                <td>
+                                    <ul>
+                                        <li>Balok melendut, lebar retak > 1.0 mm</li>
+                                        <li>Retak meluas pada beberapa tempat</li>
+                                        <li>Retak melingkar pada zona tulangan tarik</li>
+                                    </ul>
+                                </td>
+                                <td>>30% dari seluruh balok utama</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Balok melendut, selimut beton hancur, tulangan terlihat</li>
+                                        <li>Balok patah/ runtuh</li>
+                                    </ul>
+                                </td>
+                                <td>Min 1 unit balok struktur</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rusak Sangat Berat</th>
+                                <td>
+                                    <ul>
+                                        <li>Plat dan balok lain yang menumpu pada balok tersebut ikut rusak</li>
+                                    </ul>
+                                </td>
+                                <td>Min 1 unit balok struktur</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok1" onclick="toggleCollapseBalok(false)" value="Tidak ada kerusakan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok1" onclick="toggleCollapseBalok(false), toggleCollapseIndikasiBalok(false)" value="Tidak ada kerusakan">
                 <label class="form-check-label" for="ket_balok1">
                     Tidak ada kerusakan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok2" onclick="toggleCollapseBalok(true)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok2" onclick="toggleCollapseBalok(true), toggleCollapseIndikasiBalok(false)" value="Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_balok2">
                     Ada kerusakan, namun diindikasi tidak membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok3" onclick="toggleCollapseBalok(true)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
+                <input class="form-check-input" type="radio" name="ket_balok" id="ket_balok3" onclick="toggleCollapseBalok(true), toggleCollapseIndikasiBalok(false)" value="Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan">
                 <label class="form-check-label" for="ket_balok3">
                     Ada kerusakan yang diindikasi membahayakan keselamatan pemanfaatan ruang/bangunan
                 </label>
             </div>
-
-            <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
-            <label class="" for="j_balok">Ada berapa jumlah unit Balok pada bangunan rumah Bapak/Ibu? <b class="text-danger">*</b> </label> 
-            <input type="number" min="1" class="form-control form-control-sm" id="j_balok" name="j_balok" onkeyup="calcBalok()" placeholder="Masukan jumlah unit Balok dsini" required/> 
-
+            
             <div class="collapse" id="collapseBalok">
+                <label class="fieldlabels mt-3">Tahap 2 - Menghitung volume kerusakan komponen</label> <br>  
                 <label class=" mt-3">Apakah ada dari deskripsi dibawah ini yang sesuai untuk mendeskripsikan kondisi atau kerusakan pada komponen Balok rumah Bapak/Ibu? Jiya ada, berikan tanda centang dan sertakan jumlah komponen yang mengalami kerusakan sesuai deskripsi.</label> 
                 <div class="form-check mt-2">
                     <input class="form-check-input" type="checkbox" id="balok_tr_checkbox" checked disabled>
@@ -172,12 +179,25 @@
 </script>
 
 <script>
+    function toggleCollapseIndikasiBalok(isDamaged) {
+        const collapseIndikasiBalok = document.getElementById('collapseIndikasiBalok');
+        
+        if (isDamaged) {
+            collapseIndikasiBalok.classList.add('show');
+        } else {
+            collapseIndikasiBalok.classList.remove('show');
+        }
+    }
+    
     function toggleCollapseBalok(isDamaged) {
         const collapseBalok = document.getElementById('collapseBalok');
+        const j_balok = document.getElementById('j_balok').value;
+        
         if (isDamaged) {
             collapseBalok.classList.add('show');
         } else {
             collapseBalok.classList.remove('show');
+            document.getElementById('balok_tr').value = j_balok;
         }
     }
 </script>

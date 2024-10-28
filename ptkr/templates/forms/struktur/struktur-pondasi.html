@@ -149,10 +149,16 @@
 <script>
     function toggleCollapsePondasi(isDamaged) {
         const collapsePondasi = document.getElementById('collapsePondasi');
+        const vkPondasiBaik = document.getElementById('vk_pondasi1');
+
         if (isDamaged) {
+            // Tampilkan bagian collapse dan hilangkan checked dari "Pondasi diindikasi dalam kondisi baik"
             collapsePondasi.classList.add('show');
+            vkPondasiBaik.checked = false;
         } else {
+            // Sembunyikan bagian collapse dan otomatis pilih "Pondasi diindikasi dalam kondisi baik"
             collapsePondasi.classList.remove('show');
+            vkPondasiBaik.checked = true;
         }
     }
 </script>
