@@ -7,7 +7,7 @@ var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png')
 
 var ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
 
-const apiKey = "AIzaSyDpX2A-VIf4owRpMDeuf4gaIQHREBrWlC0";
+const apiKey = "AIzaSyBtS2RmRX5kOEoiFLRt_DczfBYKSGIxgwY";
 var roadmapLayer = L.tileLayer(`https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}&key=${apiKey}`);
 var satelliteLayer = L.tileLayer(`https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&key=${apiKey}`);
 var hybridLayer = L.tileLayer(`https://mt1.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}&key=${apiKey}`).addTo(map);
